@@ -1,4 +1,4 @@
-import { useState, lazy } from "react";
+import { lazy } from "react";
 import { motion } from "framer-motion";
 import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
