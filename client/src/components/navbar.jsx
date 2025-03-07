@@ -10,17 +10,25 @@ const Navbar = () => {
     try {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      axios.post("http://localhost:8000/api/logout",{
-        token: token,
-      },{
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((res) => {
-        console.log(res);
-      }).finally(() => {
-        window.location.reload();
-      });
+      localStorage.removeItem("profilePicture");
+      axios
+        .post(
+          "http://localhost:8000/api/logout",
+          {
+            token: token,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .finally(() => {
+          window.location.reload();
+        });
     } catch (error) {
       console.log(error);
     }
