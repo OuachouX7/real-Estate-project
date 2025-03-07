@@ -2,8 +2,6 @@ import { useState, lazy } from "react";
 import { motion } from "framer-motion";
 import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Navbar from "./components/navbar";
-
 const Home = lazy(() => import("./Pages/Home"));
 const SignUp = lazy(() => import("./Pages/SignUp"));
 const Login = lazy(() => import("./Pages/Login"));
@@ -35,15 +33,12 @@ function App() {
         }
       >
         <Routes>
-          <Route path="/" element={<Navbar/>} />
+          <Route path="/" element={<Home/>} />
           <Route
             path="/sign-up"
             element={<SignUp setIsConnected={setIsConnected} />}
           />
-          <Route
-            path="/home"
-            element={<Home setIsConnected={setIsConnected} />}
-          />
+          <Route path="/login" element={<Login setIsConnected={setIsConnected} />} />
           <Route path="/about" element={<About/>} />
           <Route path="/contact" element={<Contact/>} />
           <Route path="/properties" element={<Properties/>} />
