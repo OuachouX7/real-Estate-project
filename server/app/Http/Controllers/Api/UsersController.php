@@ -15,7 +15,6 @@ class UsersController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
-            'profile_picture' => 'required'
         ]);
 
         $base64Image = $request->input('profile_picture');
@@ -25,6 +24,7 @@ class UsersController extends Controller
         }
 
         $imageData = explode(',', $base64Image)[1];
+        
         $image = base64_decode($imageData);
 
         if (!$image) {
@@ -45,6 +45,10 @@ class UsersController extends Controller
             'password' => $request->password,
             'profile_picture' => $imageName,
         ]);
+
+        if (!$user) {
+            return response()->json(['error' => 'Failed to create user'], 500);
+        }
 
         return response()->json($user);
     }
