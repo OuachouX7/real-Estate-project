@@ -10,8 +10,6 @@ const Contact = lazy(() => import("./Pages/Contact"));
 const Properties = lazy(() => import("./Pages/Properties"));
 
 function App() {
-  const [isConnected, setIsConnected] = useState(false);
-
   return (
     <BrowserRouter>
       <Suspense
@@ -29,19 +27,15 @@ function App() {
               className="w-36 h-36 border-4 border-t-transparent border-b-[#000] border-l-[#000] border-r-[#000] rounded-full"
             ></motion.div>
           </div>
-
         }
       >
         <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route
-            path="/sign-up"
-            element={<SignUp setIsConnected={setIsConnected} />}
-          />
-          <Route path="/login" element={<Login setIsConnected={setIsConnected} />} />
-          <Route path="/about" element={<About/>} />
-          <Route path="/contact" element={<Contact/>} />
-          <Route path="/properties" element={<Properties/>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/properties" element={<Properties />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
