@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Navbar = () => {
   const token = localStorage.getItem("token");
+  const profilePictureFromStorage = localStorage.getItem("profilePicture");
 
   const handleLogOut = () => {
     try {
@@ -74,7 +75,18 @@ const Navbar = () => {
             Login
           </Link>
         )}
-        {token && <button onClick={handleLogOut}>Logout</button>}
+        {token && (
+          <div className="flex items-center justify-around">
+            <img
+              src={`http://localhost:8000/storage/images/${profilePictureFromStorage}`}
+              alt={profilePictureFromStorage}
+              className="w-8 h-8 object-cover"
+            />
+            <button className="ml-1" onClick={handleLogOut}>
+              Logout
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
