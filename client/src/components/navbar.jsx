@@ -12,12 +12,12 @@ const Navbar = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     window.location.reload();
-  }
+  };
 
   return (
-    <div className="navbar w-full flex justify-between items-center p-6 bg-white shadow-md">
-      <div>
-        <img src={logo} alt="Logo" width={100} />
+    <div className="w-full flex justify-between items-center bg-white shadow-md">
+      <div className="p-1 flex justify-center items-center">
+        <img src={logo} alt="Logo" className="w-[100px] h-[100px]" />
       </div>
       <div>
         <ul className="flex space-x-4 p-2 rounded-full shadow-lg bg-gray-50">
@@ -43,20 +43,18 @@ const Navbar = () => {
           </Link>
         </ul>
       </div>
-      <div className="flex space-x-4">
-        {!token && <Link to="/sign-up" className="text-gray-700 hover:text-gray-900">
-          Sign up
-        </Link>}
+      <div className="flex w-[150px] h-[100px] p-1 items-center justify-around">
+        {!token && (
+          <Link to="/sign-up" className="text-gray-700 hover:text-gray-900">
+            Sign up
+          </Link>
+        )}
         {!token && (
           <Link to="/login" className="text-gray-700 hover:text-gray-900">
             Login
           </Link>
         )}
-        {
-          token && (
-            <button onClick={handleLogOut}>Logout</button>
-          )
-        }
+        {token && <button onClick={handleLogOut}>Logout</button>}
       </div>
     </div>
   );
