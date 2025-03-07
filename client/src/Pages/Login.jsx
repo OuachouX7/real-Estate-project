@@ -20,6 +20,7 @@ const Login = ({ setIsConnected }) => {
           console.log(res);
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("user", res.data.user.name);
+          localStorage.setItem("profilePicture", res.data.user.profile_picture);
           navigate("/");
         });
     } catch (error) {
@@ -29,7 +30,7 @@ const Login = ({ setIsConnected }) => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
+      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
         <h1 className="text-2xl font-bold text-center">Login</h1>
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
