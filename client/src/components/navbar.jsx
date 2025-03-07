@@ -43,9 +43,9 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="flex space-x-4">
-        <Link to="/sign-up" className="text-gray-700 hover:text-gray-900">
+        {!token && <Link to="/sign-up" className="text-gray-700 hover:text-gray-900">
           Sign up
-        </Link>
+        </Link>}
         {!token && (
           <Link to="/login" className="text-gray-700 hover:text-gray-900">
             Login
