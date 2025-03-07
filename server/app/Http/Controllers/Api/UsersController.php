@@ -24,7 +24,7 @@ class UsersController extends Controller
         }
 
         $imageData = explode(',', $base64Image)[1];
-        
+
         $image = base64_decode($imageData);
 
         if (!$image) {
@@ -71,5 +71,13 @@ class UsersController extends Controller
         }
 
         return response()->json(['error' => 'Invalid credentials'], 401);
+    }
+    public function logout(Request $request)
+    {
+        $res = $request->user()->tokens()->delete();
+        return response()->json([
+            'message' => 'Logged out',
+            'tokens_deleted' => $res
+        ]);
     }
 }

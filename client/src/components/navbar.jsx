@@ -1,17 +1,29 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/Property.png";
-import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = () => {
   const token = localStorage.getItem("token");
 
-  const navigate = useNavigate();
-
   const handleLogOut = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    window.location.reload();
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      axios.post("http://localhost:8000/api/logout",{
+        token: token,
+      },{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }).then((res) => {
+        console.log(res);
+      }).finally(() => {
+        window.location.reload();
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
