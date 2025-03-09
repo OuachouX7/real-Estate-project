@@ -36,7 +36,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full flex justify-between items-center bg-white shadow-md">
+    <div className="w-full flex justify-between items-center bg-white shadow-md ">
       <div className="p-1 flex justify-center items-center">
         <img src={logo} alt="Logo" className="w-[100px] h-[100px]" />
       </div>
@@ -62,6 +62,12 @@ const Navbar = () => {
               Contact
             </li>
           </Link>
+          <Link to="/add">
+            <li className="inline-block mx-2 text-gray-700 hover:text-gray-900">
+              add
+            </li>
+          </Link>
+
         </ul>
       </div>
       <div className="flex w-[150px] h-[100px] p-1 items-center justify-around">
