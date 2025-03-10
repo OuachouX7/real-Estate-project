@@ -39,9 +39,23 @@ const Home = () => {
             </button>
           </div>
           <div className="grid grid-cols-4 gap-4 mt-4">
-            {properties.map((listing, index) => (
-              <>// write here</>
-            ))}
+
+          {properties.map((listing, index) => (
+            <div key={index} className="p-4 border rounded-lg shadow-sm" onClick={() => navigate(`/property/${listing.id}`)}>
+              <img src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}/>
+
+              <h3 className="text-lg font-semibold">{listing.title}</h3>
+              <div className="flex items-center text-gray-600 text-sm">
+                <span className="mr-1">📍</span> {listing.location}
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span className="text-xl font-bold">{listing.price}</span>
+              </div>
+            </div>
+          ))}
+
+
+
           </div>
         </div>
       </div>
