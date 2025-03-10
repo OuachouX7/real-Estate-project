@@ -13,9 +13,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [UsersController::class, 'logout']);
     Route::get('/users', [UsersController::class, 'index']);
     Route::post('/addProperty' , [PropertiesController::class , 'store']);
-    Route::get('/properties', [PropertiesController::class, 'index']);
-    Route::get('/properties/{id}', [PropertiesController::class, 'show']);
 });
 
+Route::get('/properties', [PropertiesController::class, 'index']);
+Route::get('/properties/{id}', [PropertiesController::class, 'show']);
 Route::post('/login',[UsersController::class, 'login']);
 Route::post('/register', [UsersController::class, 'register']);
