@@ -9,6 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
+
+    public function index()
+    {
+        return response()->json(User::all());
+    }
+
     public function register(Request $request)
     {
         $request->validate([

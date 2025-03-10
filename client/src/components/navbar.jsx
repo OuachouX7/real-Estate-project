@@ -1,11 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/Property.png";
 import axios from "axios";
 
 const Navbar = () => {
+  const [users, setUsers] = useState([]);
+
   const token = localStorage.getItem("token");
   const profilePictureFromStorage = localStorage.getItem("profilePicture");
+  const userId = localStorage.getItem("userId");
+
+  const getUsers = () => {
+    try {
+      axios
+        .get("http://localhost:8000/api/users", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          //console.log(res.data);
+          setUsers(res.data);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleLogOut = () => {
     try {
@@ -35,6 +55,14 @@ const Navbar = () => {
     }
   };
 
+  const isAdmin = users.find(
+    (user) => user.role == "admin" && user.id == userId && token
+  );
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <div className="w-full flex justify-between items-center bg-white shadow-md ">
       <div className="p-1 flex justify-center items-center">
@@ -62,12 +90,13 @@ const Navbar = () => {
               Contact
             </li>
           </Link>
-          <Link to="/add">
-            <li className="inline-block mx-2 text-gray-700 hover:text-gray-900">
-              add
-            </li>
-          </Link>
-
+          {isAdmin && (
+            <Link to="/add">
+              <li className="inline-block mx-2 text-gray-700 hover:text-gray-900">
+                add
+              </li>
+            </Link>
+          )}
         </ul>
       </div>
       <div className="flex w-[150px] h-[100px] p-1 items-center justify-around">

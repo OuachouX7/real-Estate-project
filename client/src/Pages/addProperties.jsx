@@ -1,38 +1,62 @@
 import React, { useState } from "react";
 import Navbar from "../components/navbar";
+import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const CreateListingForm = () => {
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    category: "",
-    listedIn: "",
-    status: "Active",
-    salesPrice: "",
-    rentalPrice: "",
-    taxRate: "",
+    price: null,
+    images: [],
+    location: "",
   });
+  const [images, setImages] = useState([]);
+  const [base64Image, setBase64Image] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    // Ensure numeric fields are non-negative
-    if (["salesPrice", "rentalPrice", "taxRate"].includes(name) && value < 0) {
-      return;
-    }
-    setFormData({ ...formData, [name]: value });
+  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  if (!token) {
+    navigate("/");
+    Navigate("/");
+  }
+
+  const handleImage = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setBase64Image(reader.result);
+      setImages([...images, reader.result]);
+    };
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Basic validation
-    if (!formData.title || !formData.description || !formData.category) {
-      alert("Please fill in all required fields.");
-      return;
+    try {
+      axios
+        .post(
+          "http://localhost:8000/api/addProperty",
+          {
+            title: formData.title,
+            description: formData.description,
+            price: formData.price,
+            images: images,
+            location: formData.location,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
     }
-
-    console.log("Form Data Submitted:", formData);
-    // You can now send `formData` to your Laravel API
   };
 
   return (
@@ -47,8 +71,9 @@ const CreateListingForm = () => {
             <input
               type="text"
               name="title"
-              value={formData.title}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
               className="w-full p-2 border rounded"
               placeholder="Add Listing Title"
               required
@@ -59,100 +84,56 @@ const CreateListingForm = () => {
             <label className="block font-semibold">Description *</label>
             <textarea
               name="description"
-              value={formData.description}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, description: e.target.value })
+              }
               className="w-full p-2 border rounded"
               placeholder="Add Description"
               required
             ></textarea>
           </div>
-
-          <div>
-            <label className="block font-semibold">Category *</label>
-            <select
-              name="category"
-              value={formData.category}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-              required
-            >
-              <option value="">Select property category</option>
-              <option value="Residential">Residential</option>
-              <option value="Commercial">Commercial</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block font-semibold">Listed In</label>
-            <select
-              name="listedIn"
-              value={formData.listedIn}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            >
-              <option value="">Select Listing Type</option>
-              <option value="Sale">Sale</option>
-              <option value="Rent">Rent</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block font-semibold">Property Status</label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={handleChange}
-              className="w-full p-2 border rounded"
-            >
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-          </div>
-
           <div>
             <label className="block font-semibold">Property Sales Price</label>
             <input
               type="number"
               name="salesPrice"
-              value={formData.salesPrice}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, price: e.target.value })
+              }
               className="w-full p-2 border rounded"
               placeholder="Add sales price"
               min="0"
             />
           </div>
-
           <div>
-            <label className="block font-semibold">Property Rental Price</label>
+            <label className="block font-semibold">Location</label>
             <input
-              type="number"
+              type="text"
               name="rentalPrice"
-              value={formData.rentalPrice}
-              onChange={handleChange}
+              onChange={(e) =>
+                setFormData({ ...formData, location: e.target.value })
+              }
               className="w-full p-2 border rounded"
-              placeholder="Add rental price"
+              placeholder="Add location"
               min="0"
             />
           </div>
-
           <div>
-            <label className="block font-semibold">Yearly Tax Rate</label>
+            <label className="block font-semibold">Images</label>
             <input
-              type="number"
-              name="taxRate"
-              value={formData.taxRate}
-              onChange={handleChange}
+              type="file"
+              name="images"
+              onChange={handleImage}
+              multiple
               className="w-full p-2 border rounded"
-              placeholder="Add property tax"
-              min="0"
+              placeholder="Add images"
             />
           </div>
-
           <button
             type="submit"
             className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
-            Next Step
+            Add
           </button>
         </form>
       </div>

@@ -4,132 +4,53 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Property;
-use Illuminate\Http\Request;
+use App\Models\PropertyImage;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
-class PropertyController extends Controller
+class PropertiesController extends Controller
 {
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'price' => 'required|numeric',
-            'location' => 'required|string',
-            'bedrooms' => 'required|integer',
-            'bathrooms' => 'required|integer',
-            'square_feet' => 'nullable|integer',
-            'property_type' => 'required|string',
-            'is_available' => 'boolean',
-            'image' => 'nullable|string', // Expecting base64 image
+            'title' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'location' => 'required',
         ]);
 
-        $imageName = null;
-        if ($request->has('image')) {
-            $imageName = $this->handleImageUpload($request->input('image'));
-        }
-
         $property = Property::create([
-            'user_id' => $request->user()->id,
             'title' => $request->title,
             'description' => $request->description,
             'price' => $request->price,
             'location' => $request->location,
-            'bedrooms' => $request->bedrooms,
-            'bathrooms' => $request->bathrooms,
-            'square_feet' => $request->square_feet,
-            'property_type' => $request->property_type,
-            'is_available' => $request->is_available ?? true,
-            'image' => $imageName,
+            'is_available' => true,
         ]);
 
-        return response()->json($property, 201);
-    }
+        $propertyImages = [];
 
-    public function index()
-    {
-        return response()->json(Property::all());
-    }
+        foreach ($request->images as $image) {
+            $imageData = explode(',', $image)[1];
+            $imageDecoded = base64_decode($imageData);
 
-    public function show($id)
-    {
-        $property = Property::find($id);
-        if (!$property) {
-            return response()->json(['error' => 'Property not found'], 404);
-        }
-        return response()->json($property);
-    }
-
-    public function update(Request $request, $id)
-
-        $property = Property::find($id);
-        if (!$property) {
-            return response()->json(['error' => 'Property not found'], 404);
-        }
-
-        $request->validate([
-            'title' => 'sometimes|string',
-            'description' => 'sometimes|string',
-            'price' => 'sometimes|numeric',
-            'location' => 'sometimes|string',
-            'bedrooms' => 'sometimes|integer',
-            'bathrooms' => 'sometimes|integer',
-            'square_feet' => 'nullable|integer',
-            'property_type' => 'sometimes|string',
-            'is_available' => 'boolean',
-            'image' => 'nullable|string',
-        ]);
-
-        // Handle Image Upload
-        if ($request->has('image')) {
-            // Delete old image before saving new one
-            if ($property->image) {
-                Storage::disk('public')->delete('property_images/' . $property->image);
+            if (!$imageDecoded) {
+                return response()->json(['error' => 'Image decoding failed'], 400);
             }
-            $property->image = $this->handleImageUpload($request->input('image'));
+
+            $imageName = time() . '_' . uniqid() . '.png';
+            Storage::disk('public')->put('images/' . $imageName, $imageDecoded);
+
+            $propertyImage = PropertyImage::create([
+                'property_id' => $property->id,
+                'image_url' => $imageName,
+            ]);
+
+            $propertyImages[] = $propertyImage;
         }
 
-        $property->update($request->except('image')); // Avoid overriding with null image
-
-        return response()->json($property);
-    }
-
-    public function destroy($id)
-    {
-        $property = Property::find($id);
-        if (!$property) {
-            return response()->json(['error' => 'Property not found'], 404);
-        }
-
-        // Delete the stored image
-        if ($property->image) {
-            Storage::disk('public')->delete('property_images/' . $property->image);
-        }
-
-        $property->delete();
-        return response()->json(['message' => 'Property deleted successfully']);
-    }
-
-    private function handleImageUpload($base64Image)
-    {
-        // Check if base64 is valid
-        if (!preg_match('/^data:image\/(\w+);base64,/', $base64Image, $matches)) {
-            return null; // Invalid base64 format
-        }
-
-        $imageExtension = $matches[1]; // Extract extension
-        $imageData = substr($base64Image, strpos($base64Image, ',') + 1); // Get actual base64 content
-
-        // Decode image
-        $image = base64_decode($imageData);
-        if (!$image) {
-            return null; // Failed decoding
-        }
-
-        // Generate a unique filename
-        $imageName = time() . '.' . $imageExtension;
-        Storage::disk('public')->put('property_images/' . $imageName, $image);
-
-        return $imageName;
+        return response()->json([
+            'property' => $property,
+            'images' => $propertyImages,
+        ]);
     }
 }

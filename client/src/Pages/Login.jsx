@@ -20,6 +20,7 @@ const Login = ({ setIsConnected }) => {
           console.log(res);
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("user", res.data.user.name);
+          localStorage.setItem("userId", res.data.user.id);
           localStorage.setItem("profilePicture", res.data.user.profile_picture);
           navigate("/");
         });
