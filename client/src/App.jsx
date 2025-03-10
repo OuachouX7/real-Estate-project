@@ -9,6 +9,7 @@ const About = lazy(() => import("./Pages/About"));
 const Contact = lazy(() => import("./Pages/Contact"));
 const Properties = lazy(() => import("./Pages/Properties"));
 const AddProperties = lazy(() => import("./Pages/addProperties"));
+const PropertyDetails = lazy(() => import("./Pages/PropertyDetails"));
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/property/:id" element={<PropertyDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/add" element={<AddProperties />} />
           <Route path="/about" element={<About />} />

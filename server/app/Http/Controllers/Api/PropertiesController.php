@@ -10,6 +10,25 @@ use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
 {
+
+    public function index()
+    {
+        $properties = Property::with('images')->get();
+
+        return response()->json($properties);
+    }
+
+    public function show($id)
+    {
+        $property = Property::with('images')->find($id);
+
+        if (!$property) {
+            return response()->json(['error' => 'Property not found'], 404);
+        }
+
+        return response()->json($property);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
