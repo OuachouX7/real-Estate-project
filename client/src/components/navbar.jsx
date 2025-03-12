@@ -5,119 +5,90 @@ import axios from "axios";
 
 const Navbar = () => {
   const [users, setUsers] = useState([]);
-
   const token = localStorage.getItem("token");
   const profilePictureFromStorage = localStorage.getItem("profilePicture");
-  const userId = localStorage.getItem("userId");
-
-  const getUsers = () => {
-    try {
-      axios
-        .get("http://localhost:8000/api/users", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          //console.log(res.data);
-          setUsers(res.data);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleLogOut = () => {
-    try {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      localStorage.removeItem("profilePicture");
-      axios
-        .post(
-          "http://localhost:8000/api/logout",
-          {
-            token: token,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-        })
-        .finally(() => {
-          window.location.reload();
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const isAdmin = users.find(
-    (user) => user.role == "admin" && user.id == userId && token
-  );
+  const userId = Number(localStorage.getItem("userId"));
 
   useEffect(() => {
-    getUsers();
-  }, []);
+    if (token) {
+      axios
+        .get("http://localhost:8000/api/users", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => setUsers(res.data))
+        .catch((err) => console.error("Error fetching users:", err));
+    }
+  }, [token]);
+
+  const handleLogOut = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8000/api/logout",
+        { token },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      localStorage.clear();
+      window.location.reload();
+    }
+  };
+
+  const isAdmin = users.some(
+    (user) => user.role === "admin" && user.id === userId
+  );
 
   return (
-    <div className="w-full flex justify-between items-center bg-white shadow-md ">
-      <div className="p-1 flex justify-center items-center">
-        <img src={logo} alt="Logo" className="w-[100px] h-[100px]" />
+    <div className="w-full flex justify-between items-center bg-white shadow-lg px-8 py-4">
+
+      <div className="flex items-center">
+        <img src={logo} alt="Logo" className="w-16 h-16 object-contain" />
       </div>
+
+      {/* Navigation Links */}
       <div>
-        <ul className="flex space-x-4 p-2 rounded-full shadow-lg bg-gray-50">
-          <Link to="/">
-            <li className="inline-block mx-2 text-gray-700 hover:text-gray-900">
-              Home
-            </li>
-          </Link>
-          <Link to="/properties">
-            <li className="inline-block mx-2 text-gray-700 hover:text-gray-900">
-              Properties
-            </li>
-          </Link>
-          <Link to="/about">
-            <li className="inline-block mx-2 text-gray-700 hover:text-gray-900">
-              About
-            </li>
-          </Link>
-          <Link to="/contact">
-            <li className="inline-block mx-2 text-gray-700 hover:text-gray-900">
-              Contact
-            </li>
-          </Link>
-          {isAdmin && (
-            <Link to="/add">
-              <li className="inline-block mx-2 text-gray-700 hover:text-gray-900">
-                add
-              </li>
-            </Link>
-          )}
+        <ul className="flex space-x-8">
+          <NavItem to="/" label="Home" />
+          <NavItem to="/properties" label="Properties" />
+          <NavItem to="/about" label="About" />
+          <NavItem to="/contact" label="Contact" />
+          {isAdmin && <NavItem to="/add" label="Add Property" />}
         </ul>
       </div>
-      <div className="flex w-[150px] h-[100px] p-1 items-center justify-around">
-        {!token && (
-          <Link to="/sign-up" className="text-gray-700 hover:text-gray-900">
-            Sign up
-          </Link>
-        )}
-        {!token && (
-          <Link to="/login" className="text-gray-700 hover:text-gray-900">
-            Login
-          </Link>
-        )}
-        {token && (
-          <div className="flex items-center justify-around">
+
+      {/* Auth & Profile */}
+      <div className="flex items-center space-x-6">
+        {!token ? (
+          <>
+            <Link
+              to="/sign-up"
+              className="bg-blue-600 text-white px-6 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+            >
+              Sign Up
+            </Link>
+            <Link
+              to="/login"
+              className="border border-blue-600 text-blue-600 px-6 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-all"
+            >
+              Login
+            </Link>
+          </>
+        ) : (
+          <div className="flex items-center space-x-4">
             <img
-              src={`http://localhost:8000/storage/images/${profilePictureFromStorage}`}
-              alt={profilePictureFromStorage}
-              className="w-8 h-8 object-cover"
+              src={
+                profilePictureFromStorage
+                  ? `http://localhost:8000/storage/images/${profilePictureFromStorage}`
+                  : "https://via.placeholder.com/40"
+              }
+              alt="Profile"
+              className="w-12 h-12 rounded-full object-cover"
             />
-            <button className="ml-1" onClick={handleLogOut}>
+            <button
+              className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
+              onClick={handleLogOut}
+            >
               Logout
             </button>
           </div>
@@ -126,5 +97,15 @@ const Navbar = () => {
     </div>
   );
 };
+
+// Reusable NavItem Component
+const NavItem = ({ to, label }) => (
+  <Link
+    to={to}
+    className="text-gray-800 font-semibold hover:text-gray-900 transition-all"
+  >
+    {label}
+  </Link>
+);
 
 export default Navbar;
