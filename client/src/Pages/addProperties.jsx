@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-import Navbar from "../Components/Navbar";
+import React, { lazy, useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
+const Navbar = lazy(() => import("../Components/Navbar"));
+const Footer = lazy(() => import("../Components/Footer"));
 
 const CreateListingForm = () => {
   const [formData, setFormData] = useState({
@@ -61,6 +62,7 @@ const CreateListingForm = () => {
 
   return (
     <>
+      <Navbar />
       <div className="max-w-4xl mx-auto p-6">
         <h2 className="text-2xl font-bold mb-4">Create A Listing</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -135,6 +137,7 @@ const CreateListingForm = () => {
           </button>
         </form>
       </div>
+      <Footer />
     </>
   );
 };

@@ -79,7 +79,6 @@ const PropertyDetails = () => {
                 <FaCar className="text-blue-500 mr-2" /> {property.garage}{" "}
                 Garage
               </span>
-              <span className="text-gray-700">{property.size} Sqft</span>
             </div>
             <h3 className="text-xl font-semibold mt-6">Details</h3>
             <div className="grid grid-cols-2 gap-4 mt-2">
@@ -88,18 +87,6 @@ const PropertyDetails = () => {
               </p>
               <p className="text-gray-700">
                 <strong>Price:</strong> ${property.price}
-              </p>
-              <p className="text-gray-700">
-                <strong>Size:</strong> {property.size} Sqft
-              </p>
-              <p className="text-gray-700">
-                <strong>Year Built:</strong> {property.year_built}
-              </p>
-              <p className="text-gray-700">
-                <strong>Category:</strong> {property.category}
-              </p>
-              <p className="text-gray-700">
-                <strong>Status:</strong> {property.status}
               </p>
             </div>
           </div>

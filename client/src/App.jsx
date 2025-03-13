@@ -8,7 +8,7 @@ const Login = lazy(() => import("./Pages/Login"));
 const About = lazy(() => import("./Pages/About"));
 const Contact = lazy(() => import("./Pages/Contact"));
 const Properties = lazy(() => import("./Pages/Properties"));
-const AddProperties = lazy(() => import("./Pages/addProperties"));
+const AddProperties = lazy(() => import("./Pages/AddProperties"));
 const PropertyDetails = lazy(() => import("./Pages/PropertyDetails"));
 
 function App() {
