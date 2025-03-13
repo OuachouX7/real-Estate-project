@@ -1,6 +1,7 @@
 import React from "react";
 import { lazy } from "react";
 const Navbar = lazy(() => import("../components/navbar"));
+const Footer = lazy(() => import("../components/footer"));
 
 const Properties = () => {
   return (
@@ -14,6 +15,7 @@ const Properties = () => {
           </p>
         </div>
       </div>
+      <Footer/>
     </>
   );
 };

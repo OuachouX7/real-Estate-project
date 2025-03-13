@@ -3,6 +3,9 @@ import Navbar from "../components/navbar";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
+
+
+
 const CreateListingForm = () => {
   const [formData, setFormData] = useState({
     title: "",
@@ -19,7 +22,7 @@ const CreateListingForm = () => {
 
   if (!token) {
     navigate("/");
-    Navigate("/");
+    return null;
   }
 
   const handleImage = (e) => {
@@ -61,7 +64,7 @@ const CreateListingForm = () => {
 
   return (
     <>
-      <Navbar />
+
 
       <div className="max-w-4xl mx-auto p-6">
         <h2 className="text-2xl font-bold mb-4">Create A Listing</h2>
@@ -137,7 +140,13 @@ const CreateListingForm = () => {
           </button>
         </form>
       </div>
+
+
+
+
+
     </>
+
   );
 };
 
