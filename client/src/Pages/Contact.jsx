@@ -1,6 +1,7 @@
 import React from "react";
 import { lazy } from "react";
-const Navbar = lazy(() => import("../components/navbar"));
+const Navbar = lazy(() => import("../Components/Navbar"));
+const Footer = lazy(() => import("../Components/Footer"));
 
 const Contact = () => {
   return (
@@ -14,6 +15,7 @@ const Contact = () => {
           </p>
         </div>
       </div>
+      <Footer />
     </>
   );
 };

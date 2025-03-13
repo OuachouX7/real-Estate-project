@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "../components/navbar";
+import Navbar from "../Components/Navbar";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
 
@@ -19,7 +19,7 @@ const CreateListingForm = () => {
 
   if (!token) {
     navigate("/");
-    Navigate("/");
+    return null;
   }
 
   const handleImage = (e) => {
@@ -61,8 +61,6 @@ const CreateListingForm = () => {
 
   return (
     <>
-      <Navbar />
-
       <div className="max-w-4xl mx-auto p-6">
         <h2 className="text-2xl font-bold mb-4">Create A Listing</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
