@@ -44,8 +44,6 @@ const Navbar = () => {
       <div className="flex items-center">
         <img src={logo} alt="Logo" className="w-16 h-16 object-contain" />
       </div>
-
-      {/* Navigation Links */}
       <div>
         <ul className="flex space-x-8">
           <NavItem to="/" label="Home" />
@@ -55,8 +53,6 @@ const Navbar = () => {
           {isAdmin && <NavItem to="/add" label="Add Property" />}
         </ul>
       </div>
-
-      {/* Auth & Profile */}
       <div className="flex items-center space-x-6">
         {!token ? (
           <>
@@ -96,8 +92,6 @@ const Navbar = () => {
     </div>
   );
 };
-
-// Reusable NavItem Component
 const NavItem = ({ to, label }) => (
   <Link
     to={to}

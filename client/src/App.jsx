@@ -10,6 +10,7 @@ const Contact = lazy(() => import("./Pages/Contact"));
 const Properties = lazy(() => import("./Pages/Properties"));
 const AddProperties = lazy(() => import("./Pages/AddProperties"));
 const PropertyDetails = lazy(() => import("./Pages/PropertyDetails"));
+const Chat = lazy(() => import("./Pages/Chat"));
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/properties" element={<Properties />} />
+          <Route path="/chat/:id" element={<Chat />} />
         </Routes>
       </Suspense>
     </BrowserRouter>

@@ -1,0 +1,48 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use App\Models\Favorite;
+
+class FavoriteController extends Controller
+{
+
+    public function index()
+    {
+        $favorites = Favorite::all();
+        return response()->json($favorites);
+    }
+
+    public function addFavorite(Request $request)
+    {
+        $request->validate([
+            'user_id' => 'required',
+            'property_id' => 'required'
+        ]);
+
+        $favoriteExist = Favorite::where('user_id', $request->user_id)->where('property_id', $request->property_id)->first();
+
+        if (!$favoriteExist) {
+            $favorite = Favorite::create([
+                'user_id' => $request->user_id,
+                'property_id' => $request->property_id
+            ]);
+            if (!$favorite) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Favorite not added'
+                ]);
+            }
+            
+            return response()->json($favorite);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Favorite already exist'
+        ]);
+
+    }
+}

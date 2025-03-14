@@ -16,6 +16,7 @@ const Home = () => {
     try {
       axios.get("http://localhost:8000/api/properties").then((res) => {
         setProperties(res.data);
+        console.log(res.data);
       });
     } catch (error) {
       console.log(error);

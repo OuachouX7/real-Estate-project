@@ -15,6 +15,11 @@ class UsersController extends Controller
         return response()->json(User::all());
     }
 
+    public function getUserById($id)
+    {
+        return response()->json(User::findorFail($id));
+    }
+
     public function register(Request $request)
     {
         $request->validate([

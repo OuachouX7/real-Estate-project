@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Footer = lazy(() => import("../Components/Footer"));
 
 const PropertyDetails = () => {
@@ -10,6 +12,10 @@ const PropertyDetails = () => {
   const [property, setProperty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProperty = async () => {
@@ -32,6 +38,32 @@ const PropertyDetails = () => {
     fetchProperty();
   }, [id]);
 
+  const handleFavorite = (id) => {
+    if (!token) {
+      navigate("/login");
+    }
+    try {
+      axios
+        .post(
+          "http://localhost:8000/api/addFavorite",
+          {
+            user_id: userId,
+            property_id: id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   console.log(property);
 
   if (loading)
@@ -43,7 +75,15 @@ const PropertyDetails = () => {
     <>
       <Navbar />
       <div className="max-w-6xl mx-auto p-6">
-        <h1 className="text-4xl font-bold text-gray-800">{property.title}</h1>
+        <div className="flex w-full justify-between items-center">
+          <h1 className="text-4xl font-bold text-gray-800">{property.title}</h1>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            onClick={() => handleFavorite(property.id)}
+          >
+            Add to Favorites
+          </button>
+        </div>
         <p className="text-gray-600 flex items-center mt-2">
           <FaMapMarkerAlt className="text-blue-500 mr-2" /> {property.location}
         </p>
@@ -65,6 +105,7 @@ const PropertyDetails = () => {
               Description
             </h2>
             <p className="text-gray-600">{property.description}</p>
+            <button className="bg-blue-500 text-white px-8 py-2 rounded-md hover:bg-blue-600 mt-4" onClick={() => navigate(`/chat/${"9e36109f-9563-4d05-95e2-c9f1a92e78t9"}`)}>Chat</button>
             <h3 className="text-xl font-semibold mt-6">Overview</h3>
             <div className="flex items-center space-x-6 mt-2">
               <span className="flex items-center text-gray-700">
