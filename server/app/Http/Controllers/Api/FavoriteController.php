@@ -11,10 +11,21 @@ use App\Models\PropertyImage;
 class FavoriteController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $favorites = Favorite::all();
-        return response()->json($favorites);
+        $favorites = Favorite::where('user_id', $request->user_id)->first();
+        $favoriteProperty = Property::where('id', $favorites->property_id)->get();
+        $favoriteImages = PropertyImage::where('property_id', $favorites->property_id)->get();
+        if (!$favorites) {
+            return response()->json([
+                'message' => 'No favorites found'
+            ]);
+        }
+        return response()->json([
+            'favorites' => $favorites,
+            'favoriteProperty' => $favoriteProperty,
+            'favoriteImages' => $favoriteImages
+        ]);
     }
 
     public function addFavorite(Request $request)
@@ -41,6 +52,7 @@ class FavoriteController extends Controller
 
             $favoriteProperty = Property::where('id', $request->property_id)->first();
             $favoriteImages = PropertyImage::where('property_id', $request->property_id)->get();
+
             return response()->json([
                 'property' => $favoriteProperty,
                 'favorite' => $favorite,
@@ -50,7 +62,6 @@ class FavoriteController extends Controller
 
 
         return response()->json([
-            'success' => false,
             'message' => 'Favorite already exist'
         ]);
     }
