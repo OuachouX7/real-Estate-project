@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function sendMessage(Request $request){
+    public function sendMessage(Request $request)
+    {
         $request->validate([
             'sender_id' => 'required',
             'receiver_id' => 'required',
@@ -25,17 +26,18 @@ class MessageController extends Controller
             'data' => $newMsg
         ]);
     }
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $request->validate([
             'user_ids' => 'required|array',
         ]);
 
         $userIds = $request->input('user_ids');
-    
+
         $messages = Message::whereIn('sender_id', $userIds)
-        ->whereIn('receiver_id', $userIds)
-        ->get();
+            ->whereIn('receiver_id', $userIds)
+            ->get();
 
         return response()->json($messages);
-    } 
+    }
 }
