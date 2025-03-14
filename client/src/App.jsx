@@ -11,6 +11,7 @@ const Properties = lazy(() => import("./Pages/Properties"));
 const AddProperties = lazy(() => import("./Pages/AddProperties"));
 const PropertyDetails = lazy(() => import("./Pages/PropertyDetails"));
 const Chat = lazy(() => import("./Pages/Chat"));
+const Wishlist = lazy(() => import("./components/Wishlist"));
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/properties" element={<Properties />} />
           <Route path="/chat/:id" element={<Chat />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Routes>
       </Suspense>
     </BrowserRouter>
