@@ -1,6 +1,6 @@
 import { useEffect, useState, lazy } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../Components/Navbar";
+import Navbar from "../components/Navbar";
 import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";

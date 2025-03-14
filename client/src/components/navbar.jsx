@@ -50,7 +50,9 @@ const Navbar = () => {
           <NavItem to="/properties" label="Properties" />
           <NavItem to="/about" label="About" />
           <NavItem to="/contact" label="Contact" />
+
           {isAdmin && <NavItem to="/add" label="Add Property" />}
+          {!isAdmin && <NavItem to="/wishlist" label="Wishlist" />}
         </ul>
       </div>
       <div className="flex items-center space-x-6">
