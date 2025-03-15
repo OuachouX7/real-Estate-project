@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Favorite;
+use App\Models\Property;
+use App\Models\PropertyImage;
 
 class FavoriteController extends Controller
 {
@@ -29,20 +31,27 @@ class FavoriteController extends Controller
                 'user_id' => $request->user_id,
                 'property_id' => $request->property_id
             ]);
+
             if (!$favorite) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Favorite not added'
                 ]);
             }
-            
-            return response()->json($favorite);
+
+            $favoriteProperty = Property::where('id', $request->property_id)->first();
+            $favoriteImages = PropertyImage::where('property_id', $request->property_id)->get();
+
+            return response()->json([
+                'property' => $favoriteProperty,
+                'favorite' => $favorite,
+                'favoriteImages' => $favoriteImages
+            ]);
         }
 
+
         return response()->json([
-            'success' => false,
             'message' => 'Favorite already exist'
         ]);
-
     }
 }
