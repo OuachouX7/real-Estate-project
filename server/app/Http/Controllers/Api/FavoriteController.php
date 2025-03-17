@@ -66,4 +66,18 @@ class FavoriteController extends Controller
             'message' => 'Favorite already exist'
         ]);
     }
+    public function deleteFavorite($id)
+    {
+        $favorite = Favorite::findorfail($id);
+        if (!$favorite) {
+            return response()->json([
+                'message' => 'Favorite not found'
+            ]);
+        }
+        $favorite->delete();
+        return response()->json([
+            'message' => 'Favorite deleted',
+            'favorite' => $favorite
+        ]);
+    }
 }
