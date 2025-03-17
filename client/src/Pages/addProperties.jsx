@@ -1,8 +1,8 @@
 import React, { lazy, useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-const Navbar = lazy(() => import("./Components/Navbar"));
-const Footer = lazy(() => import("./Components/Footer"));
+const Navbar = lazy(() => import("../Components/Navbar"));
+const Footer = lazy(() => import("../Components/Footer"));
 
 const CreateListingForm = () => {
   const [formData, setFormData] = useState({
