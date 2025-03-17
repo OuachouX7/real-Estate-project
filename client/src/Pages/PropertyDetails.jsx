@@ -1,6 +1,6 @@
 import { useEffect, useState, lazy } from "react";
 import { useParams } from "react-router-dom";
-import Navbar from "../components/Navbar";
+import Navbar from "../Components/Navbar";
 import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -105,7 +105,14 @@ const PropertyDetails = () => {
               Description
             </h2>
             <p className="text-gray-600">{property.description}</p>
-            <button className="bg-blue-500 text-white px-8 py-2 rounded-md hover:bg-blue-600 mt-4" onClick={() => navigate(`/chat/${"9e36109f-9563-4d05-95e2-c9f1a92e78t9"}`)}>Chat</button>
+            <button
+              className="bg-blue-500 text-white px-8 py-2 rounded-md hover:bg-blue-600 mt-4"
+              onClick={() =>
+                navigate(`/chat/${"9e36109f-9563-4d05-95e2-c9f1a92e78t9"}`)
+              }
+            >
+              Chat
+            </button>
             <h3 className="text-xl font-semibold mt-6">Overview</h3>
             <div className="flex items-center space-x-6 mt-2">
               <span className="flex items-center text-gray-700">

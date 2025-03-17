@@ -13,9 +13,12 @@ class FavoriteController extends Controller
 
     public function index(Request $request)
     {
-        $favorites = Favorite::where('user_id', $request->user_id)->first();
-        $favoriteProperty = Property::where('id', $favorites->property_id)->get();
-        $favoriteImages = PropertyImage::where('property_id', $favorites->property_id)->get();
+        $request->validate([
+            'user_id' => 'required'
+        ]);
+        $favorites = Favorite::where('user_id', $request->user_id)
+            ->with(['property', 'property.images'])
+            ->get();
         if (!$favorites) {
             return response()->json([
                 'message' => 'No favorites found'
@@ -23,8 +26,6 @@ class FavoriteController extends Controller
         }
         return response()->json([
             'favorites' => $favorites,
-            'favoriteProperty' => $favoriteProperty,
-            'favoriteImages' => $favoriteImages
         ]);
     }
 
