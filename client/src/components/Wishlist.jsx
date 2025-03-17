@@ -37,7 +37,7 @@ const Wishlist = () => {
 
   const deleteFavorite = (id) => {
     axios
-      .delete(`http://localhost:8000/api/favorites/${id}`, {
+      .delete(`http://localhost:8000/api/deleteFavorite/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
