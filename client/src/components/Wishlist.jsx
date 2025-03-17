@@ -1,8 +1,8 @@
 import React, { lazy, useState, useEffect } from "react";
 import axios from "axios";
 
-const Navbar = lazy(() => import("../components/Navbar"));
-const Footer = lazy(() => import("../components/Footer"));
+const Navbar = lazy(() => import("../Components/Navbar"));
+const Footer = lazy(() => import("../Components/Footer"));
 
 const Wishlist = () => {
   const [wishList, setWishList] = useState([]);
