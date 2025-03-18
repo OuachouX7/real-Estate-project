@@ -10,6 +10,8 @@ const Footer = lazy(() => import("../Components/Footer"));
 const Users = () => {
   const [users, setUsers] = useState([]);
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
 
   const getUser = () => {
     try {
@@ -46,7 +48,7 @@ const Users = () => {
           <>
             <div key={user.id}></div>
             <p>{user.name}</p>
-            <button>Chat</button>
+            <button onClick={() => navigate(`/chat/${user.id}`)}>Chat</button>
           </>
         ))}
         
