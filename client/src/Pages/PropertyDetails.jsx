@@ -1,5 +1,5 @@
 import { useEffect, useState, lazy } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -64,6 +64,18 @@ const PropertyDetails = () => {
     }
   };
 
+  const handleChat = () => {
+    if (!token) {
+      navigate("/login");
+      Navigate("/login");
+    }
+    try {
+      navigate(`/chat/${"9e36109f-9563-4d05-95e2-c9f1a92e78t9"}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   console.log(property);
 
   if (loading)
@@ -107,9 +119,7 @@ const PropertyDetails = () => {
             <p className="text-gray-600">{property.description}</p>
             <button
               className="bg-blue-500 text-white px-8 py-2 rounded-md hover:bg-blue-600 mt-4"
-              onClick={() =>
-                navigate(`/chat/${"9e36109f-9563-4d05-95e2-c9f1a92e78t9"}`)
-              }
+              onClick={handleChat}
             >
               Chat
             </button>
