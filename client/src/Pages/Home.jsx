@@ -15,7 +15,7 @@ const Home = () => {
   const getProperties = () => {
     try {
       axios.get("http://localhost:8000/api/properties").then((res) => {
-        setProperties(res.data);
+        setProperties(res.data.data);
         console.log(res.data);
       });
     } catch (error) {
@@ -36,7 +36,7 @@ const Home = () => {
         <div className="mb-10">
           <div className="flex justify-between items-center">
             <h2 className="text-3xl font-bold">Listings</h2>
-            <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100">
+            <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100" onClick={() => navigate("/properties")}>
               View All
             </button>
           </div>
@@ -49,6 +49,8 @@ const Home = () => {
               >
                 <img
                   src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
+                  alt={listing.title}
+                  className="w-full h-40 object-contain mb-2"
                 />
 
                 <h3 className="text-lg font-semibold">{listing.title}</h3>
