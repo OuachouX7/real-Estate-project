@@ -5,7 +5,7 @@ import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Footer = lazy(() => import("../Components/Footer"));
-const Navbar = lazy(() => import("../Components/Navbar"));
+const Navbar = lazy(() => import("../components/Navbar"));
 
 const PropertyDetails = () => {
   const { id } = useParams();
