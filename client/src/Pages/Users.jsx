@@ -40,19 +40,29 @@ const Users = () => {
     <>
       <Navbar />
       <SearchBar />
-      <div>
-        {Users.map((user) => (
-          <>
-            <div key={user.id}></div>
-            <p>{user.name}</p>
-            <img
-              className="w-10 h-10 rounded-full"
-              src={`http://localhost:8000/storage/images/${user.profile_picture}`}
-              alt={user.name}
-            />
-            <button onClick={() => navigate(`/chat/${user.id}`)}>Chat</button>
-          </>
-        ))}
+      <div className="max-w-6xl mx-auto p-6">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Users</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {Users.map((user) => (
+            <div
+              key={user.id}
+              className="border p-4 rounded-lg shadow-lg flex flex-col items-center bg-white"
+            >
+              <img
+                className="w-24 h-24 rounded-full mb-4"
+                src={`http://localhost:8000/storage/images/${user.profile_picture}`}
+                alt={user.name}
+              />
+              <p className="text-lg font-semibold mb-2">{user.name}</p>
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+                onClick={() => navigate(`/chat/${user.id}`)}
+              >
+                Chat
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
       <Footer />
     </>
