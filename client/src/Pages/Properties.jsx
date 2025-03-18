@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { lazy } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const Navbar = lazy(() => import("../components/Navbar"));
+const Navbar = lazy(() => import("../Components/Navbar"));
 const Footer = lazy(() => import("../Components/Footer"));
 
 const Properties = () => {
@@ -14,7 +14,9 @@ const Properties = () => {
 
   const getProperties = async (page) => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/properties?page=${page}`);
+      const res = await axios.get(
+        `http://localhost:8000/api/properties?page=${page}`
+      );
       setProperties(res.data.data);
       setCurrentPage(res.data.current_page);
       setTotalPages(res.data.last_page);

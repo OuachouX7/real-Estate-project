@@ -59,8 +59,10 @@ const Wishlist = () => {
     getFavorite();
   }, []);
 
-  if (loading) return <p className="text-center text-gray-500 mt-10">Loading...</p>;
-  if (error) return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
+  if (loading)
+    return <p className="text-center text-gray-500 mt-10">Loading...</p>;
+  if (error)
+    return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
 
   return (
     <>
@@ -72,12 +74,17 @@ const Wishlist = () => {
         ) : (
           <ul className="space-y-4">
             {wishList.map((w) => (
-              <li key={w.id} className="border p-4 rounded-lg shadow flex flex-col">
-                <h2 className="text-lg font-semibold">{w.property.title}</h2>
-                <p className="text-gray-600">{w.property.location}</p>
-                <p className="text-gray-600">${w.property.price}</p>
-                <p className="text-gray-600">{w.property.description}</p>
-                <div className="grid grid-cols-3 gap-4 mt-4">
+              <li
+                key={w.id}
+                className="border p-4 rounded-lg shadow-lg flex flex-col bg-white"
+              >
+                <h2 className="text-xl font-semibold mb-2">
+                  {w.property.title}
+                </h2>
+                <p className="text-gray-600 mb-2">{w.property.location}</p>
+                <p className="text-gray-600 mb-2">${w.property.price}</p>
+                <p className="text-gray-600 mb-4">{w.property.description}</p>
+                <div className="grid grid-cols-3 gap-4 mb-4">
                   {w.property.images.map((img, index) => (
                     <img
                       key={index}
@@ -87,12 +94,12 @@ const Wishlist = () => {
                     />
                   ))}
                 </div>
-                <div className="flex space-x-4 mt-4">
+                <div className="flex space-x-4">
                   <button
                     className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                     onClick={() => viewDetails(w.property.id)}
                   >
-                    Afficher Details
+                    View Details
                   </button>
                   <button
                     className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"

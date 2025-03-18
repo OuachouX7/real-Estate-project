@@ -78,7 +78,7 @@ function Chat() {
       <div className="flex flex-col flex-shrink-0 bg-white h-[10%]">
         <div className="flex flex-col border-b overflow-y-auto">
           <div className="flex items-center  py-2 hover:bg-gray-100 cursor-pointer">
-            <Link to="/home">
+            <Link to="/">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

@@ -2,7 +2,7 @@ import { lazy } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-const Navbar = lazy(() => import("../components/Navbar"));
+const Navbar = lazy(() => import("../Components/Navbar"));
 const SearchBar = lazy(() => import("../Components/SearchBar"));
 const Footer = lazy(() => import("../Components/Footer"));
 
@@ -36,7 +36,10 @@ const Home = () => {
         <div className="mb-10">
           <div className="flex justify-between items-center">
             <h2 className="text-3xl font-bold">Listings</h2>
-            <button className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100" onClick={() => navigate("/properties")}>
+            <button
+              className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
+              onClick={() => navigate("/properties")}
+            >
               View All
             </button>
           </div>
