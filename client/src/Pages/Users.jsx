@@ -3,9 +3,9 @@ import { lazy } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const Navbar = lazy(() => import("../Components/Navbar"));
-const SearchBar = lazy(() => import("../Components/SearchBar"));
-const Footer = lazy(() => import("../Components/Footer"));
+const Navbar = lazy(() => import("../components/Navbar"));
+const SearchBar = lazy(() => import("../components/SearchBar"));
+const Footer = lazy(() => import("../components/Footer"));
 
 const Users = () => {
   const [users, setUsers] = useState([]);

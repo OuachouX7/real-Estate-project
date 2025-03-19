@@ -4,8 +4,9 @@ import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const Footer = lazy(() => import("../Components/Footer"));
-const Navbar = lazy(() => import("../Components/Navbar"));
+const Footer = lazy(() => import("../components/Footer"));
+const Navbar = lazy(() => import("../components/Navbar"));
+const LocationMap = lazy(() => import("../components/LocationMap"));
 
 const PropertyDetails = () => {
   const { id } = useParams();
@@ -98,6 +99,7 @@ const PropertyDetails = () => {
         </div>
         <p className="text-gray-600 flex items-center mt-2">
           <FaMapMarkerAlt className="text-blue-500 mr-2" /> {property.location}
+
         </p>
         <div className="mt-6">
           <div className="grid grid-cols-3 gap-4 mt-4">
@@ -146,9 +148,11 @@ const PropertyDetails = () => {
               <p className="text-gray-700">
                 <strong>Price:</strong> ${property.price}
               </p>
+
             </div>
+            <LocationMap location={property.location} />
           </div>
-          <div className="bg-white shadow-lg p-6 rounded-lg border border-gray-200">
+
             <div className="flex items-center justify-between">
               <p className="text-2xl font-semibold text-gray-900">
                 ${property.price} / Night
@@ -161,40 +165,11 @@ const PropertyDetails = () => {
                 </span>
               </div>
             </div>
-            <form className="mt-4">
-              <label className="block text-gray-700 font-medium">Name</label>
-              <input
-                type="text"
-                placeholder="Your Full Name"
-                className="w-full p-2 border rounded mt-1"
-              />
-
-              <label className="block text-gray-700 font-medium mt-3">
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder="Your Email"
-                className="w-full p-2 border rounded mt-1"
-              />
-
-              <label className="block text-gray-700 font-medium mt-3">
-                Date
-              </label>
-              <input type="date" className="w-full p-2 border rounded mt-1" />
-
-              <button
-                type="submit"
-                className="w-full bg-orange-500 text-white px-4 py-2 rounded mt-4 hover:bg-orange-600 transition"
-              >
-                Reserve
-              </button>
-            </form>
 
             <p className="text-gray-500 text-sm mt-3">
               Certain reservations may also require a security deposit.
             </p>
-          </div>
+          
         </div>
       </div>
       <Footer />
