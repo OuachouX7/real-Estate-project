@@ -43,7 +43,8 @@ const Wishlist = () => {
         },
       })
       .then(() => {
-        setWishList(wishList.filter((item) => item.id !== id));
+        getFavorite();
+
       })
       .catch((error) => {
         console.error("Error deleting favorite:", error);

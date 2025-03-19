@@ -7,9 +7,11 @@ const Footer = lazy(() => import("../components/Footer"));
 
 const Properties = () => {
   const [properties, setProperties] = useState([]);
+  const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 
   const navigate = useNavigate();
 
@@ -31,6 +33,21 @@ const Properties = () => {
     getProperties(currentPage);
   }, [currentPage]);
 
+
+  useEffect(() => {
+    if (token) {
+      axios
+        .get("http://localhost:8000/api/users", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setUsers(res.data.data);
+        })
+        .catch((err) => console.error("Error fetching users:", err));
+    }
+  }, [token]);
+
+
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -49,13 +66,19 @@ const Properties = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
+      }).then(()=>{
+        getProperties(currentPage);
+      }
+      );
 
     } catch (error) {
       console.log(error);
       
     }
   }
+  const isAdmin = users.find(
+    (user) => user.role == "admin" && user.id == userId
+  );
 
   return (
     <>
@@ -79,9 +102,10 @@ const Properties = () => {
             </div>
 
           </div>
+          {isAdmin && (<button className="px-4 py-2 mt-2 bg-red-500 text-white rounded-lg hover:bg-red-600" onClick={()=>handleDelete(listing.id) } >Delete</button>)}
         
           
-                      <button className="px-4 py-2 mt-2 bg-red-500 text-white rounded-lg hover:bg-red-600" onClick={()=>handleDelete(listing.id) } >Delete</button>
+
                     </>
         ))}
       </div>
