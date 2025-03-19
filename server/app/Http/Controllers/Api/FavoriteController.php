@@ -74,10 +74,18 @@ class FavoriteController extends Controller
                 'message' => 'Favorite not found'
             ]);
         }
+        //$favorite->delete();
+        $favoriteImages = PropertyImage::where('property_id', $favorite->id)->get();
+        foreach ($favoriteImages as $image) {
+            $image->delete();
+        }
         $favorite->delete();
+
         return response()->json([
             'message' => 'Favorite deleted',
-            'favorite' => $favorite
+            'favorite' => $favorite,
+            'favoriteImages' => $favoriteImages,
+
         ]);
     }
 }
