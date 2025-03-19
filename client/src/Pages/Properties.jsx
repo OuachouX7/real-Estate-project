@@ -80,58 +80,60 @@ const Properties = () => {
   return (
     <>
       <Navbar />
-      <div className="grid grid-cols-4 gap-4 mt-4 p-3">
-        {properties.map((listing, index) => (
-          <>
+      <div className="max-w-6xl mx-auto p-6">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">Properties</h1>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {properties.map((listing, index) => (
             <div
               key={index}
-              className="p-4 border rounded-lg shadow-sm"
-              onClick={() => navigate(`/property/${listing.id}`)}
+              className="bg-white border rounded-lg shadow-lg overflow-hidden"
             >
               <img
                 src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
                 alt={listing.title}
-                className="w-full h-48 object-contain mb-2"
+                className="w-full h-48 object-cover"
+                onClick={() => navigate(`/property/${listing.id}`)}
               />
-              <h3 className="text-lg font-semibold">{listing.title}</h3>
-              <div className="flex items-center text-gray-600 text-sm">
-                <span className="mr-1">📍</span> {listing.location}
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <span className="text-xl font-bold">{listing.price}</span>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold mb-2">{listing.title}</h3>
+                <div className="flex items-center text-gray-600 text-sm mb-2">
+                  <span className="mr-1">📍</span> {listing.location}
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-xl font-bold">{listing.price}</span>
+                  {isAdmin && (
+                    <button
+                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                      onClick={() => handleDelete(listing.id)}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
-            {isAdmin && (
-              <button
-                className="px-4 py-2 mt-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                onClick={() => handleDelete(listing.id)}
-              >
-                Delete
-              </button>
-            )}
-          </>
-        ))}
+          ))}
+        </div>
+        <div className="flex justify-between items-center mt-6">
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <span className="text-gray-700">
+            Page {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
       </div>
-      <div className="flex justify-end items-center mt-4 p-3 w-[100%]">
-        <button
-          onClick={handlePreviousPage}
-          disabled={currentPage === 1}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
-        >
-          Previous
-        </button>
-        <span className="text-gray-700 px-2">
-          Page {currentPage} of {totalPages}
-        </span>
-        <button
-          onClick={handleNextPage}
-          disabled={currentPage === totalPages}
-          className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
-
       <Footer />
     </>
   );

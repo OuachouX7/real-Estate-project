@@ -10,13 +10,13 @@ const Wishlist = () => {
   const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
-  const user_id = localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
 
   const getFavorite = () => {
     axios
       .get("http://localhost:8000/api/favorites", {
         params: {
-          user_id: user_id,
+          user_id: userId,
         },
         headers: {
           Authorization: `Bearer ${token}`,
