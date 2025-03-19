@@ -52,7 +52,7 @@ const EditProperty = () => {
           }
         )
         .then((e) => {
-          console.log(e);
+          getProperty();
         });
     } catch (r) {
       console.log(r);

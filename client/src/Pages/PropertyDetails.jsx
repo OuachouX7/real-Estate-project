@@ -122,6 +122,9 @@ const PropertyDetails = () => {
               <p className="text-gray-700">
                 <strong>Price:</strong> ${property.price}
               </p>
+              <p className="text-gray-700">
+                <strong>Available</strong> {property.available ? "No" : "Yes"}
+              </p>
             </div>
             <LocationMap location={property.location} />
           </div>

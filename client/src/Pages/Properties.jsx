@@ -85,7 +85,7 @@ const Properties = () => {
                 <div className="flex justify-between items-center">
                   <span className="text-xl font-bold">{listing.price}</span>
                   {isAdmin && (
-                    <div className="flex justify-between w-[35%]">
+                    <div className="flex justify-between w-[45%]">
                       <button
                         className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
                         onClick={() => handleDelete(listing.id)}
