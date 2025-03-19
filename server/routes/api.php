@@ -21,6 +21,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/sendMessage' , [MessageController::class , 'sendMessage']);
     Route::get('/user/{id}',[UsersController::class,'getUserById']);
     Route::delete('/deleteFavorite/{id}',[FavoriteController::class,'deleteFavorite']);
+    Route::delete('/deleteProperty/{id}',[PropertiesController::class,'deleteProperty']);
 });
 
 Route::get('/properties', [PropertiesController::class, 'index']);

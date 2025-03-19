@@ -72,4 +72,19 @@ class PropertiesController extends Controller
             'images' => $propertyImages,
         ]);
     }
+    public function deleteProperty($id)
+    {
+        $property = Property::findorfail($id);
+        $favoriteImages = PropertyImage::where('property_id', $property->id)->get();
+        foreach ($favoriteImages as $image) {
+            $image->delete();
+        }
+        $property->delete();
+        return response()->json([
+            'message' => 'Property deleted',
+            'property' => $property,
+            'favoriteImages' => $favoriteImages,
+        ]);
+
+    }
 }

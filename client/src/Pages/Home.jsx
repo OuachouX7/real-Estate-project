@@ -2,9 +2,9 @@ import { lazy } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-const Navbar = lazy(() => import("../Components/Navbar"));
-const SearchBar = lazy(() => import("../Components/SearchBar"));
-const Footer = lazy(() => import("../Components/Footer"));
+const Navbar = lazy(() => import("../components/Navbar"));
+const SearchBar = lazy(() => import("../components/SearchBar"));
+const Footer = lazy(() => import("../components/Footer"));
 
 const Home = () => {
   const [properties, setProperties] = useState([]);
@@ -50,11 +50,7 @@ const Home = () => {
                 className="p-4 border rounded-lg shadow-sm"
                 onClick={() => navigate(`/property/${listing.id}`)}
               >
-                <img
-                  src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
-                  alt={listing.title}
-                  className="w-full h-40 object-contain mb-2"
-                />
+
 
                 <h3 className="text-lg font-semibold">{listing.title}</h3>
                 <div className="flex items-center text-gray-600 text-sm">
