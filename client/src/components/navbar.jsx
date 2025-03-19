@@ -2,49 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/Property.png";
 import axios from "axios";
-
 const Navbar = () => {
-  const [users, setUsers] = useState([]);
-  const token = localStorage.getItem("token");
-  const profilePictureFromStorage = localStorage.getItem("profilePicture");
-  const userId = localStorage.getItem("userId");
-
-  useEffect(() => {
-    try {
-      if (token) {
-        axios
-          .get("http://localhost:8000/api/users", {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((res) => {
-            setUsers(res.data.data);
-          })
-          .catch((err) => console.error("Error fetching users:", err));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [token]);
-
-  const handleLogOut = async () => {
-    try {
-      await axios.post(
-        "http://localhost:8000/api/logout",
-        { token },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-    } catch (error) {
-      console.error("Logout error:", error);
-    } finally {
-      localStorage.clear();
-      window.location.reload();
-    }
-  };
-
-  const isAdmin = users.find(
-    (user) => user.role == "admin" && user.id == userId
-  );
-
+  const[users,setUsers]=useState([]),token=localStorage.getItem("token"),profilePictureFromStorage=localStorage.getItem("profilePicture"),userId=localStorage.getItem("userId");useEffect(()=>{try{token&&axios.get("http://localhost:8000/api/users",{headers:{Authorization:`Bearer ${token}`}}).then(e=>{setUsers(e.data.data)}).catch(e=>console.error("Error fetching users:",e))}catch(e){console.log(e)}},[token]);const handleLogOut=async()=>{try{await axios.post("http://localhost:8000/api/logout",{token},{headers:{Authorization:`Bearer ${token}`}})}catch(e){console.error("Logout error:",e)}finally{localStorage.clear(),window.location.reload()}},isAdmin=users.find(e=>"admin"==e.role&&e.id==userId);
   return (
     <div className="w-full flex justify-between items-center bg-white shadow-lg px-8 py-4">
       <div className="flex items-center">

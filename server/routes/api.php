@@ -22,6 +22,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/user/{id}',[UsersController::class,'getUserById']);
     Route::delete('/deleteFavorite/{id}',[FavoriteController::class,'deleteFavorite']);
     Route::delete('/deleteProperty/{id}',[PropertiesController::class,'deleteProperty']);
+    Route::put('/properties/{id}',[PropertiesController::class,'updateProperty']);
 });
 
 Route::get('/properties', [PropertiesController::class, 'index']);

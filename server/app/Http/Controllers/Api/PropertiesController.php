@@ -87,4 +87,24 @@ class PropertiesController extends Controller
         ]);
 
     }
+    public function updateProperty(Request $request, $id){
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'location' => 'required',
+            'is_available' => 'required',
+        ]);
+        $property = Property::findorfail($id);
+        $property->update([
+          'title' => $request->title,
+          'description' => $request->description,
+          'price' => $request->price,
+          'location' => $request->location,
+          'is_available' => $request->is_available
+        ]);
+        return response()->json([
+            'property' => $property,
+        ]);
+    }
 }

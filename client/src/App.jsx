@@ -2,6 +2,7 @@ import { lazy } from "react";
 import { motion } from "framer-motion";
 import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+const EditProperty = lazy(() => import("./Pages/EditProperty"))
 const Home = lazy(() => import("./Pages/Home"));
 const SignUp = lazy(() => import("./Pages/SignUp"));
 const Login = lazy(() => import("./Pages/Login"));
@@ -37,6 +38,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/edit/:id" element={<EditProperty />} />
           <Route path="/property/:id" element={<PropertyDetails />} />
           <Route path="/login" element={<Login />} />
           <Route path="/add" element={<AddProperties />} />
@@ -51,5 +53,4 @@ function App() {
     </BrowserRouter>
   );
 }
-
 export default App;

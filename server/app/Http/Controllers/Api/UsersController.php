@@ -36,18 +36,30 @@ class UsersController extends Controller
         }
 
         $imageData = explode(',', $base64Image)[1];
-
         $image = base64_decode($imageData);
 
         if (!$image) {
             return response()->json(['error' => 'Image decoding failed'], 400);
         }
 
-        $imageName = time() . '.webp';
-        Storage::disk('public')->put('images/' . $imageName, $image);
+        $imageResource = imagecreatefromstring($image);
 
-        if (!Storage::disk('public')->exists('images/' . $imageName)) {
-            return response()->json(['error' => 'Failed to save image'], 500);
+        if (!$imageResource) {
+            return response()->json(['error' => 'Failed to create image from string'], 400);
+        }
+
+        $imageName = time() . '.webp';
+        $path = storage_path('app/public/images/' . $imageName);
+
+        $compressionQuality = 80;
+        if (!imagewebp($imageResource, $path, $compressionQuality)) {
+            return response()->json(['error' => 'Failed to save the image'], 500);
+        }
+
+        imagedestroy($imageResource);
+
+        if (!file_exists($path)) {
+            return response()->json(['error' => 'Image was not saved properly'], 500);
         }
 
         $user = User::create([

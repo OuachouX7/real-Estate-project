@@ -3,27 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 const LocationMap = ({ location }) => {
-  const [position, setPosition] = useState([31.7917, -7.0926]);
-
-  useEffect(() => {
-    try {
-      if (location) {
-        fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&q=${location}`
-        )
-          .then((response) => response.json())
-          .then((data) => {
-            if (data.length > 0) {
-              setPosition([parseFloat(data[0].lat), parseFloat(data[0].lon)]);
-            }
-          })
-          .catch((error) => console.error("Error fetching location:", error));
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }, [location]);
-
+  const[position,setPosition]=useState([31.7917,-7.0926]);useEffect(()=>{try{location&&fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`).then(t=>t.json()).then(t=>{t.length>0&&setPosition([parseFloat(t[0].lat),parseFloat(t[0].lon)])}).catch(t=>console.error("Error fetching location:",t))}catch(t){console.log(t)}},[location]);
   return (
     <>
       {position && (

@@ -1,12 +1,8 @@
 import { useState } from "react";
 import React from "react";
 import { MapPin } from "lucide-react";
-
 export default function SearchBar() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [location, setLocation] = useState("Agadir");
-  const [transactionType, setTransactionType] = useState("buy");
-
+  const [searchTerm, setSearchTerm] = useState("");const [location, setLocation] = useState("Agadir");const [transactionType, setTransactionType] = useState("buy");
   return (
     <div className="flex items-center justify-between p-3 border border-gray-300 rounded-md w-full gap-2 shadow-sm">
       <div className="flex gap-2">

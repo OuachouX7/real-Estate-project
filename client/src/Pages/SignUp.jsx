@@ -4,46 +4,41 @@ import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [signUp, setSignUp] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    password: "",
-    profile_picture: "",
-  });
-  const [base64Image, setBase64Image] = useState("");
-
-  const handleImageInput = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setBase64Image(reader.result);
-      setSignUp({ ...signUp, profile_picture: reader.result });
-    };
-  };
-
-  const navigate = useNavigate();
-
-  const handleSignup = (e) => {
-    e.preventDefault();
-    try {
-      axios
-        .post("http://127.0.0.1:8000/api/register", {
-          name: signUp.name,
-          email: signUp.email,
-          phone: signUp.phone,
-          password: signUp.password,
-          profile_picture: signUp.profile_picture,
-        })
-        .then((res) => {
-          console.log(res);
-          navigate("/");
+      name: "",
+      phone: "",
+      email: "",
+      password: "",
+      profile_picture: "",
+    }),
+    [base64Image, setBase64Image] = useState(""),
+    handleImageInput = (e) => {
+      let a = e.target.files[0],
+        p = new FileReader();
+      p.readAsDataURL(a),
+        (p.onloadend = () => {
+          setBase64Image(p.result),
+            setSignUp({ ...signUp, profile_picture: p.result });
         });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+    },
+    navigate = useNavigate(),
+    handleSignup = (e) => {
+      e.preventDefault();
+      try {
+        axios
+          .post("http://127.0.0.1:8000/api/register", {
+            name: signUp.name,
+            email: signUp.email,
+            phone: signUp.phone,
+            password: signUp.password,
+            profile_picture: signUp.profile_picture,
+          })
+          .then((e) => {
+            console.log(e), navigate("/");
+          });
+      } catch (a) {
+        console.log(a);
+      }
+    };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">

@@ -5,28 +5,8 @@ import { useState, useEffect } from "react";
 const Navbar = lazy(() => import("../components/Navbar"));
 const SearchBar = lazy(() => import("../components/SearchBar"));
 const Footer = lazy(() => import("../components/Footer"));
-
 const Home = () => {
-  const [properties, setProperties] = useState([]);
-  const userName = localStorage.getItem("user");
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
-
-  const getProperties = () => {
-    try {
-      axios.get("http://localhost:8000/api/properties").then((res) => {
-        setProperties(res.data.data);
-        console.log(res.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getProperties();
-  }, []);
-
+  const[properties,setProperties]=useState([]),userName=localStorage.getItem("user"),token=localStorage.getItem("token"),navigate=useNavigate(),getProperties=()=>{try{axios.get("http://localhost:8000/api/properties").then(e=>{setProperties(e.data.data),console.log(e.data)})}catch(e){console.log(e)}};useEffect(()=>{getProperties()},[]);
   return (
     <>
       <Navbar />

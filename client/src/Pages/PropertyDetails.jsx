@@ -7,83 +7,58 @@ import axios from "axios";
 const Footer = lazy(() => import("../components/Footer"));
 const Navbar = lazy(() => import("../components/Navbar"));
 const LocationMap = lazy(() => import("../components/LocationMap"));
-
 const PropertyDetails = () => {
-  const { id } = useParams();
-  const [property, setProperty] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-  const navigate = useNavigate();
-
+  const { id: t } = useParams(),
+    [property, setProperty] = useState(null),
+    [loading, setLoading] = useState(!0),
+    [error, setError] = useState(null),
+    token = localStorage.getItem("token"),
+    userId = localStorage.getItem("userId"),
+    navigate = useNavigate();
   useEffect(() => {
-    const fetchProperty = async () => {
+    let e = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8000/api/properties/${id}`
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch property details");
-        }
-        const data = await response.json();
-        setProperty(data);
-      } catch (err) {
-        setError(err.message);
+        let e = await fetch(`http://localhost:8000/api/properties/${t}`);
+        if (!e.ok) throw Error("Failed to fetch property details");
+        let o = await e.json();
+        setProperty(o);
+      } catch (a) {
+        setError(a.message);
       } finally {
-        setLoading(false);
+        setLoading(!1);
       }
     };
-
-    fetchProperty();
-  }, [id]);
-
-  const handleFavorite = (id) => {
-    if (!token) {
-      navigate("/login");
-    }
-    try {
-      axios
-        .post(
-          "http://localhost:8000/api/addFavorite",
-          {
-            user_id: userId,
-            property_id: id,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleChat = () => {
-    if (!token) {
-      navigate("/login");
-      Navigate("/login");
-    }
-    try {
-      navigate(`/chat/${"9e36109f-9563-4d05-95e2-c9f1a92e78t9"}`);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+    e();
+  }, [t]);
+  const handleFavorite = (t) => {
+      token || navigate("/login");
+      try {
+        axios
+          .post(
+            "http://localhost:8000/api/addFavorite",
+            { user_id: userId, property_id: t },
+            { headers: { Authorization: `Bearer ${token}` } }
+          )
+          .then((t) => {
+            console.log(t);
+          });
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    handleChat = () => {
+      token || (navigate("/login"), Navigate("/login"));
+      try {
+        navigate("/chat/9e36109f-9563-4d05-95e2-c9f1a92e78t9");
+      } catch (t) {
+        console.log(t);
+      }
+    };
   console.log(property);
-
   if (loading)
     return <p className="text-center text-gray-500 mt-10">Loading...</p>;
   if (error)
     return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
-
   return (
     <>
       <Navbar />
@@ -99,7 +74,6 @@ const PropertyDetails = () => {
         </div>
         <p className="text-gray-600 flex items-center mt-2">
           <FaMapMarkerAlt className="text-blue-500 mr-2" /> {property.location}
-
         </p>
         <div className="mt-6">
           <div className="grid grid-cols-3 gap-4 mt-4">
@@ -148,28 +122,26 @@ const PropertyDetails = () => {
               <p className="text-gray-700">
                 <strong>Price:</strong> ${property.price}
               </p>
-
             </div>
             <LocationMap location={property.location} />
           </div>
 
-            <div className="flex items-center justify-between">
-              <p className="text-2xl font-semibold text-gray-900">
-                ${property.price} / Night
-              </p>
-              <div className="flex items-center text-yellow-500">
-                <AiFillStar className="mr-1" />{" "}
-                <span className="font-semibold">{property.rating}</span>
-                <span className="text-gray-500 text-sm ml-1">
-                  ({property.reviews} Reviews)
-                </span>
-              </div>
-            </div>
-
-            <p className="text-gray-500 text-sm mt-3">
-              Certain reservations may also require a security deposit.
+          <div className="flex items-center justify-between">
+            <p className="text-2xl font-semibold text-gray-900">
+              ${property.price} / Night
             </p>
-          
+            <div className="flex items-center text-yellow-500">
+              <AiFillStar className="mr-1" />{" "}
+              <span className="font-semibold">{property.rating}</span>
+              <span className="text-gray-500 text-sm ml-1">
+                ({property.reviews} Reviews)
+              </span>
+            </div>
+          </div>
+
+          <p className="text-gray-500 text-sm mt-3">
+            Certain reservations may also require a security deposit.
+          </p>
         </div>
       </div>
       <Footer />

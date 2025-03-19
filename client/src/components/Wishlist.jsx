@@ -2,69 +2,12 @@ import React, { lazy, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Navbar = lazy(() => import("./Navbar"));
-
 const Wishlist = () => {
-  const [wishList, setWishList] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("userId");
-
-  const getFavorite = () => {
-    axios
-      .get("http://localhost:8000/api/favorites", {
-        params: {
-          user_id: userId,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        setWishList(res.data.favorites);
-        console.log(res.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching favorites:", error);
-        setError(error.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  const deleteFavorite = (id) => {
-    axios
-      .delete(`http://localhost:8000/api/deleteFavorite/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(() => {
-        getFavorite();
-
-      })
-      .catch((error) => {
-        console.error("Error deleting favorite:", error);
-        setError(error.message);
-      });
-  };
-
-  const viewDetails = (id) => {
-    navigate(`/property/${id}`);
-  };
-
-  useEffect(() => {
-    getFavorite();
-  }, []);
-
+  const[wishList,setWishList]=useState([]),[loading,setLoading]=useState(!0),[error,setError]=useState(null),navigate=useNavigate(),token=localStorage.getItem("token"),userId=localStorage.getItem("userId"),getFavorite=()=>{axios.get("http://localhost:8000/api/favorites",{params:{user_id:userId},headers:{Authorization:`Bearer ${token}`}}).then(e=>{setWishList(e.data.favorites),console.log(e.data)}).catch(e=>{console.error("Error fetching favorites:",e),setError(e.message)}).finally(()=>{setLoading(!1)})},deleteFavorite=e=>{axios.delete(`http://localhost:8000/api/deleteFavorite/${e}`,{headers:{Authorization:`Bearer ${token}`}}).then(()=>{getFavorite()}).catch(e=>{console.error("Error deleting favorite:",e),setError(e.message)})},viewDetails=e=>{navigate(`/property/${e}`)};useEffect(()=>{getFavorite()},[]);
   if (loading)
     return <p className="text-center text-gray-500 mt-10">Loading...</p>;
   if (error)
     return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
-
   return (
     <>
       <Navbar />

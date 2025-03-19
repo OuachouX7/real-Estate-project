@@ -5,61 +5,7 @@ const Navbar = lazy(() => import("../Components/Navbar"));
 const Footer = lazy(() => import("../Components/Footer"));
 
 const CreateListingForm = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    price: null,
-    images: [],
-    location: "",
-  });
-  const [images, setImages] = useState([]);
-  const [base64Image, setBase64Image] = useState("");
-
-  const token = localStorage.getItem("token");
-  const navigate = useNavigate();
-
-  if (!token) {
-    navigate("/");
-    return null;
-  }
-
-  const handleImage = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onloadend = () => {
-      setBase64Image(reader.result);
-      setImages([...images, reader.result]);
-    };
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    try {
-      axios
-        .post(
-          "http://localhost:8000/api/addProperty",
-          {
-            title: formData.title,
-            description: formData.description,
-            price: formData.price,
-            images: images,
-            location: formData.location,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        )
-        .then((res) => {
-          console.log(res);
-        });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  const[formData,setFormData]=useState({title:"",description:"",price:null,images:[],location:""}),[images,setImages]=useState([]),[base64Image,setBase64Image]=useState(""),token=localStorage.getItem("token"),navigate=useNavigate();token||navigate("/");const handleImage=e=>{let t=e.target.files[0],a=new FileReader;a.readAsDataURL(t),a.onloadend=()=>{setBase64Image(a.result),setImages([...images,a.result])}},handleSubmit=e=>{e.preventDefault();try{axios.post("http://localhost:8000/api/addProperty",{title:formData.title,description:formData.description,price:formData.price,images:images,location:formData.location},{headers:{Authorization:`Bearer ${token}`}}).then(e=>{console.log(e)})}catch(t){console.log(t)}};
   return (
     <>
       <Navbar />
