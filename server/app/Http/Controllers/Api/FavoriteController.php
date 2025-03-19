@@ -69,15 +69,17 @@ class FavoriteController extends Controller
     public function deleteFavorite($id)
     {
         $favorite = Favorite::findorfail($id);
+        dd($favorite);
+        $favoriteImages = PropertyImage::where('property_id', $favorite->id)->get();
         if (!$favorite) {
             return response()->json([
                 'message' => 'Favorite not found'
             ]);
         }
-        $favorite->delete();
         return response()->json([
             'message' => 'Favorite deleted',
-            'favorite' => $favorite
+            'favorite' => $favorite,
+            'favoriteImages' => $favoriteImages
         ]);
     }
 }
