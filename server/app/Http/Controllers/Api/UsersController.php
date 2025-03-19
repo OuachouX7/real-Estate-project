@@ -43,7 +43,7 @@ class UsersController extends Controller
             return response()->json(['error' => 'Image decoding failed'], 400);
         }
 
-        $imageName = time() . '.png';
+        $imageName = time() . '.webp';
         Storage::disk('public')->put('images/' . $imageName, $image);
 
         if (!Storage::disk('public')->exists('images/' . $imageName)) {

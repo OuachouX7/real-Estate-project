@@ -5,7 +5,7 @@ import axios from "axios";
 function Chat() {
   const [message, setMessage] = useState("");
   const [messages, setmessages] = useState([]);
-  const [user,setUser] = useState({});
+  const [user, setUser] = useState({});
 
   const { id } = useParams();
   const token = localStorage.getItem("token");
@@ -13,45 +13,48 @@ function Chat() {
 
   const getUserById = () => {
     try {
-        axios
-          .get(`http://localhost:8000/api/user/${id}`, {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((res) => {
-            setUser({
-              name: res.data.name,
-              email : res.data.email,
-              phone : res.data.phone
-            });
+      axios
+        .get(`http://localhost:8000/api/user/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          setUser({
+            name: res.data.name,
+            email: res.data.email,
+            phone: res.data.phone,
           });
-        
+        });
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-  }
+  };
 
   const handleMessageSubmit = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      axios
-        .post(
-          "http://localhost:8000/api/sendMessage",
-          {
-            sender_id: sender_id,
-            receiver_id: id,
-            message: message,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    try {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        axios
+          .post(
+            "http://localhost:8000/api/sendMessage",
+            {
+              sender_id: sender_id,
+              receiver_id: id,
+              message: message,
             },
-          }
-        )
-        .then(() => {
-          getMessages();
-        });
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          )
+          .then(() => {
+            getMessages();
+          });
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -118,7 +121,9 @@ function Chat() {
                 message.sender_id != sender_id && "bg-gray-100 p-2 rounded "
               }
             >
-              <p className="font-bold">{message.sender_id == sender_id ? "" : user.name}</p>
+              <p className="font-bold">
+                {message.sender_id == sender_id ? "" : user.name}
+              </p>
               <p className="text-sm">{message.message}</p>
             </div>
           </div>

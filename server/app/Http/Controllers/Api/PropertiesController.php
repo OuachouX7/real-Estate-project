@@ -56,7 +56,7 @@ class PropertiesController extends Controller
                 return response()->json(['error' => 'Image decoding failed'], 400);
             }
 
-            $imageName = time() . '_' . uniqid() . '.png';
+            $imageName = time() . '_' . uniqid() . '.webp';
             Storage::disk('public')->put('images/' . $imageName, $imageDecoded);
 
             $propertyImage = PropertyImage::create([

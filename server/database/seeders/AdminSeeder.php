@@ -20,7 +20,7 @@ class AdminSeeder extends Seeder
             'password' => 'admin123',
             'role' => 'admin',
             'phone' => '1234567890',
-            'profile_picture' => '14678999431.png',
+            'profile_picture' => '14678999431.webp',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import logo from "../assets/Property.png";
 import axios from "axios";
 
@@ -9,18 +9,20 @@ const Navbar = () => {
   const profilePictureFromStorage = localStorage.getItem("profilePicture");
   const userId = localStorage.getItem("userId");
 
-  const navigate = useNavigate();
-
   useEffect(() => {
-    if (token) {
-      axios
-        .get("http://localhost:8000/api/users", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          setUsers(res.data.data);
-        })
-        .catch((err) => console.error("Error fetching users:", err));
+    try {
+      if (token) {
+        axios
+          .get("http://localhost:8000/api/users", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((res) => {
+            setUsers(res.data.data);
+          })
+          .catch((err) => console.error("Error fetching users:", err));
+      }
+    } catch (error) {
+      console.log(error);
     }
   }, [token]);
 
