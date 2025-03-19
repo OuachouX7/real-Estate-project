@@ -7,8 +7,11 @@ const Footer = lazy(() => import("../components/Footer"));
 
 const Properties = () => {
   const [properties, setProperties] = useState([]);
+  const [users, setUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
 
   const navigate = useNavigate();
 
@@ -30,6 +33,19 @@ const Properties = () => {
     getProperties(currentPage);
   }, [currentPage]);
 
+  useEffect(() => {
+    if (token) {
+      axios
+        .get("http://localhost:8000/api/users", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setUsers(res.data.data);
+        })
+        .catch((err) => console.error("Error fetching users:", err));
+    }
+  }, [token]);
+
   const handleNextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
@@ -42,29 +58,58 @@ const Properties = () => {
     }
   };
 
+  const handleDelete = (id) => {
+    try {
+      axios
+        .delete(`http://localhost:8000/api/deleteProperty/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(() => {
+          getProperties(currentPage);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const isAdmin = users.find(
+    (user) => user.role == "admin" && user.id == userId
+  );
+
   return (
     <>
       <Navbar />
       <div className="grid grid-cols-4 gap-4 mt-4 p-3">
         {properties.map((listing, index) => (
-          <div
-            key={index}
-            className="p-4 border rounded-lg shadow-sm"
-            onClick={() => navigate(`/property/${listing.id}`)}
-          >
-            <img
-              src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
-              alt={listing.title}
-              className="w-full h-40 object-contain mb-2"
-            />
-            <h3 className="text-lg font-semibold">{listing.title}</h3>
-            <div className="flex items-center text-gray-600 text-sm">
-              <span className="mr-1">📍</span> {listing.location}
+          <>
+            <div
+              key={index}
+              className="p-4 border rounded-lg shadow-sm"
+              onClick={() => navigate(`/property/${listing.id}`)}
+            >
+              <img
+                src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
+                alt={listing.title}
+                className="w-full h-48 object-contain mb-2"
+              />
+              <h3 className="text-lg font-semibold">{listing.title}</h3>
+              <div className="flex items-center text-gray-600 text-sm">
+                <span className="mr-1">📍</span> {listing.location}
+              </div>
+              <div className="flex justify-between items-center mt-2">
+                <span className="text-xl font-bold">{listing.price}</span>
+              </div>
             </div>
-            <div className="flex justify-between items-center mt-2">
-              <span className="text-xl font-bold">{listing.price}</span>
-            </div>
-          </div>
+            {isAdmin && (
+              <button
+                className="px-4 py-2 mt-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                onClick={() => handleDelete(listing.id)}
+              >
+                Delete
+              </button>
+            )}
+          </>
         ))}
       </div>
       <div className="flex justify-end items-center mt-4 p-3 w-[100%]">
@@ -86,6 +131,7 @@ const Properties = () => {
           Next
         </button>
       </div>
+
       <Footer />
     </>
   );
