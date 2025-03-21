@@ -1,94 +1,86 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/Property.png";
 import axios from "axios";
+
 const Navbar = () => {
-  const[users,setUsers]=useState([]),token=localStorage.getItem("token"),profilePictureFromStorage=localStorage.getItem("profilePicture"),userId=localStorage.getItem("userId");useEffect(()=>{try{token&&axios.get("http://localhost:8000/api/users",{headers:{Authorization:`Bearer ${token}`}}).then(e=>{setUsers(e.data.data)}).catch(e=>console.error("Error fetching users:",e))}catch(e){console.log(e)}},[token]);const handleLogOut=async()=>{try{await axios.post("http://localhost:8000/api/logout",{token},{headers:{Authorization:`Bearer ${token}`}})}catch(e){console.error("Logout error:",e)}finally{localStorage.clear(),window.location.reload()}},isAdmin=users.find(e=>"admin"==e.role&&e.id==userId);
+  const location = useLocation();
+  const activePath = location.pathname;
+
+  const token = localStorage.getItem("token");
+  const profilePicture = localStorage.getItem("profilePicture");
+  const userId = localStorage.getItem("userId");
+
+  const handleLogOut = async () => {
+    try {
+      await axios.post(
+        "http://localhost:8000/api/logout",
+        {},
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      localStorage.clear();
+      window.location.reload();
+    }
+  };
+
   return (
-    <div className="w-full flex justify-between items-center bg-white shadow-lg px-8 py-4">
+    <div className="w-full flex justify-between items-center bg-white shadow-md px-10 py-5">
       <div className="flex items-center">
-        <img src={logo} alt="Logo" className="w-16 h-16 object-contain" />
+        <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
       </div>
-      <div>
-        <ul className="flex space-x-8">
-          <Link
-            to="/"
-            className="text-gray-800 font-semibold hover:text-gray-900 transition-all"
-          >
-            Home
-          </Link>
-          <Link
-            to="/properties"
-            className="text-gray-800 font-semibold hover:text-gray-900 transition-all"
-          >
-            Properties
-          </Link>
-          <Link
-            to="/about"
-            className="text-gray-800 font-semibold hover:text-gray-900 transition-all"
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            className="text-gray-800 font-semibold hover:text-gray-900 transition-all"
-          >
-            Contact
-          </Link>
-        </ul>
-      </div>
+
+      <ul className="flex space-x-8 text-lg font-medium">
+        {["Home", "Explore", "Properties", "About", "Contact"].map((item) => {
+          const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
+          const isActive = activePath === path;
+
+          return (
+            <li key={item}>
+              <Link
+                to={path}
+                className={`${
+                  isActive
+                    ? "text-blue-600 font-semibold border-b-2 border-blue-600"
+                    : "text-gray-700 hover:text-blue-700"
+                } transition-all pb-1`}
+              >
+                {item}
+              </Link>
+            </li>
+          );
+        })}
+      </ul>
+
       <div className="flex items-center space-x-6">
         {!token ? (
           <>
             <Link
               to="/sign-up"
-              className="bg-blue-600 text-white px-6 py-2 rounded-full shadow-lg hover:bg-blue-700 transition-all"
+              className="bg-blue-600 text-white px-5 py-2 rounded-full shadow-md hover:bg-blue-700 transition-all"
             >
               Sign Up
             </Link>
             <Link
               to="/login"
-              className="border border-blue-600 text-blue-600 px-6 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-all"
+              className="border border-blue-600 text-blue-600 px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-all"
             >
               Login
             </Link>
           </>
         ) : (
           <div className="flex items-center space-x-4">
-            {profilePictureFromStorage && (
+
+            {profilePicture && (
               <img
-                src={
-                  profilePictureFromStorage
-                    ? `http://localhost:8000/storage/images/${profilePictureFromStorage}`
-                    : "https://via.placeholder.com/40"
-                }
+                src={`http://localhost:8000/storage/images/${profilePicture}`}
                 alt="Profile"
-                className="w-12 h-12 rounded-full object-cover"
+                className="w-12 h-12 rounded-full object-cover shadow-md"
               />
             )}
-            {isAdmin ? (
-              <>
-                <Link
-                  to="/add"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
-                >
-                  Admin
-                </Link>
-                <Link
-                  to="/users"
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
-                >
-                  users
-                </Link>
-              </>
-            ) : (
-              <Link
-                to="/wishlist"
-                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-all"
-              >
-                {isAdmin ? "Add" : "Wishlist"}
-              </Link>
-            )}
+
             <button
               className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
               onClick={handleLogOut}

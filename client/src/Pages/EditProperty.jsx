@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { lazy, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-const Navbar = lazy(() => import("../Components/Navbar"));
-const Footer = lazy(() => import("../Components/Footer"));
+const Navbar = lazy(() => import("../components/Navbar"));
+const Footer = lazy(() => import("../components/Footer"));
 
 const EditProperty = () => {
   const [properties, setProperties] = useState([]);

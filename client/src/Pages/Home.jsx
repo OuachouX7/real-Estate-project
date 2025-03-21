@@ -2,15 +2,41 @@ import { lazy } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import homeimg from "../assets/home-image.jpg";
 const Navbar = lazy(() => import("../components/Navbar"));
-const SearchBar = lazy(() => import("../components/SearchBar"));
 const Footer = lazy(() => import("../components/Footer"));
 const Home = () => {
-  const[properties,setProperties]=useState([]),userName=localStorage.getItem("user"),token=localStorage.getItem("token"),navigate=useNavigate(),getProperties=()=>{try{axios.get("http://localhost:8000/api/properties").then(e=>{setProperties(e.data.data),console.log(e.data)})}catch(e){console.log(e)}};useEffect(()=>{getProperties()},[]);
+  const [properties, setProperties] = useState([]),
+    userName = localStorage.getItem("user"),
+    token = localStorage.getItem("token"),
+    navigate = useNavigate(),
+    getProperties = () => {
+      try {
+        axios.get("http://localhost:8000/api/properties").then((e) => {
+          setProperties(e.data.data), console.log(e.data);
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+  useEffect(() => {
+    getProperties();
+  }, []);
   return (
     <>
       <Navbar />
-      <SearchBar />
+      <div className="relative w-full h-[600px]">
+        <img
+          src={homeimg}
+          alt="home_image"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 flex items-center justify-center">
+          <h1 className="text-white text-6xl font-bold text-center">
+            Discover Your Perfect Home
+          </h1>
+        </div>
+      </div>
 
       <div className="p-10">
         <div className="mb-10">

@@ -14,6 +14,7 @@ const PropertyDetails = lazy(() => import("./Pages/PropertyDetails"));
 const Chat = lazy(() => import("./Pages/Chat"));
 const Wishlist = lazy(() => import("./components/Wishlist"));
 const Users = lazy(() => import("./Pages/Users"));
+const Explore = lazy(() => import("./Pages/Explore"));
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/explore" element={<Explore />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/edit/:id" element={<EditProperty />} />
           <Route path="/property/:id" element={<PropertyDetails />} />
