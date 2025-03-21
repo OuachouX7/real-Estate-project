@@ -41,7 +41,7 @@ const Home = () => {
       <div className="p-10">
         <div className="mb-10">
           <div className="flex justify-between items-center">
-            <h2 className="text-3xl font-bold">Listings</h2>
+            <h2 className="text-3xl font-bold">Newest Listings</h2>
             <button
               className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
               onClick={() => navigate("/properties")}
