@@ -89,11 +89,11 @@ class PropertiesController extends Controller
     public function updateProperty(Request $request, $id)
     {
         $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-            'price' => 'required',
-            'location' => 'required',
-            'is_available' => 'required',
+            'title' => 'string|min:3|max:55',
+            'description' => 'string|min:3|max:255',
+            'price' => 'min:1',
+            'location' => 'string|min:3|max:205',
+            'is_available' => 'boolean',
         ]);
         $property = Property::findorfail($id);
         $property->update([
