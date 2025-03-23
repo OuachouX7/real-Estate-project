@@ -110,10 +110,6 @@ class PropertiesController extends Controller
     }
     public function search(Request $request)
     {
-        $request->validate([
-            'location' => 'string',
-            'price' => 'numeric',
-        ]);
         $properties = Property::where('location', 'like', '%' . $request->location . '%')
             ->where('price', '<=', $request->price)
             ->get();

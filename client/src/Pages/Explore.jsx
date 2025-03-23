@@ -10,13 +10,14 @@ const Explore = () => {
 
   const fetchProperties = async (filters) => {
     try {
-      const response = await axios.post(`http://localhost:8000/api/propertiesSearch`, {
+      const response = await axios.get(`http://localhost:8000/api/propertiesSearch`, {
         params: {
           location: filters.location,
-          price: Number(filters.priceRange),
+          price: filters.priceRange,
         },
       });
       setProperties(response.data);
+      console.log(response.data);
     } catch (error) {
       console.error("Error fetching properties:", error);
     }
@@ -42,7 +43,6 @@ const Explore = () => {
                   alt={property.title}
                   className="w-full h-40 object-cover rounded-lg"
                 />
-                <h3 className="text-lg font-semibold">{property.title}</h3>
                 <p className="text-gray-600">{property.location}</p>
                 <p className="text-xl font-bold">{property.price}</p>
               </div>
