@@ -5,9 +5,7 @@ export default function SearchBar({ onSearch }) {
   const [priceRange, setPriceRange] = useState("$106 - $948");
 
   const handleSearch = () => {
-    if (onSearch) {
-      onSearch({ location, priceRange });
-    }
+    onSearch({ location, priceRange });
   };
 
   return (

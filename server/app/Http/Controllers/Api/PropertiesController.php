@@ -112,6 +112,7 @@ class PropertiesController extends Controller
     {
         $properties = Property::where('location', 'like', '%' . $request->location . '%')
             ->where('price', '<=', $request->price)
+            ->with('images')
             ->get();
         if (!$properties) {
             return response()->json(['error' => 'No properties found'], 404);
