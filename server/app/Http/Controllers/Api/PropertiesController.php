@@ -85,9 +85,9 @@ class PropertiesController extends Controller
             'property' => $property,
             'favoriteImages' => $favoriteImages,
         ]);
-
     }
-    public function updateProperty(Request $request, $id){
+    public function updateProperty(Request $request, $id)
+    {
         $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -97,14 +97,28 @@ class PropertiesController extends Controller
         ]);
         $property = Property::findorfail($id);
         $property->update([
-          'title' => $request->title,
-          'description' => $request->description,
-          'price' => $request->price,
-          'location' => $request->location,
-          'is_available' => $request->is_available
+            'title' => $request->title,
+            'description' => $request->description,
+            'price' => $request->price,
+            'location' => $request->location,
+            'is_available' => $request->is_available
         ]);
         return response()->json([
             'property' => $property,
         ]);
+    }
+    public function search(Request $request)
+    {
+        $request->validate([
+            'location' => 'string',
+            'price' => 'numeric',
+        ]);
+        $properties = Property::where('location', 'like', '%' . $request->location . '%')
+            ->where('price', '<=', $request->price)
+            ->get();
+        if (!$properties) {
+            return response()->json(['error' => 'No properties found'], 404);
+        }
+        return response()->json($properties);
     }
 }

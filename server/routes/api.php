@@ -14,18 +14,19 @@ Route::get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [UsersController::class, 'logout']);
     Route::get('/users', [UsersController::class, 'index']);
-    Route::post('/addProperty' , [PropertiesController::class , 'store']);
-    Route::post('/addFavorite' , [FavoriteController::class , 'addFavorite']);
-    Route::get('/favorites' , [FavoriteController::class , 'index']);
-    Route::get('/getMessages' , [MessageController::class , 'index']);
-    Route::post('/sendMessage' , [MessageController::class , 'sendMessage']);
-    Route::get('/user/{id}',[UsersController::class,'getUserById']);
-    Route::delete('/deleteFavorite/{id}',[FavoriteController::class,'deleteFavorite']);
-    Route::delete('/deleteProperty/{id}',[PropertiesController::class,'deleteProperty']);
-    Route::put('/properties/{id}',[PropertiesController::class,'updateProperty']);
+    Route::post('/addProperty', [PropertiesController::class, 'store']);
+    Route::post('/addFavorite', [FavoriteController::class, 'addFavorite']);
+    Route::get('/favorites', [FavoriteController::class, 'index']);
+    Route::get('/getMessages', [MessageController::class, 'index']);
+    Route::post('/sendMessage', [MessageController::class, 'sendMessage']);
+    Route::get('/user/{id}', [UsersController::class, 'getUserById']);
+    Route::delete('/deleteFavorite/{id}', [FavoriteController::class, 'deleteFavorite']);
+    Route::delete('/deleteProperty/{id}', [PropertiesController::class, 'deleteProperty']);
+    Route::put('/properties/{id}', [PropertiesController::class, 'updateProperty']);
 });
 
+Route::post('/propertiesSearch', [PropertiesController::class, 'search']);
 Route::get('/properties', [PropertiesController::class, 'index']);
 Route::get('/properties/{id}', [PropertiesController::class, 'show']);
-Route::post('/login',[UsersController::class, 'login']);
+Route::post('/login', [UsersController::class, 'login']);
 Route::post('/register', [UsersController::class, 'register']);
