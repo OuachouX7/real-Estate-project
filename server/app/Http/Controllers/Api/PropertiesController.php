@@ -78,6 +78,7 @@ class PropertiesController extends Controller
         $favoriteImages = PropertyImage::where('property_id', $property->id)->get();
         foreach ($favoriteImages as $image) {
             $image->delete();
+            Storage::disk('public')->delete('images/' . $image->image_url);
         }
         $property->delete();
         return response()->json([
