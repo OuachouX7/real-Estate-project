@@ -34,6 +34,7 @@ const Wishlist = () => {
                       key={index}
                       src={`http://localhost:8000/storage/images/${img.image_url}`}
                       alt={`Gallery ${index}`}
+                      loading="lazy"
                       className="rounded-md"
                     />
                   ))}

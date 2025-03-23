@@ -29,6 +29,7 @@ const Home = () => {
         <img
           src={homeimg}
           alt="home_image"
+          loading="lazy"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 flex items-center justify-center">
@@ -59,6 +60,7 @@ const Home = () => {
                 <img
                   src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
                   alt={listing.title}
+                  loading="lazy"
                   className="w-full h-40 object-contain rounded-lg"
                 />
                 <h3 className="text-lg font-semibold">{listing.title}</h3>

@@ -28,6 +28,7 @@ const About = () => {
             <img
               src={aboutPic}
               alt="Happy couple in their new home"
+              loading="lazy"
               className="w-full rounded-xl object-cover"
             />
           </div>

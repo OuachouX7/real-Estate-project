@@ -77,6 +77,7 @@ const Navbar = () => {
               <img
                 src={`http://localhost:8000/storage/images/${profilePicture}`}
                 alt="Profile"
+                loading="lazy"
                 className="w-12 h-12 rounded-full object-cover shadow-md"
               />
             )}

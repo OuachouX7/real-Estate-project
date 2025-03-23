@@ -81,6 +81,7 @@ const PropertyDetails = () => {
               <img
                 key={index}
                 src={`http://localhost:8000/storage/images/${img.image_url}`}
+                loading="lazy"
                 alt={`Gallery ${index}`}
                 className="rounded-md"
               />
