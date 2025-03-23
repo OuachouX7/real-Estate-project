@@ -7,7 +7,29 @@ const Navbar = lazy(() => import("../components/Navbar"));
 const Footer = lazy(() => import("../components/Footer"));
 
 const Users = () => {
-  const[users,setUsers]=useState([]),token=localStorage.getItem("token"),userId=localStorage.getItem("userId"),navigate=useNavigate(),getUser=()=>{try{axios.get("http://localhost:8000/api/users",{headers:{Authorization:`Bearer ${token}`}}).then(e=>{setUsers(e.data.data)}).catch(e=>console.error("Error fetching users:",e))}catch(e){console.log(e)}},Users=users.filter(e=>"user"===e.role);useEffect(()=>{getUser()},[]),console.log(users);
+  const [users, setUsers] = useState([]),
+    token = sessionStorage.getItem("token"),
+    userId = localStorage.getItem("userId"),
+    navigate = useNavigate(),
+    getUser = () => {
+      try {
+        axios
+          .get("http://localhost:8000/api/users", {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((e) => {
+            setUsers(e.data.data);
+          })
+          .catch((e) => console.error("Error fetching users:", e));
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    Users = users.filter((e) => "user" === e.role);
+  useEffect(() => {
+    getUser();
+  }, []),
+    console.log(users);
   return (
     <>
       <Navbar />

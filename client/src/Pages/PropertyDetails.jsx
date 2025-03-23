@@ -12,7 +12,7 @@ const PropertyDetails = () => {
     [property, setProperty] = useState(null),
     [loading, setLoading] = useState(!0),
     [error, setError] = useState(null),
-    token = localStorage.getItem("token"),
+    token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),
     navigate = useNavigate();
   useEffect(() => {

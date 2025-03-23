@@ -10,7 +10,7 @@ const Properties = () => {
     [users, setUsers] = useState([]),
     [currentPage, setCurrentPage] = useState(1),
     [totalPages, setTotalPages] = useState(1),
-    token = localStorage.getItem("token"),
+    token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),
     navigate = useNavigate(),
     getProperties = async (e) => {

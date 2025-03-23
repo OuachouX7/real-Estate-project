@@ -3,7 +3,46 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Navbar = lazy(() => import("./Navbar"));
 const Wishlist = () => {
-  const[wishList,setWishList]=useState([]),[loading,setLoading]=useState(!0),[error,setError]=useState(null),navigate=useNavigate(),token=localStorage.getItem("token"),userId=localStorage.getItem("userId"),getFavorite=()=>{axios.get("http://localhost:8000/api/favorites",{params:{user_id:userId},headers:{Authorization:`Bearer ${token}`}}).then(e=>{setWishList(e.data.favorites),console.log(e.data)}).catch(e=>{console.error("Error fetching favorites:",e),setError(e.message)}).finally(()=>{setLoading(!1)})},deleteFavorite=e=>{axios.delete(`http://localhost:8000/api/deleteFavorite/${e}`,{headers:{Authorization:`Bearer ${token}`}}).then(()=>{getFavorite()}).catch(e=>{console.error("Error deleting favorite:",e),setError(e.message)})},viewDetails=e=>{navigate(`/property/${e}`)};useEffect(()=>{getFavorite()},[]);
+  const [wishList, setWishList] = useState([]),
+    [loading, setLoading] = useState(!0),
+    [error, setError] = useState(null),
+    navigate = useNavigate(),
+    token = sessionStorage.getItem("token"),
+    userId = localStorage.getItem("userId"),
+    getFavorite = () => {
+      axios
+        .get("http://localhost:8000/api/favorites", {
+          params: { user_id: userId },
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((e) => {
+          setWishList(e.data.favorites), console.log(e.data);
+        })
+        .catch((e) => {
+          console.error("Error fetching favorites:", e), setError(e.message);
+        })
+        .finally(() => {
+          setLoading(!1);
+        });
+    },
+    deleteFavorite = (e) => {
+      axios
+        .delete(`http://localhost:8000/api/deleteFavorite/${e}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then(() => {
+          getFavorite();
+        })
+        .catch((e) => {
+          console.error("Error deleting favorite:", e), setError(e.message);
+        });
+    },
+    viewDetails = (e) => {
+      navigate(`/property/${e}`);
+    };
+  useEffect(() => {
+    getFavorite();
+  }, []);
   if (loading)
     return <p className="text-center text-gray-500 mt-10">Loading...</p>;
   if (error)

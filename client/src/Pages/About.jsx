@@ -7,7 +7,6 @@ const About = () => {
   return (
     <>
       <Navbar />
-
       <div className="bg-gray-50 p-25">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
           <div>
@@ -17,10 +16,11 @@ const About = () => {
             </h1>
             <p className="text-gray-600 mt-6">
               At DreamNest Realty, we believe that finding the perfect home
-              should be an exciting and seamless experience. Founded by Mohammad Salimi, our mission is to connect people with
-              properties that truly feel like home. With years of expertise in
-              the real estate industry, our dedicated team offers personalized
-              guidance to make your dreams a reality.
+              should be an exciting and seamless experience. Founded by Mohammad
+              Salimi, our mission is to connect people with properties that
+              truly feel like home. With years of expertise in the real estate
+              industry, our dedicated team offers personalized guidance to make
+              your dreams a reality.
             </p>
           </div>
 

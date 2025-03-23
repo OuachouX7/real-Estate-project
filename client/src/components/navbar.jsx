@@ -7,7 +7,7 @@ const Navbar = () => {
   const location = useLocation();
   const activePath = location.pathname;
 
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const profilePicture = localStorage.getItem("profilePicture");
   const userId = localStorage.getItem("userId");
 
@@ -72,7 +72,6 @@ const Navbar = () => {
           </>
         ) : (
           <div className="flex items-center space-x-4">
-
             {profilePicture && (
               <img
                 src={`http://localhost:8000/storage/images/${profilePicture}`}

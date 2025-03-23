@@ -15,7 +15,7 @@ const EditProperty = () => {
     is_available: true,
   });
 
-  const token = localStorage.getItem("token");
+  const token = sessionStorage.getItem("token");
   const { id } = useParams();
 
   const getProperty = async () => {

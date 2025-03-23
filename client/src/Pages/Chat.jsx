@@ -1,6 +1,60 @@
-import { useEffect, useState } from "react";import { useParams, Link } from "react-router-dom";import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import axios from "axios";
 function Chat() {
-  const[message,setMessage]=useState(""),[messages,setmessages]=useState([]),[user,setUser]=useState({}),{id:e}=useParams(),token=localStorage.getItem("token"),sender_id=localStorage.getItem("userId"),getUserById=()=>{try{axios.get(`http://localhost:8000/api/user/${e}`,{headers:{Authorization:`Bearer ${token}`}}).then(e=>{setUser({name:e.data.name,email:e.data.email,phone:e.data.phone})})}catch(s){console.log(s)}},handleMessageSubmit=s=>{try{"Enter"===s.key&&(s.preventDefault(),axios.post("http://localhost:8000/api/sendMessage",{sender_id:sender_id,receiver_id:e,message:message},{headers:{Authorization:`Bearer ${token}`}}).then(()=>{getMessages()}))}catch(t){console.log(t)}},getMessages=()=>{axios.get("http://localhost:8000/api/getMessages",{params:{user_ids:[sender_id,e]},headers:{Authorization:`Bearer ${token}`}}).then(e=>{setmessages(e.data)})};useEffect(()=>{getMessages(),getUserById()},[]);
+  const [message, setMessage] = useState(""),
+    [messages, setmessages] = useState([]),
+    [user, setUser] = useState({}),
+    { id: e } = useParams(),
+    token = sessionStorage.getItem("token"),
+    sender_id = localStorage.getItem("userId"),
+    getUserById = () => {
+      try {
+        axios
+          .get(`http://localhost:8000/api/user/${e}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          })
+          .then((e) => {
+            setUser({
+              name: e.data.name,
+              email: e.data.email,
+              phone: e.data.phone,
+            });
+          });
+      } catch (s) {
+        console.log(s);
+      }
+    },
+    handleMessageSubmit = (s) => {
+      try {
+        "Enter" === s.key &&
+          (s.preventDefault(),
+          axios
+            .post(
+              "http://localhost:8000/api/sendMessage",
+              { sender_id: sender_id, receiver_id: e, message: message },
+              { headers: { Authorization: `Bearer ${token}` } }
+            )
+            .then(() => {
+              getMessages();
+            }));
+      } catch (t) {
+        console.log(t);
+      }
+    },
+    getMessages = () => {
+      axios
+        .get("http://localhost:8000/api/getMessages", {
+          params: { user_ids: [sender_id, e] },
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((e) => {
+          setmessages(e.data);
+        });
+    };
+  useEffect(() => {
+    getMessages(), getUserById();
+  }, []);
   return (
     <div className="flex flex-col justify-between h-screen mx-auto p-4">
       <div className="flex flex-col flex-shrink-0 bg-white h-[10%]">

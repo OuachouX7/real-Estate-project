@@ -8,7 +8,7 @@ const Footer = lazy(() => import("../components/Footer"));
 const Home = () => {
   const [properties, setProperties] = useState([]),
     userName = localStorage.getItem("user"),
-    token = localStorage.getItem("token"),
+    token = sessionStorage.getItem("token"),
     navigate = useNavigate(),
     getProperties = () => {
       try {

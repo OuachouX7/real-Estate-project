@@ -4,7 +4,32 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const[email,setEmail]=useState(""),[password,setPassword]=useState(""),navigate=useNavigate(),handleLogin=e=>{e.preventDefault();try{axios.post("http://127.0.0.1:8000/api/login",{email:email,password:password}).then(e=>{console.log(e),localStorage.setItem("token",e.data.token),localStorage.setItem("user",e.data.user.name),localStorage.setItem("userId",e.data.user.id),localStorage.setItem("profilePicture",e.data.user.profile_picture),navigate("/")})}catch(t){console.log(t)}};
+  const [email, setEmail] = useState(""),
+    [password, setPassword] = useState(""),
+    navigate = useNavigate(),
+    handleLogin = (e) => {
+      e.preventDefault();
+      try {
+        axios
+          .post("http://127.0.0.1:8000/api/login", {
+            email: email,
+            password: password,
+          })
+          .then((e) => {
+            console.log(e),
+              sessionStorage.setItem("token", e.data.token),
+              localStorage.setItem("user", e.data.user.name),
+              localStorage.setItem("userId", e.data.user.id),
+              localStorage.setItem(
+                "profilePicture",
+                e.data.user.profile_picture
+              ),
+              navigate("/");
+          });
+      } catch (t) {
+        console.log(t);
+      }
+    };
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">

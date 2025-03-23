@@ -2,11 +2,13 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="bg-[#1D3557] text-white py-12 px-6">
-              <div>
-          <h2 className="text-3xl font-bold text-center">Make Your Home More Modern</h2><br></br>
-        </div>
+      <div>
+        <h2 className="text-3xl font-bold text-center">
+          Make Your Home More Modern
+        </h2>
+        <br></br>
+      </div>
       <div className="max-w-6xl mx-auto grid md:grid-cols-4 gap-8 text-center md:text-left">
-
         <div>
           <h3 className="font-semibold text-lg">Our Services</h3>
           <ul className="mt-3 space-y-2">
