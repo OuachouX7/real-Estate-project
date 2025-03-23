@@ -1,2 +1,7 @@
 User-agent: *
-Disallow:
+Disallow: /admin/
+Disallow: /login/
+Allow: /public/
+
+Allow: /about/
+Allow: /contact/

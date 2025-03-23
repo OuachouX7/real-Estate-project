@@ -1,6 +1,6 @@
 import React from "react";
 import { lazy } from "react";
-import aboutPic from "../assets/aboutPic.jpg";
+import aboutPic from "../assets/aboutPic.webp";
 const Navbar = lazy(() => import("../Components/Navbar"));
 const Footer = lazy(() => import("../Components/Footer"));
 const About = () => {

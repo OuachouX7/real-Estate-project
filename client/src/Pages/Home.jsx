@@ -2,7 +2,7 @@ import { lazy } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import homeimg from "../assets/home-image.jpg";
+import homeimg from "../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
 const Navbar = lazy(() => import("../components/Navbar"));
 const Footer = lazy(() => import("../components/Footer"));

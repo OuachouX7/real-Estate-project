@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../assets/Property.png";
+import logo from "../assets/Property.webp";
 import axios from "axios";
 
 const Navbar = () => {
