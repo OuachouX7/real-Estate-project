@@ -32,7 +32,7 @@ const Navbar = () => {
         <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
       </div>
 
-      <ul className="flex space-x-8 text-lg font-medium">
+      <ul className="flex space-x-8 text-lg font-light">
         {["Home", "Explore", "Properties", "About", "Contact"].map((item) => {
           const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
           const isActive = activePath === path;
@@ -44,7 +44,7 @@ const Navbar = () => {
                 className={`${
                   isActive
                     ? "text-blue-600 font-semibold border-b-2 border-blue-600"
-                    : "text-gray-700 hover:text-blue-700"
+                    : "text-gray-500  hover:text-blue-700"
                 } transition-all pb-1`}
               >
                 {item}
