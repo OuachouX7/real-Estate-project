@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import homeimg from "../assets/home-image.jpg";
+import { Helmet } from "react-helmet-async";
 const Navbar = lazy(() => import("../components/Navbar"));
 const Footer = lazy(() => import("../components/Footer"));
 const Home = () => {
@@ -24,6 +25,16 @@ const Home = () => {
   }, []);
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="description" content="Web site created using create-react-app" />
+        <meta name="keywords" content="Real Estate, Properties, Houses, Apartments" />
+        <meta name="og:title" content="Real Estate" />
+        <meta name="og:description" content="Web site created using create-react-app" />
+        <meta name="og:image" content="/src/assets/home-image.jpg" />
+        <title>Home</title>
+      </Helmet>
       <Navbar />
       <div className="relative w-full h-[600px]">
         <img
@@ -38,7 +49,6 @@ const Home = () => {
           </h1>
         </div>
       </div>
-
       <div className="p-10">
         <div className="mb-10">
           <div className="flex justify-between items-center">
