@@ -1,7 +1,7 @@
 import React, { lazy, useState } from "react";
 import axios from "axios";
 
-const Navbar = lazy(() => import("../components/Navbar"));
+const Navbar = lazy(() => import("../Components/Navbar"));
 const LocationMap = lazy(() => import("../components/LocationMap"));
 const SearchBar = lazy(() => import("../components/SearchBar"));
 

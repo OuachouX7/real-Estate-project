@@ -1,6 +1,6 @@
 import React from "react";
 import { lazy } from "react";
-const Navbar = lazy(() => import("../components/Navbar"));
+const Navbar = lazy(() => import("../Components/Navbar"));
 const Footer = lazy(() => import("../Components/Footer"));
 
 const Contact = () => {
@@ -8,7 +8,7 @@ const Contact = () => {
     <>
       <Navbar />
       <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gray-100 p-6">
-        {/* Left Section */}
+
         <div className="md:w-1/2 space-y-6">
           <h1 className="text-6xl font-bold">Contact Us</h1>
           <p className="text-gray-600">
@@ -39,7 +39,6 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Right Section - Contact Form */}
         <div className="md:w-1/2 bg-white p-6 rounded-3xl shadow-lg w-full max-w-lg mt-6 md:mt-0">
           <h2 className="text-4xl font-bold">Get in Touch</h2><br></br>
           <p className="text-gray-600">You can reach us anytime</p><br></br>
