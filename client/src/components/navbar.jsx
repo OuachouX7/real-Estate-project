@@ -21,7 +21,7 @@ const Navbar = () => {
     } catch (error) {
       console.error("Logout error:", error);
     } finally {
-      localStorage.clear();
+      sessionStorage.clear();
       window.location.reload();
     }
   };

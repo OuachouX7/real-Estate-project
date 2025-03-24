@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Navbar = lazy(() => import("../components/Navbar"));
 const Footer = lazy(() => import("../components/Footer"));
+const Spinner = lazy(() => import("../Components/Spinner"))
 
 const Properties = () => {
   const [properties, setProperties] = useState([]),
@@ -63,10 +64,10 @@ const Properties = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-6xl mx-auto p-6">
+      <div className="max-w-8xl mx-auto p-6">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Properties</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {properties.map((listing, index) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {properties.length > 0 ? properties.map((listing, index) => (
             <div
               key={index}
               className="bg-white border rounded-lg shadow-lg overflow-hidden"
@@ -103,7 +104,11 @@ const Properties = () => {
                 </div>
               </div>
             </div>
-          ))}
+          )) : (
+            <div className="w-[600px] flex">
+              <Spinner />
+            </div>
+          )}
         </div>
         <div className="flex justify-between items-center mt-6">
           <button

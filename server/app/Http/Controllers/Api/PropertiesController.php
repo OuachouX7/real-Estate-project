@@ -13,7 +13,7 @@ class PropertiesController extends Controller
 
     public function index()
     {
-        $properties = Property::with('images')->paginate(4);
+        $properties = Property::with('images')->paginate(8);
 
         return response()->json($properties);
     }
