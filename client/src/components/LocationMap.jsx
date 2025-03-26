@@ -5,7 +5,7 @@ import "leaflet/dist/leaflet.css";
 const LocationMap = ({ location }) => {
   const[position,setPosition]=useState([31.7917,-7.0926]);useEffect(()=>{try{location&&fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${location}`).then(t=>t.json()).then(t=>{t.length>0&&setPosition([parseFloat(t[0].lat),parseFloat(t[0].lon)])}).catch(t=>console.error("Error fetching location:",t))}catch(t){console.log(t)}},[location]);
   return (
-    <>
+    <div className="z-[-1]">
       {position && (
         <MapContainer
           center={position}
@@ -18,7 +18,7 @@ const LocationMap = ({ location }) => {
           </Marker>
         </MapContainer>
       )}
-    </>
+    </div>
   );
 };
 

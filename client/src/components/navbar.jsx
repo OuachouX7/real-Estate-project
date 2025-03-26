@@ -27,12 +27,12 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full flex justify-between items-center bg-white shadow-md px-10 py-5">
+    <div className="w-full flex justify-between items-center bg-white shadow-md px-10  py-2 ">
       <div className="flex items-center">
         <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
       </div>
 
-      <ul className="flex space-x-8 text-lg font-light">
+      <ul className="flex space-x-8 text-lg font-{font-poppins}">
         {["Home", "Explore", "Properties", "About", "Contact"].map((item) => {
           const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
           const isActive = activePath === path;
@@ -43,7 +43,7 @@ const Navbar = () => {
                 to={path}
                 className={`${
                   isActive
-                    ? "text-blue-600 font-semibold border-b-2 border-blue-600"
+                    ? "text-blue-900 font-semibold "
                     : "text-gray-500  hover:text-blue-700"
                 } transition-all pb-1`}
               >

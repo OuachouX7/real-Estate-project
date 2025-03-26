@@ -1,9 +1,9 @@
 import React, { lazy, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const Navbar = lazy(() => import("../Components/Navbar"));
-const LocationMap = lazy(() => import("../components/LocationMap"));
+const Navbar = lazy(() => import("../components/Navbar"));
 const SearchBar = lazy(() => import("../components/SearchBar"));
+const LocationMap = lazy(() => import("../components/LocationMap"));
 
 
 const Explore = () => {
@@ -29,7 +29,15 @@ const Explore = () => {
   return (
     <>
       <Navbar />
+      <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
+      <a href="/" className="text-gray-600 font-semibold hover:underline">
+        Home
+      </a>
+      <span className="text-gray-400">&gt;</span>
+      <span className="text-blue-900 font-bold">Explore</span>
+    </nav>
       <LocationMap location={properties&&properties[0]?.location} />
+
       <SearchBar onSearch={fetchProperties} />
 
       <div className="p-10">

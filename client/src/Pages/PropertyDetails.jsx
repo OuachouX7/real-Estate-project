@@ -62,7 +62,8 @@ const PropertyDetails = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-6xl mx-auto p-6">
+      <div className="bg-gray-50">
+      <div className="max-w-6xl mx-auto p-6 ">
         <div className="flex w-full justify-between items-center">
           <h1 className="text-4xl font-bold text-gray-800">{property.title}</h1>
           <button
@@ -148,7 +149,9 @@ const PropertyDetails = () => {
           </p>
         </div>
       </div>
+      </div>
       <Footer />
+      
     </>
   );
 };

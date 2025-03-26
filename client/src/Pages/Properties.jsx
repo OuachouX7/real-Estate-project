@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Navbar = lazy(() => import("../components/Navbar"));
 const Footer = lazy(() => import("../components/Footer"));
-const Spinner = lazy(() => import("../Components/Spinner"))
+const Spinner = lazy(() => import("../Components/Spinner"));
 
 const Properties = () => {
   const [properties, setProperties] = useState([]),
@@ -64,47 +64,64 @@ const Properties = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-8xl mx-auto p-6">
+      <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
+        <a href="/" className="text-gray-600 font-semibold hover:underline">
+          Home
+        </a>
+        <span className="text-gray-400">&gt;</span>
+        <a href="/explore" className="text-gray-600 font-semibold hover:underline">
+          Explore
+        </a>
+
+        
+        <span className="text-gray-400">&gt;</span>
+        <span className="text-blue-900 font-bold">Properties</span>
+      </nav>
+      <div className="max-w-8xl mx-auto p-6 bg-gray-50">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Properties</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {properties.length > 0 ? properties.map((listing, index) => (
-            <div
-              key={index}
-              className="bg-white border rounded-lg shadow-lg overflow-hidden"
-            >
-              <img
-                src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
-                alt={listing.title}
-                className="w-full h-48 object-cover"
-                onClick={() => navigate(`/property/${listing.id}`)}
-              />
-              <div className="p-4">
-                <h3 className="text-lg font-semibold mb-2">{listing.title}</h3>
-                <div className="flex items-center text-gray-600 text-sm mb-2">
-                  <span className="mr-1">📍</span> {listing.location}
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-xl font-bold">{listing.price}</span>
-                  {isAdmin && (
-                    <div className="flex justify-between w-[45%]">
-                      <button
-                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                        onClick={() => handleDelete(listing.id)}
-                      >
-                        Delete
-                      </button>
-                      <button
-                        className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                        onClick={() => navigate(`/edit/${listing.id}`)}
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  )}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
+          {properties.length > 0 ? (
+            properties.map((listing, index) => (
+              <div
+                key={index}
+                className="bg-white border rounded-lg shadow-lg overflow-hidden"
+              >
+                <img
+                  src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
+                  alt={listing.title}
+                  className="w-full h-48 object-cover"
+                  onClick={() => navigate(`/property/${listing.id}`)}
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold mb-2">
+                    {listing.title}
+                  </h3>
+                  <div className="flex items-center text-gray-600 text-sm mb-2">
+                    <span className="mr-1">📍</span> {listing.location}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold">{listing.price}</span>
+                    {isAdmin && (
+                      <div className="flex justify-between w-[45%]">
+                        <button
+                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                          onClick={() => handleDelete(listing.id)}
+                        >
+                          Delete
+                        </button>
+                        <button
+                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                          onClick={() => navigate(`/edit/${listing.id}`)}
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-          )) : (
+            ))
+          ) : (
             <div className="w-[600px] flex">
               <Spinner />
             </div>
