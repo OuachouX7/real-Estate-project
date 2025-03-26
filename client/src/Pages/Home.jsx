@@ -76,58 +76,44 @@ const Home = () => {
               View All
             </button>
           </div>
-          <div className="grid grid-cols-4 gap-4 mt-4">
-            {properties ? (
+
+          <div className="grid grid-cols-4 gap-6 mt-6">
+            {properties?.length > 0 ? (
               properties.map((listing, index) => (
                 <div
                   key={index}
-                  className="p-4 border rounded-lg shadow-sm"
+                  className="p-4 bg-white border rounded-2xl shadow-lg cursor-pointer hover:shadow-xl transition-all border-gray-200"
                   onClick={() => navigate(`/property/${listing?.id}`)}
                 >
-                  <img
-                    src={`http://localhost:8000/storage/images/${listing?.images[0]?.image_url}`}
-                    alt={listing?.title}
-                    loading="lazy"
-                    className="w-full h-40 object-contain rounded-lg"
-                  />
-                  <h3 className="text-lg font-semibold">{listing?.title}</h3>
-                  <div className="flex items-center text-gray-600 text-sm">
-                    <span className="mr-1">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
-                        width="24"
-                        height="24"
-                        color="#000000"
-                        fill="none"
-                      >
-                        <path
-                          d="M14.5 9C14.5 10.3807 13.3807 11.5 12 11.5C10.6193 11.5 9.5 10.3807 9.5 9C9.5 7.61929 10.6193 6.5 12 6.5C13.3807 6.5 14.5 7.61929 14.5 9Z"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                        />
-                        <path
-                          d="M13.2574 17.4936C12.9201 17.8184 12.4693 18 12.0002 18C11.531 18 11.0802 17.8184 10.7429 17.4936C7.6543 14.5008 3.51519 11.1575 5.53371 6.30373C6.6251 3.67932 9.24494 2 12.0002 2C14.7554 2 17.3752 3.67933 18.4666 6.30373C20.4826 11.1514 16.3536 14.5111 13.2574 17.4936Z"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                        />
-                        <path
-                          d="M18 20C18 21.1046 15.3137 22 12 22C8.68629 22 6 21.1046 6 20"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                        />
-                      </svg>
-                    </span>{" "}
+                  <div className="w-full h-48 bg-gray-200 rounded-xl overflow-hidden">
+                    <img
+                      src={`http://localhost:8000/storage/images/${listing?.images[0]?.image_url}`}
+                      alt={listing?.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+
+                  <h3 className="text-lg font-semibold mt-3" style={{ color: "#123763" }}>
+                    {listing?.title}
+                  </h3>
+
+                  <div className="flex items-center text-gray-500 text-sm mt-1">
+                    <span className="text-green-600 mr-1">📍</span>
                     {listing?.location}
                   </div>
-                  <div className="flex justify-between items-center mt-2">
-                    <span className="text-xl font-bold">{listing?.price}</span>
+
+                  <div className="flex justify-between items-center mt-3">
+                    <span className="text-xl font-bold">
+                      {listing?.price} DH
+                    </span>
                   </div>
                 </div>
               ))
             ) : (
-              <Spinner />
+              <p className="text-gray-500 col-span-4 text-center">
+                No properties found.
+              </p>
             )}
           </div>
         </div>
@@ -173,3 +159,6 @@ const Home = () => {
 };
 
 export default Home;
+
+
+

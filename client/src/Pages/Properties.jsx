@@ -69,11 +69,13 @@ const Properties = () => {
           Home
         </a>
         <span className="text-gray-400">&gt;</span>
-        <a href="/explore" className="text-gray-600 font-semibold hover:underline">
+        <a
+          href="/explore"
+          className="text-gray-600 font-semibold hover:underline"
+        >
           Explore
         </a>
 
-        
         <span className="text-gray-400">&gt;</span>
         <span className="text-blue-900 font-bold">Properties</span>
       </nav>
@@ -84,7 +86,7 @@ const Properties = () => {
             properties.map((listing, index) => (
               <div
                 key={index}
-                className="bg-white border rounded-lg shadow-lg overflow-hidden"
+                className="bg-white border rounded-lg shadow-lg overflow-hidden border-gray-200 "
               >
                 <img
                   src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
@@ -93,7 +95,7 @@ const Properties = () => {
                   onClick={() => navigate(`/property/${listing.id}`)}
                 />
                 <div className="p-4">
-                  <h3 className="text-lg font-semibold mb-2">
+                  <h3 className="text-lg font-semibold mb-2 " style={{ color: "#123763" }} >
                     {listing.title}
                   </h3>
                   <div className="flex items-center text-gray-600 text-sm mb-2">
@@ -153,3 +155,6 @@ const Properties = () => {
 };
 
 export default Properties;
+
+
+
