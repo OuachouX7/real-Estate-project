@@ -1,12 +1,34 @@
 import React from "react";
 import { lazy } from "react";
-import aboutPic from "../assets/aboutPic.webp";
-const Navbar = lazy(() => import("../Components/Navbar"));
-const Footer = lazy(() => import("../Components/Footer"));
+import aboutPic from "../../assets/aboutPic.webp";
+const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
+const Footer = lazy(() => import("../../Components/Footer/Footer"));
 const About = () => {
   return (
     <>
       <Navbar />
+      <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
+        <a href="/" className="text-gray-600 font-semibold hover:underline">
+          Home
+        </a>
+        <span className="text-gray-400">&gt;</span>
+        <a
+          href="/explore"
+          className="text-gray-600 font-semibold hover:underline"
+        >
+          Explore
+        </a>
+        <span className="text-gray-400">&gt;</span>
+        <a
+          href="/explore"
+          className="text-gray-600 font-semibold hover:underline"
+        >
+          Properties
+        </a>
+
+        <span className="text-gray-400">&gt;</span>
+        <span className="text-blue-900 font-bold">About</span>
+      </nav>
       <div className="bg-gray-50 p-25">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
           <div>
@@ -29,7 +51,7 @@ const About = () => {
               src={aboutPic}
               alt="Happy couple in their new home"
               loading="lazy"
-              className="w-full rounded-xl object-cover"
+              className="w-full h-full rounded-xl object-cover"
             />
           </div>
         </div>

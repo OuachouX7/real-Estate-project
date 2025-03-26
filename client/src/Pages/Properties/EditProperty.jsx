@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { lazy, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-const Navbar = lazy(() => import("../Components/Navbar"));
-const Footer = lazy(() => import("../Components/Footer"));
+const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
+const Footer = lazy(() => import("../../Components/Footer/Footer"));
 
 const EditProperty = () => {
   const [properties, setProperties] = useState([]);
@@ -66,7 +66,7 @@ const EditProperty = () => {
   return (
     <>
       <Navbar />
-      <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6">
+      <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6  ">
         <h1 className="text-2xl font-bold mb-6">Edit Property</h1>
         <form onSubmit={updateProperty} className="space-y-4 py-2">
           <div>

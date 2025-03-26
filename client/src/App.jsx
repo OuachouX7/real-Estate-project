@@ -1,21 +1,22 @@
 import { lazy } from "react";
-import { motion } from "framer-motion";
 import { Suspense } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-const EditProperty = lazy(() => import("./Pages/EditProperty"))
-const Home = lazy(() => import("./Pages/Home"));
-const SignUp = lazy(() => import("./Pages/SignUp"));
-const Login = lazy(() => import("./Pages/Login"));
-const About = lazy(() => import("./Pages/About"));
-const Contact = lazy(() => import("./Pages/Contact"));
-const Properties = lazy(() => import("./Pages/Properties"));
-const AddProperties = lazy(() => import("./Pages/addProperties"));
-const PropertyDetails = lazy(() => import("./Pages/PropertyDetails"));
-const Chat = lazy(() => import("./Pages/Chat"));
-const Wishlist = lazy(() => import("./Components/Wishlist"));
-const Users = lazy(() => import("./Pages/Users"));
-const Explore = lazy(() => import("./Pages/Explore"));
-const Spinner = lazy(() => import("./Components/Spinner"))
+const Home = lazy(() => import("./Pages/Home/Home"));
+const Explore = lazy(() => import("./Pages/Explore/Explore"));
+const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
+const EditProperty = lazy(() => import("./Pages/Properties/EditProperty"));
+const PropertyDetails = lazy(() => import("./Pages/Properties/PropertyDetails"));
+const Login = lazy(() => import("./Pages/Auth/Login"));
+const AddProperties = lazy(() => import("./Pages/Properties/AddProperties"));
+const About = lazy(() => import("./Pages/About/About"));
+const Contact = lazy(() => import("./Pages/Contact/Contact"));
+const Properties = lazy(() => import("./Pages/Properties/Properties"));
+const Chat = lazy(() => import("./Pages/Chat/Chat"));
+const Wishlist = lazy(() => import("./Pages/Wishlist/Wishlist"));
+const Users = lazy(() => import("./Pages/Users/Users"));
+const Spinner = lazy(() => import("./Components/Loading/Spinner"));
+
+
 
 function App() {
   return (

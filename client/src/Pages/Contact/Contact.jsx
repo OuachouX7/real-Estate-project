@@ -2,8 +2,8 @@ import React from "react";
 import { lazy } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-const Navbar = lazy(() => import("../Components/Navbar"));
-const Footer = lazy(() => import("../Components/Footer"));
+const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
+const Footer = lazy(() => import("../../Components/Footer/Footer"));
 
 const Contact = () => {
   return (
@@ -19,7 +19,36 @@ const Contact = () => {
         <title>Contact Us</title>
       </Helmet>
       <Navbar />
-      <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gray-100 p-6">
+      <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
+        <a href="/" className="text-gray-600 font-semibold hover:underline">
+          Home
+        </a>
+        <span className="text-gray-400">&gt;</span>
+        <a
+          href="/explore"
+          className="text-gray-600 font-semibold hover:underline"
+        >
+          Explore
+        </a>
+        <span className="text-gray-400">&gt;</span>
+        <a
+          href="/explore"
+          className="text-gray-600 font-semibold hover:underline"
+        >
+          Properties
+        </a>
+        <span className="text-gray-400">&gt;</span>
+        <a
+          href="/explore"
+          className="text-gray-600 font-semibold hover:underline"
+        >
+          About
+        </a>
+
+        <span className="text-gray-400">&gt;</span>
+        <span className="text-blue-900 font-bold">Contact</span>
+      </nav>
+      <div className="flex flex-col md:flex-row items-center justify-center min-h-screen bg-gray-50 p-6">
         <div className="md:w-1/2 space-y-6">
           <h1 className="text-6xl font-bold">Contact Us</h1>
           <p className="text-gray-600">

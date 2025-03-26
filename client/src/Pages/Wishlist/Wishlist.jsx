@@ -1,7 +1,7 @@
 import React, { lazy, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const Navbar = lazy(() => import("./Navbar"));
+const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const Wishlist = () => {
   const [wishList, setWishList] = useState([]),
     [loading, setLoading] = useState(!0),
