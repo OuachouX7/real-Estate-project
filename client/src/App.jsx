@@ -12,7 +12,7 @@ const Properties = lazy(() => import("./Pages/Properties"));
 const AddProperties = lazy(() => import("./Pages/addProperties"));
 const PropertyDetails = lazy(() => import("./Pages/PropertyDetails"));
 const Chat = lazy(() => import("./Pages/Chat"));
-const Wishlist = lazy(() => import("./components/Wishlist"));
+const Wishlist = lazy(() => import("./Components/Wishlist"));
 const Users = lazy(() => import("./Pages/Users"));
 const Explore = lazy(() => import("./Pages/Explore"));
 const Spinner = lazy(() => import("./Components/Spinner"))

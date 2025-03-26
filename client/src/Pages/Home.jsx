@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import homeimg from "../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
-const Navbar = lazy(() => import("../components/Navbar"));
-const Footer = lazy(() => import("../components/Footer"));
+const Navbar = lazy(() => import("../Components/Navbar"));
+const Footer = lazy(() => import("../Components/Footer"));
 const Spinner = lazy(() => import("../Components/Spinner"));
 const Home = () => {
   const [properties, setProperties] = useState([]),

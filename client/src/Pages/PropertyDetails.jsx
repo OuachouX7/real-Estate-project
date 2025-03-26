@@ -4,9 +4,9 @@ import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-const Footer = lazy(() => import("../components/Footer"));
-const Navbar = lazy(() => import("../components/Navbar"));
-const LocationMap = lazy(() => import("../components/LocationMap"));
+const Footer = lazy(() => import("../Components/Footer"));
+const Navbar = lazy(() => import("../Components/Navbar"));
+const LocationMap = lazy(() => import("../Components/LocationMap"));
 const PropertyDetails = () => {
   const { id: t } = useParams(),
     [property, setProperty] = useState(null),

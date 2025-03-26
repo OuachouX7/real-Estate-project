@@ -2,8 +2,8 @@ import React, { lazy, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const Navbar = lazy(() => import("../Components/Navbar"));
-const LocationMap = lazy(() => import("../components/LocationMap"));
-const SearchBar = lazy(() => import("../components/SearchBar"));
+const LocationMap = lazy(() => import("../Components/LocationMap"));
+const SearchBar = lazy(() => import("../Components/SearchBar"));
 
 
 const Explore = () => {

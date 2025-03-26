@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { lazy } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const Navbar = lazy(() => import("../components/Navbar"));
-const Footer = lazy(() => import("../components/Footer"));
+const Navbar = lazy(() => import("../Components/Navbar"));
+const Footer = lazy(() => import("../Components/Footer"));
 const Spinner = lazy(() => import("../Components/Spinner"))
 
 const Properties = () => {
