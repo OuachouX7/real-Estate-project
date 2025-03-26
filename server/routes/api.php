@@ -14,7 +14,6 @@ Route::get('/user', function (Request $request) {
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [UsersController::class, 'logout']);
     Route::get('/users', [UsersController::class, 'index']);
-    Route::post('/addProperty', [PropertiesController::class, 'store']);
     Route::post('/addFavorite', [FavoriteController::class, 'addFavorite']);
     Route::get('/favorites', [FavoriteController::class, 'index']);
     Route::get('/getMessages', [MessageController::class, 'index']);
@@ -23,6 +22,7 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('/deleteFavorite/{id}', [FavoriteController::class, 'deleteFavorite']);
     Route::delete('/deleteProperty/{id}', [PropertiesController::class, 'deleteProperty']);
     Route::put('/properties/{id}', [PropertiesController::class, 'updateProperty']);
+    Route::post('/addProperty', [PropertiesController::class, 'store']);
 });
 
 Route::get('/propertiesSearch', [PropertiesController::class, 'search']);

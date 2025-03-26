@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
+            $table->string('category');
+            $table->string('rentalFrequency');
             $table->decimal('price', 10, 2);
             $table->string('location');
             $table->boolean('is_available')->default(true);

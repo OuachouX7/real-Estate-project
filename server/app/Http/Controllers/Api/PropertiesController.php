@@ -36,6 +36,8 @@ class PropertiesController extends Controller
             'description' => 'required',
             'price' => 'required',
             'location' => 'required',
+            'category' => 'required',
+            'rentalFrequency' => 'required',
         ]);
 
         $property = Property::create([
@@ -44,6 +46,8 @@ class PropertiesController extends Controller
             'price' => $request->price,
             'location' => $request->location,
             'is_available' => true,
+            'category' => $request->category,
+            'rentalFrequency' => $request->rentalFrequency,
         ]);
 
         $propertyImages = [];

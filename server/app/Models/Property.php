@@ -12,6 +12,8 @@ class Property extends Model
         'price',
         'location',
         'is_available',
+        'rentalFrequency',
+        'category',
     ];
 
     public function images()

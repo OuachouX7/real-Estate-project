@@ -1,63 +1,61 @@
 import React, { lazy, useState } from "react";
 import axios from "axios";
 import { Navigate, useNavigate } from "react-router-dom";
-
 const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const Footer = lazy(() => import("../../Components/Footer/Footer"));
 
-const CreateListingForm = () => {
+const AddProperty = () => {
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    category: "",
-    listedIn: "",
-    status: "Active",
-    price: "",
-    rentalPrice: "",
-    rentalFrequency: "Monthly",
-    images: [],
-    location: "",
-  });
-
-  const [images, setImages] = useState([]);
-  const token = sessionStorage.getItem("token");
-  const navigate = useNavigate();
-
-  if (!token) {
-    navigate("/");
-    Navigate("/");
-  }
-
+      title: "",
+      description: "",
+      category: "",
+      price: null,
+      images: [],
+      rentalFrequency: "",
+      location: "",
+    }),
+    [images, setImages] = useState([]),
+    [base64Image, setBase64Image] = useState(""),
+    token = sessionStorage.getItem("token"),
+    navigate = useNavigate();
   const handleImage = (e) => {
-    const files = Array.from(e.target.files);
-    const updatedImages = [...images];
-
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        updatedImages.push(reader.result);
-        setImages(updatedImages);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://localhost:8000/api/addProperty",
-        { ...formData, images },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+      let t = e.target.files[0],
+        a = new FileReader();
+      a.readAsDataURL(t),
+        (a.onloadend = () => {
+          setBase64Image(a.result), setImages([...images, a.result]);
+        });
+    },
+    handleSubmit = (e) => {
+      e.preventDefault();
+      try {
+        axios
+          .post(
+            "http://localhost:8000/api/addProperty",
+            {
+              title: formData.title,
+              description: formData.description,
+              price: formData.price,
+              images: images,
+              rentalFrequency: formData.rentalFrequency,
+              category: formData.category,
+              location: formData.location,
+            },
+            { headers: { Authorization: `Bearer ${token}` } }
+          )
+          .then((response) => {
+            console.log(response.data);
+            navigate("/properties");
+          })
+          .catch((error) => {
+            console.error(
+              error.message
+            );
+          });
+      } catch (t) {
+        console.log(t);
+      }
+    };
   return (
     <>
       <Navbar />
@@ -90,7 +88,6 @@ const CreateListingForm = () => {
               required
             ></textarea>
           </div>
-
           <div>
             <label className="block font-semibold">Category</label>
             <select
@@ -107,50 +104,19 @@ const CreateListingForm = () => {
               <option value="Condo">Garage</option>
             </select>
           </div>
-
           <div>
-            <label className="block font-semibold">Listed In</label>
+            <label className="block font-semibold">Location</label>
             <input
               type="text"
-              name="listedIn"
+              name="rentalPrice"
               onChange={(e) =>
-                setFormData({ ...formData, listedIn: e.target.value })
+                setFormData({ ...formData, location: e.target.value })
               }
               className="w-full p-2 border rounded"
-              placeholder="e.g., MLS, Zillow, Local Listing"
-            />
-          </div>
-
-          <div>
-            <label className="block font-semibold">Property Status</label>
-            <select
-              name="status"
-              value={formData.status}
-              onChange={(e) =>
-                setFormData({ ...formData, status: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-            >
-              <option value="Active">Active</option>
-              <option value="Pending">Pending</option>
-              <option value="Sold">Sold</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block font-semibold">Property Sales Price</label>
-            <input
-              type="number"
-              name="price"
-              onChange={(e) =>
-                setFormData({ ...formData, price: e.target.value })
-              }
-              className="w-full p-2 border rounded"
-              placeholder="Add sales price"
+              placeholder="Add location"
               min="0"
             />
           </div>
-
           <div className="flex space-x-4">
             <div className="w-2/3">
               <label className="block font-semibold">
@@ -160,7 +126,7 @@ const CreateListingForm = () => {
                 type="number"
                 name="rentalPrice"
                 onChange={(e) =>
-                  setFormData({ ...formData, rentalPrice: e.target.value })
+                  setFormData({ ...formData, price: e.target.value })
                 }
                 className="w-full p-2 border rounded"
                 placeholder="Add rental price"
@@ -176,13 +142,13 @@ const CreateListingForm = () => {
                 }
                 className="w-full p-2 border rounded"
               >
+                <option value="">Select frequency</option>
                 <option value="Monthly">Monthly</option>
                 <option value="Weekly">Weekly</option>
-                <option value="Yearly">Yearly</option>
+                <option value="Yearly">Per Day</option>
               </select>
             </div>
           </div>
-
           <div>
             <label className="block font-semibold">Images</label>
             <input
@@ -191,12 +157,22 @@ const CreateListingForm = () => {
               onChange={handleImage}
               multiple
               className="w-full p-2 border rounded"
+              placeholder="Add images"
             />
           </div>
-
+          <div className="grid grid-cols-3 gap-4">
+            {images.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt="Property"
+                className="h-32 w-full object-cover rounded-md"
+              />
+            ))}
+          </div>
           <button
             type="submit"
-            className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 transition"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
           >
             Add
           </button>
@@ -207,4 +183,4 @@ const CreateListingForm = () => {
   );
 };
 
-export default CreateListingForm;
+export default AddProperty;
