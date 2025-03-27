@@ -75,9 +75,14 @@ const Explore = () => {
 
       <div className="p-10 mt-10">
         {filters.location && (
-          <h2 className="text-3xl font-bold mb-4">
-            Search Results for "{filters?.category + ' in ' + filters?.location}"
-          </h2>
+          <>
+            <h2 className="text-3xl font-bold mb-4">
+              Search Results for "{filters?.location}"
+            </h2>
+            <p className="my-3 text-[#333333] font-[600]">
+              Displaying {properties.length} Results
+            </p>
+          </>
         )}
         <div className="grid grid-cols-4 gap-4">
           {properties?.length > 0 ? (
@@ -87,7 +92,7 @@ const Explore = () => {
                 className="p-4 bg-white border rounded-2xl shadow-lg cursor-pointer hover:shadow-xl transition-all border-gray-200"
                 onClick={() => navigate(`/property/${listing?.id}`)}
               >
-                <div className="w-full h-48 bg-gray-200 rounded-xl overflow-hidden">
+                <div className="w-full h-52 bg-gray-200 rounded-xl overflow-hidden">
                   <img
                     src={`http://localhost:8000/storage/images/${listing?.images[0]?.image_url}`}
                     alt={listing?.title}
@@ -96,6 +101,9 @@ const Explore = () => {
                   />
                 </div>
 
+                <div className="bg-[#DEF8ED] w-fit p-2 rounded-[8px] text-[#27AD77] mt-2">
+                  {listing.category}
+                </div>
                 <h3
                   className="text-lg font-semibold mt-3"
                   style={{ color: "#123763" }}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 export default function SearchBar({ onSearch }) {
-  const [location, setLocation] = useState("Jakarta, Indonesia");
+  const [location, setLocation] = useState("Apartment");
   const [priceRange, setPriceRange] = useState("$106 - $948");
   const [category,setCategory] = useState("");
 

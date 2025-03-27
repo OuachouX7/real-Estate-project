@@ -29,7 +29,7 @@ const Home = () => {
     getProperties();
   }, []);
   return (
-    <>
+    <div className="bg-[#fff]">
       <Helmet>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -119,7 +119,146 @@ const Home = () => {
           </div>
         </div>
       </div>
-
+      <div>
+        <div className="flex w-full justify-around items-center">
+          <div className="text-[#123763] font-[700] text-[46px] leading-[64px] w-[45%] flex justify-end text-start">
+            We help you to find your dream house
+          </div>
+          <div className="w-[45%] text-[#666666] leading-[26px] font-[400] px-5">
+            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
+            sint. Velit officia consequat duis enim velit mollit. Exercitation
+            veniam consequat sunt nostrud amet.
+          </div>
+        </div>
+        <div className="w-full flex justify-around items-center mt-10">
+          <div className="w-[45%] flex justify-center">
+            <div className="h-[450px] w-full">
+              <img className="w-full h-full rounded-[8px]" src={homeimg} alt="ttt"  />
+            </div>
+          </div>
+          <div className="w-[45%]">
+            <div className="py-2.5 radius-[8px] box-border">
+              <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
+                <summary className="bg-white relative flex items-center">
+                  <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
+                    Lifetime Warranty
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 absolute right-0 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    ></path>
+                  </svg>
+                </summary>
+                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                amet sint. Velit officia consequat duis enim velit mollit.
+                Exercitation veniam consequat.
+              </details>
+            </div>
+            <div className="py-2.5 radius-[8px] box-border">
+              <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
+                <summary className="bg-white relative flex items-center">
+                  <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
+                    cheapest compared to other competitors
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 absolute right-0 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    ></path>
+                  </svg>
+                </summary>
+                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                amet sint. Velit officia consequat duis enim velit mollit.
+                Exercitation veniam consequat.
+              </details>
+            </div>
+            <div className="py-2.5 radius-[8px] box-border">
+              <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
+                <summary className="bg-white relative flex items-center">
+                  <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
+                    Strategic location
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 absolute right-0 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    ></path>
+                  </svg>
+                </summary>
+                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                amet sint. Velit officia consequat duis enim velit mollit.
+                Exercitation veniam consequat.
+              </details>
+            </div>
+            <div className="py-2.5 radius-[8px] box-border">
+              <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
+                <summary className="bg-white relative flex items-center">
+                  <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
+                    Low tax
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 absolute right-0 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    ></path>
+                  </svg>
+                </summary>
+                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
+                amet sint. Velit officia consequat duis enim velit mollit.
+                Exercitation veniam consequat.
+              </details>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mt-10 flex justify-between items-center">
+        <div className="flex flex-col w-[35%] h-[400px] justify-around ml-10">
+          <h2 className="text-[#123763] font-[700] text-wrap text-[46px] leading-[64px] flex text-start">Need a home loan? Get pre-approved</h2>
+          <p className="text-[#666666] leading-[26px] text-wrap font-[400]">Creating a very beautiful website design in accordance with the fundamental user experience which is examined more deeply by the UX Designers that we have. </p>
+          <p className="text-[#666666] leading-[26px] font-[400] mt-5">And make good visuals so that clients are satisfied and easy when viewing the website. First impressions are our tricks to attract a customer who has seen the website that we are going to create</p>
+          <button className="bg-orange-300 text-white rounded-[8px] p-2 mt-3 w-fit">Read More</button>
+        </div>
+        <div className="w-[55%] h-[500px] flex justify-end">
+          <div className="bg-[#27AD77] w-[60%] h-full rounded-l-[70px] flex items-center">
+            <div className="w-[100%] h-[70%] translate-x-[-15%]">
+              <img className="h-full rounded-4xl w-full" src={homeimg} alt="hoem img" />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="bg-[#27AD77] text-white p-10 h-[600px] flex items-center justify-around mt-10 w-full">
         <div className="w-[50%]">
           <h2 className="text-3xl font-bold">
@@ -144,7 +283,6 @@ const Home = () => {
         </div>
         <div className="bg-gray-200 w-[508px] h-[498px] rounded-lg mr-10"></div>
       </div>
-
       <div className="bg-gray-400 text-white text-center py-35  w-full ">
         <h2 className="text-3xl font-bold">
           Get Luxury And Cheap Housing <br /> And Guaranteed Forever
@@ -155,7 +293,7 @@ const Home = () => {
       </div>
 
       <Footer />
-    </>
+    </div>
   );
 };
 
