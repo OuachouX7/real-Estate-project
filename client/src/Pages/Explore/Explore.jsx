@@ -39,7 +39,7 @@ const Explore = () => {
         <span className="text-gray-400">&gt;</span>
         <span className="text-blue-900 font-bold">Explore</span>
       </nav>
-      <div className="relative flex justify-center">
+      <div className="relative flex">
         <svg
           className="w-full"
           height="480"
@@ -62,7 +62,7 @@ const Explore = () => {
             </clipPath>
           </defs>
         </svg>
-        <div className="absolute bottom-[-50px] ">
+        <div className="absolute bottom-[-50px] left-0 right-0 flex justify-center">
           <SearchBar onSearch={fetchProperties} />
         </div>
       </div>
