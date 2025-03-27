@@ -152,7 +152,7 @@ const PropertyDetails = () => {
                 style={{ color: "#123763" }}
               >
                 Description
-              </h2>
+              </h2><br></br>
               {description?.map((desc, index) => (
                 <p key={index} className="text-gray-700">
                   {desc}
@@ -188,7 +188,7 @@ const PropertyDetails = () => {
                 style={{ color: "#123763" }}
               >
                 Details
-              </h3>
+              </h3><br></br>
               <div className="grid grid-cols-1 gap-4 mt-2">
                 <p className="text-gray-700">
                   <strong>Price :</strong> {property.price} DH
@@ -203,6 +203,9 @@ const PropertyDetails = () => {
                 </p>
                 <p className="text-gray-700">
                   <strong>Frequency :</strong> {property.rentalFrequency}
+                </p>
+                <p className="text-gray-700">
+                  <strong>Contact :</strong> {"0677172512"}
                 </p>
               </div>
             </div>

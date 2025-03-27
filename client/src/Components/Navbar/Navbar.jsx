@@ -132,14 +132,14 @@ const Navbar = () => {
             </button>
             <div className="z-10 relative">
               {arrow && isAdmin && (
-                <div className="absolute top-5 right-0 bg-white shadow-md p-4">
+                <div className={!isAdmin ? "absolute top-5 right-0 bg-white shadow-md p-4" : "hidden"}>
                   <Link to="/add" className="block hover:text-blue-600">
                     Add Property
                   </Link>
                 </div>
               )}
               {arrow && (
-                <div className="absolute top-5 right-0 bg-white shadow-md p-4">
+                <div className={isAdmin ? "absolute top-5 right-0 bg-white shadow-md p-4" : "hidden"}>
                   <Link to="/wishlist" className="block hover:text-blue-600">
                     Wishlist
                   </Link>
