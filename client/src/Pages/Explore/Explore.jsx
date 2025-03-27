@@ -7,10 +7,16 @@ const SearchBar = lazy(() => import("../../Components/SearchBar/SearchBar"));
 
 const Explore = () => {
   const [properties, setProperties] = useState([]);
+  const [filters, setFilters] = useState({});
 
   const navigate = useNavigate();
 
   const fetchProperties = async (filters) => {
+    setFilters({
+      location: filters.location,
+      price: filters.priceRange,
+      category: filters.category,
+    });
     try {
       const response = await axios.get(
         `http://localhost:8000/api/propertiesSearch`,
@@ -67,29 +73,50 @@ const Explore = () => {
         </div>
       </div>
 
-      <div className="p-10">
-        <h2 className="text-3xl font-bold mb-4">Search Results</h2>
+      <div className="p-10 mt-10">
+        {filters.location && (
+          <h2 className="text-3xl font-bold mb-4">
+            Search Results for "{filters?.category + ' in ' + filters?.location}"
+          </h2>
+        )}
         <div className="grid grid-cols-4 gap-4">
-          {properties.length > 0 ? (
-            properties.map((property) => (
+          {properties?.length > 0 ? (
+            properties.map((listing, index) => (
               <div
-                key={property.id}
-                className="p-4 border rounded-lg shadow-sm"
+                key={index}
+                className="p-4 bg-white border rounded-2xl shadow-lg cursor-pointer hover:shadow-xl transition-all border-gray-200"
+                onClick={() => navigate(`/property/${listing?.id}`)}
               >
-                <img
-                  src={`http://localhost:8000/storage/images/${property.images[0].image_url}`}
-                  loading="lazy"
-                  onClick={() => navigate(`/property/${property.id}`)}
-                  alt={property.title}
-                  className="w-full h-40 object-contain mb-2"
-                />
-                <p className="font-bold">{property.title}</p>
-                <p className="text-gray-600">{property.location}</p>
-                <p className="text-xl font-bold">{property.price}</p>
+                <div className="w-full h-48 bg-gray-200 rounded-xl overflow-hidden">
+                  <img
+                    src={`http://localhost:8000/storage/images/${listing?.images[0]?.image_url}`}
+                    alt={listing?.title}
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                <h3
+                  className="text-lg font-semibold mt-3"
+                  style={{ color: "#123763" }}
+                >
+                  {listing?.title}
+                </h3>
+
+                <div className="flex items-center text-gray-500 text-sm mt-1">
+                  <span className="text-green-600 mr-1">📍</span>
+                  {listing?.location}
+                </div>
+
+                <div className="flex justify-between items-center mt-3">
+                  <span className="text-xl font-bold">{listing?.price} DH</span>
+                </div>
               </div>
             ))
           ) : (
-            <p>No properties found.</p>
+            <p className="text-gray-500 col-span-4 text-center">
+              No properties found.
+            </p>
           )}
         </div>
       </div>
