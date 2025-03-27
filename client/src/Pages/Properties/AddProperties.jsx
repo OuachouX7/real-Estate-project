@@ -1,6 +1,6 @@
 import React, { lazy, useState } from "react";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const Footer = lazy(() => import("../../Components/Footer/Footer"));
 
@@ -48,9 +48,7 @@ const AddProperty = () => {
             navigate("/properties");
           })
           .catch((error) => {
-            console.error(
-              error.message
-            );
+            console.error(error.message);
           });
       } catch (t) {
         console.log(t);
@@ -59,6 +57,15 @@ const AddProperty = () => {
   return (
     <>
       <Navbar />
+      <div className="mt-2">
+        <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
+          <Link to="/" className="text-gray-600 font-semibold hover:underline">
+            Home
+          </Link>
+          <span className="text-gray-400">&gt;</span>
+          <span className="text-blue-900 font-bold">Add Property</span>
+        </nav>
+      </div>
       <div className="max-w-4xl mx-auto p-6">
         <h2 className="text-2xl font-bold mb-4">Create A Listing</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

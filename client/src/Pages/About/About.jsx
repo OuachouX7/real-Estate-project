@@ -1,31 +1,17 @@
 import React from "react";
 import { lazy } from "react";
 import aboutPic from "../../assets/aboutPic.webp";
+import { Link } from "react-router-dom";
 const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const Footer = lazy(() => import("../../Components/Footer/Footer"));
 const About = () => {
   return (
     <>
       <Navbar />
-      <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
-        <a href="/" className="text-gray-600 font-semibold hover:underline">
+      <nav className="flex  items-center space-x-2 bg-white p-8 rounded-lg">
+        <Link to="/" className="text-gray-600 font-semibold hover:underline">
           Home
-        </a>
-        <span className="text-gray-400">&gt;</span>
-        <a
-          href="/explore"
-          className="text-gray-600 font-semibold hover:underline"
-        >
-          Explore
-        </a>
-        <span className="text-gray-400">&gt;</span>
-        <a
-          href="/explore"
-          className="text-gray-600 font-semibold hover:underline"
-        >
-          Properties
-        </a>
-
+        </Link>
         <span className="text-gray-400">&gt;</span>
         <span className="text-blue-900 font-bold">About</span>
       </nav>

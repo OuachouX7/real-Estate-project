@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { lazy } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const Footer = lazy(() => import("../../Components/Footer/Footer"));
 const Spinner = lazy(() => import("../../Components/Loading/Spinner"));
@@ -64,18 +64,10 @@ const Properties = () => {
   return (
     <>
       <Navbar />
-      <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
-        <a href="/" className="text-gray-600 font-semibold hover:underline">
+      <nav className="flex items-center space-x-2 p-8 rounded-lg">
+        <Link to="/" className="text-gray-600 font-semibold hover:underline">
           Home
-        </a>
-        <span className="text-gray-400">&gt;</span>
-        <a
-          href="/explore"
-          className="text-gray-600 font-semibold hover:underline"
-        >
-          Explore
-        </a>
-
+        </Link>
         <span className="text-gray-400">&gt;</span>
         <span className="text-blue-900 font-bold">Properties</span>
       </nav>
@@ -107,9 +99,9 @@ const Properties = () => {
                   <div className="flex justify-between items-center">
                     <span className="text-xl font-bold">{listing.price}</span>
                     {isAdmin && (
-                      <div className="flex justify-between w-[45%]">
+                      <div className="flex justify-end w-[70%]">
                         <button
-                          className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                          className="px-4 py-2 mr-1 bg-red-500 text-white rounded-lg hover:bg-red-600"
                           onClick={() => handleDelete(listing.id)}
                         >
                           Delete

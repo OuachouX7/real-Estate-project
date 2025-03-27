@@ -20,31 +20,9 @@ const Contact = () => {
       </Helmet>
       <Navbar />
       <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
-        <a href="/" className="text-gray-600 font-semibold hover:underline">
+        <Link to="/" className="text-gray-600 font-semibold hover:underline">
           Home
-        </a>
-        <span className="text-gray-400">&gt;</span>
-        <a
-          href="/explore"
-          className="text-gray-600 font-semibold hover:underline"
-        >
-          Explore
-        </a>
-        <span className="text-gray-400">&gt;</span>
-        <a
-          href="/explore"
-          className="text-gray-600 font-semibold hover:underline"
-        >
-          Properties
-        </a>
-        <span className="text-gray-400">&gt;</span>
-        <a
-          href="/explore"
-          className="text-gray-600 font-semibold hover:underline"
-        >
-          About
-        </a>
-
+        </Link>
         <span className="text-gray-400">&gt;</span>
         <span className="text-blue-900 font-bold">Contact</span>
       </nav>

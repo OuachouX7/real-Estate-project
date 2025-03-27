@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { lazy, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const Footer = lazy(() => import("../../Components/Footer/Footer"));
 
@@ -66,6 +66,17 @@ const EditProperty = () => {
   return (
     <>
       <Navbar />
+      <div className="mt-2">
+        <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
+          <Link to="/" className="text-gray-600 font-semibold hover:underline">
+            Home
+          </Link>
+          <span className="text-gray-400">&gt;</span>
+          <span className="text-blue-900 font-bold">Edit Property</span>
+          <span className="text-gray-400">&gt;</span>
+          <span className="text-blue-900 font-bold">{properties.title}</span>
+        </nav>
+      </div>
       <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6  ">
         <h1 className="text-2xl font-bold mb-6">Edit Property</h1>
         <form onSubmit={updateProperty} className="space-y-4 py-2">
@@ -144,7 +155,7 @@ const EditProperty = () => {
           </button>
         </form>
       </div>
-      <div className="mt-6"> 
+      <div className="mt-6">
         <Footer />
       </div>
     </>
