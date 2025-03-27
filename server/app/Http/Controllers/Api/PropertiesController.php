@@ -115,6 +115,7 @@ class PropertiesController extends Controller
     public function search(Request $request)
     {
         $properties = Property::where('location', 'like', '%' . $request->location . '%')
+            ->where('category', 'like', '%' . $request->category . '%')
             ->where('price', '<=', $request->price)
             ->with('images')
             ->get();
