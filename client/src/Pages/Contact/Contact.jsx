@@ -2,8 +2,6 @@ import React from "react";
 import { lazy } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
-const Footer = lazy(() => import("../../Components/Footer/Footer"));
 
 const Contact = () => {
   return (
@@ -18,7 +16,6 @@ const Contact = () => {
         <meta name="og:image" content="/src/assets/home-image.jpg" />
         <title>Contact Us</title>
       </Helmet>
-      <Navbar />
       <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
         <Link to="/" className="text-gray-600 font-semibold hover:underline">
           Home
@@ -111,7 +108,6 @@ const Contact = () => {
           </form>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

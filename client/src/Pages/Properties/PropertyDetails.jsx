@@ -4,9 +4,6 @@ import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
-const Footer = lazy(() => import("../../Components/Footer/Footer"));
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const LocationMap = lazy(() => import("../../Components/Map/LocationMap"));
 
 const PropertyDetails = () => {
@@ -15,7 +12,7 @@ const PropertyDetails = () => {
     [loading, setLoading] = useState(true),
     [error, setError] = useState(null),
     [description, setDescription] = useState([]),
-    [selectedImageIndex, setSelectedImageIndex] = useState(null), // Track the index of the selected image
+    [selectedImageIndex, setSelectedImageIndex] = useState(null),
     token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),
     navigate = useNavigate();
@@ -29,7 +26,7 @@ const PropertyDetails = () => {
         if (!response.ok) throw new Error("Failed to fetch property details");
         const data = await response.json();
         setProperty(data);
-        setDescription(data.description.split(/\s+/));
+        setDescription(data.description.split(/ {2,}/));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -67,11 +64,11 @@ const PropertyDetails = () => {
   };
 
   const openImageModal = (index) => {
-    setSelectedImageIndex(index); // Set the index of the selected image
+    setSelectedImageIndex(index);
   };
 
   const closeImageModal = () => {
-    setSelectedImageIndex(null); // Close the modal
+    setSelectedImageIndex(null);
   };
 
   const showNextImage = () => {
@@ -98,7 +95,6 @@ const PropertyDetails = () => {
 
   return (
     <>
-      <Navbar />
       <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
         <Link to="/" className="text-gray-600 font-semibold hover:underline">
           Home
@@ -122,10 +118,16 @@ const PropertyDetails = () => {
               {property.title}
             </h1>
             <button
-              className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+              className=" text-white px-4 py-2 rounded-md"
               onClick={() => handleFavorite(property.id)}
             >
-              Add to Favorites
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512"
+                className="w-8 h h-8"
+              >
+                <path d="M192 0c-41.8 0-77.4 26.7-90.5 64L64 64C28.7 64 0 92.7 0 128L0 448c0 35.3 28.7 64 64 64l256 0c35.3 0 64-28.7 64-64l0-320c0-35.3-28.7-64-64-64l-37.5 0C269.4 26.7 233.8 0 192 0zm0 64a32 32 0 1 1 0 64 32 32 0 1 1 0-64zM72 272a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm104-16l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16s7.2-16 16-16zM72 368a24 24 0 1 1 48 0 24 24 0 1 1 -48 0zm88 0c0-8.8 7.2-16 16-16l128 0c8.8 0 16 7.2 16 16s-7.2 16-16 16l-128 0c-8.8 0-16-7.2-16-16z" />
+              </svg>
             </button>
           </div>
           <p className="text-gray-600 flex items-center mt-2">
@@ -145,14 +147,15 @@ const PropertyDetails = () => {
               ))}
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-8 mt-8">
-            <div className="col-span-2 w-fit">
+          <div className="flex justify-between w-full items-end mt-8">
+            <div className="w-[20%]">
               <h2
                 className="text-3xl font-semibold"
                 style={{ color: "#123763" }}
               >
                 Description
-              </h2><br></br>
+              </h2>
+              <br></br>
               {description?.map((desc, index) => (
                 <p key={index} className="text-gray-700">
                   {desc}
@@ -188,7 +191,8 @@ const PropertyDetails = () => {
                 style={{ color: "#123763" }}
               >
                 Details
-              </h3><br></br>
+              </h3>
+              <br></br>
               <div className="grid grid-cols-1 gap-4 mt-2">
                 <p className="text-gray-700">
                   <strong>Price :</strong> {property.price} DH
@@ -209,13 +213,12 @@ const PropertyDetails = () => {
                 </p>
               </div>
             </div>
-            <div className="w-full">
+            <div className="w-[80%]">
               <LocationMap location={property.location} />
             </div>
           </div>
         </div>
       </div>
-
       {selectedImageIndex !== null && (
         <div
           className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
@@ -292,8 +295,6 @@ const PropertyDetails = () => {
           </div>
         </div>
       )}
-
-      <Footer />
     </>
   );
 };

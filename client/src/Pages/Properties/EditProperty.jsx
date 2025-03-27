@@ -1,8 +1,6 @@
 import axios from "axios";
 import React, { lazy, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
-const Footer = lazy(() => import("../../Components/Footer/Footer"));
 
 const EditProperty = () => {
   const [properties, setProperties] = useState([]);
@@ -65,7 +63,6 @@ const EditProperty = () => {
 
   return (
     <>
-      <Navbar />
       <div className="mt-2">
         <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
           <Link to="/" className="text-gray-600 font-semibold hover:underline">
@@ -154,9 +151,6 @@ const EditProperty = () => {
             Update
           </button>
         </form>
-      </div>
-      <div className="mt-6">
-        <Footer />
       </div>
     </>
   );

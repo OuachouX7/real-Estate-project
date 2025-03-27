@@ -2,12 +2,9 @@ import React from "react";
 import { lazy } from "react";
 import aboutPic from "../../assets/aboutPic.webp";
 import { Link } from "react-router-dom";
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
-const Footer = lazy(() => import("../../Components/Footer/Footer"));
 const About = () => {
   return (
     <>
-      <Navbar />
       <nav className="flex  items-center space-x-2 bg-white p-8 rounded-lg">
         <Link to="/" className="text-gray-600 font-semibold hover:underline">
           Home
@@ -61,8 +58,6 @@ const About = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </>
   );
 };

@@ -1,11 +1,14 @@
-import { lazy } from "react";
+import { lazy, useEffect, useState } from "react";
 import { Suspense } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import axios from "axios";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 const Home = lazy(() => import("./Pages/Home/Home"));
 const Explore = lazy(() => import("./Pages/Explore/Explore"));
 const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
 const EditProperty = lazy(() => import("./Pages/Properties/EditProperty"));
-const PropertyDetails = lazy(() => import("./Pages/Properties/PropertyDetails"));
+const PropertyDetails = lazy(() =>
+  import("./Pages/Properties/PropertyDetails")
+);
 const Login = lazy(() => import("./Pages/Auth/Login"));
 const AddProperties = lazy(() => import("./Pages/Properties/AddProperties"));
 const About = lazy(() => import("./Pages/About/About"));
@@ -15,17 +18,55 @@ const Chat = lazy(() => import("./Pages/Chat/Chat"));
 const Wishlist = lazy(() => import("./Pages/Wishlist/Wishlist"));
 const Users = lazy(() => import("./Pages/Users/Users"));
 const Spinner = lazy(() => import("./Components/Loading/Spinner"));
-
-
+const Navbar = lazy(() => import("./Components/Navbar/Navbar"));
+const AdminNavbar = lazy(() => import("./Components/Navbar/AdminNavbar"));
+const Footer = lazy(() => import("./Components/Footer/Footer"));
 
 function App() {
+  const [users, setUsers] = useState([]);
+  const token = sessionStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+
+  const getUsers = async () => {
+    try {
+      axios
+        .get("http://localhost:8000/api/users", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((e) => {
+          setUsers(e.data.data);
+        })
+        .catch((e) => console.error("Error fetching users:", e));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const isAdmin = users.find(
+    (user) => user.role == "admin" && user.id == userId && token
+  );
+
+  console.log(isAdmin);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
+
   return (
     <BrowserRouter>
-      <Suspense
-        fallback={
-          <Spinner />
-        }
-      >
+      <AppContent isAdmin={isAdmin} />
+    </BrowserRouter>
+  );
+}
+
+function AppContent({ isAdmin }) {
+  const location = useLocation();
+  const isChatRoute = location.pathname.startsWith("/chat");
+
+  return (
+    <>
+      {!isChatRoute && (isAdmin ? <AdminNavbar /> : <Navbar />)}
+      <Suspense fallback={<Spinner />}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/explore" element={<Explore />} />
@@ -42,7 +83,9 @@ function App() {
           <Route path="/users" element={<Users />} />
         </Routes>
       </Suspense>
-    </BrowserRouter>
+      {!isChatRoute && <Footer />}
+    </>
   );
 }
+
 export default App;

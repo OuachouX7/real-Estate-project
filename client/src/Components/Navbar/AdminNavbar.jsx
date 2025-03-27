@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/Property.webp";
 import axios from "axios";
 
-const Navbar = () => {
+const AdminNavbar = () => {
   const [arrow, SetArrow] = useState(false);
   const location = useLocation();
   const activePath = location.pathname;
@@ -110,10 +110,10 @@ const Navbar = () => {
             <div className="z-10 relative">
               {arrow && (
                 <div
-                  className={"absolute top-5 right-0 bg-white shadow-md p-4"}
+                  className={"absolute top-6 right-0 bg-gray-50 shadow-md p-4 px-4"}
                 >
-                  <Link to="/wishlist" className="block hover:text-blue-600">
-                    Wishlist
+                  <Link to="/add" className="flex justify-center items-center hover:text-blue-600 px-6">
+                    Add Property
                   </Link>
                 </div>
               )}
@@ -125,4 +125,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default AdminNavbar;

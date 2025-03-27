@@ -1,8 +1,6 @@
 import React, { lazy, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
-const LocationMap = lazy(() => import("../../Components/Map/LocationMap"));
 const SearchBar = lazy(() => import("../../Components/SearchBar/SearchBar"));
 
 const Explore = () => {
@@ -37,7 +35,6 @@ const Explore = () => {
 
   return (
     <>
-      <Navbar />
       <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
         <a href="/" className="text-gray-600 font-semibold hover:underline">
           Home

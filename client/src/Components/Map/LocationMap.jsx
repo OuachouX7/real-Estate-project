@@ -21,7 +21,7 @@ const LocationMap = ({ location }) => {
     }
   }, [location]);
   return (
-    <div className="z-[-1]">
+    <div className="z-[-1] w-full">
       {position && (
         <MapContainer
           center={position}

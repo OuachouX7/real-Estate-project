@@ -1,8 +1,6 @@
 import React, { lazy, useState } from "react";
 import axios from "axios";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
-const Footer = lazy(() => import("../../Components/Footer/Footer"));
+import { Link, useNavigate } from "react-router-dom";
 
 const AddProperty = () => {
   const [formData, setFormData] = useState({
@@ -56,7 +54,6 @@ const AddProperty = () => {
     };
   return (
     <>
-      <Navbar />
       <div className="mt-2">
         <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
           <Link to="/" className="text-gray-600 font-semibold hover:underline">
@@ -185,7 +182,6 @@ const AddProperty = () => {
           </button>
         </form>
       </div>
-      <Footer />
     </>
   );
 };

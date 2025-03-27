@@ -3,8 +3,6 @@ import { lazy } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
-const Footer = lazy(() => import("../../Components/Footer/Footer"));
 
 const Users = () => {
   const [users, setUsers] = useState([]),
@@ -57,7 +55,6 @@ const Users = () => {
           ))}
         </div>
       </div>
-      <Footer />
     </>
   );
 };

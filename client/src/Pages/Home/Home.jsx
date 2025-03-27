@@ -5,14 +5,12 @@ import { useState, useEffect } from "react";
 import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
 import property2 from "../../assets/property2.webp";
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const Footer = lazy(() => import("../../Components/Footer/Footer"));
-const Spinner = lazy(() => import("../../Components/Loading/Spinner"));
 const Home = () => {
   const [properties, setProperties] = useState([]),
-    images = [property2,homeimg],
-    [number,setNumber] = useState(0),
-    [sourceImage,setSourceImage] = useState(property2),
+    images = [property2, homeimg],
+    [number, setNumber] = useState(0),
+    [sourceImage, setSourceImage] = useState(property2),
     navigate = useNavigate(),
     getProperties = () => {
       try {
@@ -22,8 +20,7 @@ const Home = () => {
             e.data?.data[1],
             e.data?.data[2],
             e.data?.data[3],
-          ]),
-            console.log(e.data);
+          ]);
         });
       } catch (e) {
         console.log(e);
@@ -53,7 +50,6 @@ const Home = () => {
         <meta name="og:image" content="/src/assets/home-image.jpg" />
         <title>Home</title>
       </Helmet>
-      <Navbar />
       <div className="relative w-full h-[600px]">
         <img
           src={homeimg}
@@ -303,12 +299,30 @@ const Home = () => {
             <p className="text-sm opacity-80">Pedagang Bakso</p>
           </div>
           <div className="flex gap-4 mt-6">
-            <button className="text-white text-xl hover:opacity-80" onClick={() => {number >= 0 ? setNumber(0) : setNumber(number - 1)}}>←</button>
-            <button className="text-white text-xl hover:opacity-80" onClick={() => { setNumber(number + 1)}}>→</button>
+            <button
+              className="text-white text-xl hover:opacity-80"
+              onClick={() => {
+                number >= 0 ? setNumber(0) : setNumber(number - 1);
+              }}
+            >
+              ←
+            </button>
+            <button
+              className="text-white text-xl hover:opacity-80"
+              onClick={() => {
+                setNumber(number + 1);
+              }}
+            >
+              →
+            </button>
           </div>
         </div>
         <div className="w-[550px] h-[398px] rounded-lg mr-10">
-          <img className="w-full h-full rounded-4xl" src={images[number]} alt="property" />
+          <img
+            className="w-full h-full rounded-4xl"
+            src={images[number]}
+            alt="property"
+          />
         </div>
       </div>
       <div className="bg-gray-400 text-white text-center py-35  w-full ">
@@ -319,8 +333,6 @@ const Home = () => {
           Contact Now
         </button>
       </div>
-
-      <Footer />
     </div>
   );
 };

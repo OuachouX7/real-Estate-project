@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 const Login = () => {
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
+    [error, setError] = useState(false),
     navigate = useNavigate(),
     handleLogin = (e) => {
       e.preventDefault();
@@ -25,7 +26,8 @@ const Login = () => {
                 e.data.user.profile_picture
               ),
               navigate("/");
-          });
+          })
+          .catch((e) => setError(true));
       } catch (t) {
         console.log(t);
       }
@@ -70,6 +72,11 @@ const Login = () => {
             Connect
           </button>
         </form>
+        {error && (
+          <div className="text-red-500 text-center">
+            Invalid email or password
+          </div>
+        )}
         <div className="text-center">
           <Link to="/sign-up" className="text-indigo-600 hover:text-indigo-800">
             Sign up

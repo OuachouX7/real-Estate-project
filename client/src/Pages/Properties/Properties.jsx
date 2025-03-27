@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import { lazy } from "react";
 import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
-const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
-const Footer = lazy(() => import("../../Components/Footer/Footer"));
 const Spinner = lazy(() => import("../../Components/Loading/Spinner"));
 
 const Properties = () => {
@@ -63,7 +61,6 @@ const Properties = () => {
     isAdmin = users.find((e) => "admin" == e.role && e.id == userId);
   return (
     <>
-      <Navbar />
       <nav className="flex items-center space-x-2 p-8 rounded-lg">
         <Link to="/" className="text-gray-600 font-semibold hover:underline">
           Home
@@ -144,7 +141,6 @@ const Properties = () => {
           </button>
         </div>
       </div>
-      <Footer />
     </>
   );
 };
