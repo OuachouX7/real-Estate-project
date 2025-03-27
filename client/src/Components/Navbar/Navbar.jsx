@@ -1,4 +1,5 @@
-import React from "react";
+import React, { use } from "react";
+import { useState , useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/Property.webp";
 import axios from "axios";
@@ -9,6 +10,9 @@ const Navbar = () => {
 
   const token = sessionStorage.getItem("token");
   const profilePicture = localStorage.getItem("profilePicture");
+
+  const [arrow , SetArrow] = useState(false);
+  const [users, setUsers] = useState([]);
 
   const handleLogOut = async () => {
     try {
@@ -24,6 +28,26 @@ const Navbar = () => {
       window.location.reload();
     }
   };
+  const getUsers = async () => {  
+    try {
+      axios
+        .get("http://localhost:8000/api/users", {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((e) => {
+          localStorage.setItem("userId", e.data.data.id);
+          setUsers(e.data.data);
+        })
+        .catch((e) => console.error("Error fetching users:", e));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const isAdmin = users.find((user) => user.role === "admin");
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div className="w-full flex justify-between items-center bg-white shadow-md px-10  py-2 ">
@@ -86,6 +110,43 @@ const Navbar = () => {
             >
               Logout
             </button>
+            <button  onClick={() => SetArrow(!arrow)}>
+
+              <svg
+              className="translate-x-4"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+                color="#000000"
+                fill="none"
+              >
+                <path
+                  d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+            <div className="z-10 relative">
+              {arrow && isAdmin && (
+                <div className="absolute top-5 right-0 bg-white shadow-md p-4">
+                  <Link to="/add" className="block hover:text-blue-600">
+                    Add Property
+                  </Link>
+                </div>
+              )}
+              {arrow && (
+                <div className="absolute top-5 right-0 bg-white shadow-md p-4">
+                  <Link to="/wishlist" className="block hover:text-blue-600">
+                    Wishlist
+                  </Link>
+                </div>
+              )}
+
+            </div>
           </div>
         )}
       </div>
