@@ -254,7 +254,7 @@ const Home = () => {
         <div className="w-[55%] h-[500px] flex justify-end">
           <div className="bg-[#27AD77] w-[60%] h-full rounded-l-[70px] flex items-center">
             <div className="w-[100%] h-[70%] translate-x-[-15%]">
-              <img className="h-full rounded-4xl w-full" src={homeimg} alt="hoem img" />
+              <img className="h-full rounded-4xl w-full" src={homeimg} alt="hoem_img" />
             </div>
           </div>
         </div>
