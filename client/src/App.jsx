@@ -46,8 +46,6 @@ function App() {
     (user) => user.role == "admin" && user.id == userId && token
   );
 
-  console.log(isAdmin);
-
   useEffect(() => {
     getUsers();
   }, []);
