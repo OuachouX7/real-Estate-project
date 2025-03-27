@@ -12,6 +12,7 @@ const PropertyDetails = () => {
     [property, setProperty] = useState(null),
     [loading, setLoading] = useState(!0),
     [error, setError] = useState(null),
+    [description, setDescription] = useState(property?.description.split(/\s+/)),
     token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),
     navigate = useNavigate();
@@ -22,6 +23,7 @@ const PropertyDetails = () => {
         if (!e.ok) throw Error("Failed to fetch property details");
         let o = await e.json();
         setProperty(o);
+        setDescription(o.description.split(/\s+/));
       } catch (a) {
         setError(a.message);
       } finally {
@@ -54,7 +56,8 @@ const PropertyDetails = () => {
         console.log(t);
       }
     };
-  console.log(property);
+  console.log(property?.description.split(/\s+/));
+
   if (loading)
     return <p className="text-center text-gray-500 mt-10">Loading...</p>;
   if (error)
@@ -115,7 +118,12 @@ const PropertyDetails = () => {
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">
                 Description
               </h2>
-              <p className="text-gray-600">{property.description}</p>
+              {description?.map((desc, index) => (
+                <p key={index} className="text-gray-700">
+                  {desc}
+                </p>
+              ))}
+
               <button
                 className="bg-blue-500 text-white px-8 py-2 rounded-md hover:bg-blue-600 mt-4"
                 onClick={handleChat}
