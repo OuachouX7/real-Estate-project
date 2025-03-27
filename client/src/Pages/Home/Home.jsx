@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
+import property2 from "../../assets/property2.webp";
 const Navbar = lazy(() => import("../../Components/Navbar/Navbar"));
 const Footer = lazy(() => import("../../Components/Footer/Footer"));
 const Spinner = lazy(() => import("../../Components/Loading/Spinner"));
@@ -133,7 +134,12 @@ const Home = () => {
         <div className="w-full flex justify-around items-center mt-10">
           <div className="w-[45%] flex justify-center">
             <div className="h-[450px] w-full">
-              <img className="w-full h-full rounded-[8px]" src={homeimg} alt="ttt"  />
+              <img
+                className="w-full h-full rounded-[8px]"
+                src={property2}
+                loading="lazy"
+                alt="ttt"
+              />
             </div>
           </div>
           <div className="w-[45%]">
@@ -246,15 +252,32 @@ const Home = () => {
       </div>
       <div className="mt-10 flex justify-between items-center">
         <div className="flex flex-col w-[35%] h-[400px] justify-around ml-10">
-          <h2 className="text-[#123763] font-[700] text-wrap text-[46px] leading-[64px] flex text-start">Need a home loan? Get pre-approved</h2>
-          <p className="text-[#666666] leading-[26px] text-wrap font-[400]">Creating a very beautiful website design in accordance with the fundamental user experience which is examined more deeply by the UX Designers that we have. </p>
-          <p className="text-[#666666] leading-[26px] font-[400] mt-5">And make good visuals so that clients are satisfied and easy when viewing the website. First impressions are our tricks to attract a customer who has seen the website that we are going to create</p>
-          <button className="bg-orange-300 text-white rounded-[8px] p-2 mt-3 w-fit">Read More</button>
+          <h2 className="text-[#123763] font-[700] text-wrap text-[46px] leading-[64px] flex text-start">
+            Need a home loan? Get pre-approved
+          </h2>
+          <p className="text-[#666666] leading-[26px] text-wrap font-[400]">
+            Creating a very beautiful website design in accordance with the
+            fundamental user experience which is examined more deeply by the UX
+            Designers that we have.{" "}
+          </p>
+          <p className="text-[#666666] leading-[26px] font-[400] mt-5">
+            And make good visuals so that clients are satisfied and easy when
+            viewing the website. First impressions are our tricks to attract a
+            customer who has seen the website that we are going to create
+          </p>
+          <button className="bg-[#FF8A20] text-white rounded-[8px] p-2.5 mt-3 w-fit">
+            Read More
+          </button>
         </div>
         <div className="w-[55%] h-[500px] flex justify-end">
           <div className="bg-[#27AD77] w-[60%] h-full rounded-l-[70px] flex items-center">
             <div className="w-[100%] h-[70%] translate-x-[-15%]">
-              <img className="h-full rounded-4xl w-full" src={homeimg} alt="hoem_img" />
+              <img
+                className="h-full rounded-4xl w-full"
+                src={property2}
+                loading="lazy"
+                alt="hoem_img"
+              />
             </div>
           </div>
         </div>
