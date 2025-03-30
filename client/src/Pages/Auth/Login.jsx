@@ -27,30 +27,35 @@ const Login = () => {
               ),
               navigate("/");
           })
-          .catch((e) => setError(true));
-      } catch (t) {
-        console.log(t);
+          .catch(() => setError(true));
+      } catch (e) {
+        setError(true);
+        
       }
     };
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex items-center justify-center min-h-screen">
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-lg">
-        <h1 className="text-2xl font-bold text-center">Login</h1>
-        <form onSubmit={handleLogin} className="space-y-4">
+        <h1 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
+          Login
+        </h1>
+        <form onSubmit={handleLogin} className="space-y-6">
           <div>
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email
+              Email Address
             </label>
             <input
               type="text"
               id="email"
-              className="w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-3 mt-2 border rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+              placeholder="Enter your email"
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
+
           <div>
             <label
               htmlFor="password"
@@ -61,25 +66,32 @@ const Login = () => {
             <input
               type="password"
               id="password"
-              className="w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+              className="w-full px-4 py-3 mt-2 border rounded-md shadow-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+              placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
+
           <button
             type="submit"
-            className="w-full px-4 py-2 font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="w-full px-4 py-3 font-medium text-white bg-indigo-600 rounded-md shadow-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition transform hover:scale-105"
           >
             Connect
           </button>
         </form>
+
         {error && (
-          <div className="text-red-500 text-center">
-            Invalid email or password
+          <div className="text-red-500 text-center mt-4">
+            {error}
           </div>
         )}
-        <div className="text-center">
-          <Link to="/sign-up" className="text-indigo-600 hover:text-indigo-800">
-            Sign up
+
+        <div className="text-center mt-4">
+          <Link
+            to="/sign-up"
+            className="text-indigo-600 hover:text-indigo-800 transition"
+          >
+            Don't have an account? Sign up
           </Link>
         </div>
       </div>

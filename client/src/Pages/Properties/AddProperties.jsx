@@ -55,7 +55,7 @@ const AddProperty = () => {
   return (
     <>
       <div className="mt-2">
-        <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
+        <nav className="flex items-center space-x-2 p-8 rounded-lg">
           <Link to="/" className="text-gray-600 font-semibold hover:underline">
             Home
           </Link>
@@ -63,7 +63,7 @@ const AddProperty = () => {
           <span className="text-blue-900 font-bold">Add Property</span>
         </nav>
       </div>
-      <div className="max-w-4xl mx-auto p-6">
+      <div className="max-w-4xl m-5 shadow-xl mx-auto p-6">
         <h2 className="text-2xl font-bold mb-4">Create A Listing</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>

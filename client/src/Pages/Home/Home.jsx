@@ -5,7 +5,6 @@ import { useState, useEffect } from "react";
 import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
 import property2 from "../../assets/property2.webp";
-const Footer = lazy(() => import("../../Components/Footer/Footer"));
 const Home = () => {
   const [properties, setProperties] = useState([]),
     images = [property2, homeimg],
@@ -80,7 +79,11 @@ const Home = () => {
               properties.map((listing, index) => (
                 <div
                   key={index}
-                  className="p-4 bg-white border rounded-2xl shadow-lg cursor-pointer hover:shadow-xl transition-all border-gray-200"
+                  className={
+                    listing
+                      ? "p-4 bg-white border rounded-2xl shadow-lg cursor-pointer hover:shadow-xl transition-all border-gray-200"
+                      : "hidden"
+                  }
                   onClick={() => navigate(`/property/${listing?.id}`)}
                 >
                   <div className="w-full h-48 bg-gray-200 rounded-xl overflow-hidden">
@@ -310,7 +313,9 @@ const Home = () => {
             <button
               className="text-white text-xl hover:opacity-80"
               onClick={() => {
-                setNumber(number + 1);
+                number < images.length - 1
+                  ? setNumber(number + 1)
+                  : setNumber(images.length - 1);
               }}
             >
               →

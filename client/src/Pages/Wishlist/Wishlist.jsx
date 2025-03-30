@@ -48,7 +48,7 @@ const Wishlist = () => {
     return <p className="text-center text-red-500 mt-10">Error: {error}</p>;
   return (
     <>
-      <div className="p-6">
+      <div className="p-6 min-h-[500px]">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">My Wishlist</h1>
         {wishList.length === 0 ? (
           <p className="text-gray-500">No items in wishlist.</p>

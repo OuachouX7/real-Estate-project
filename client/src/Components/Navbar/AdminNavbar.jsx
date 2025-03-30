@@ -109,12 +109,23 @@ const AdminNavbar = () => {
             </button>
             <div className="z-10 relative">
               {arrow && (
-                <div
-                  className={"absolute top-6 right-0 bg-gray-50 shadow-md p-4 px-4"}
-                >
-                  <Link to="/add" className="flex justify-center items-center hover:text-blue-600 px-6">
-                    Add Property
-                  </Link>
+                <div className="absolute top-7 right-0">
+                  <div className=" bg-gray-50 shadow-md p-4 border-1 border-gray-200  px-4">
+                    <Link
+                      to="/add"
+                      className="flex justify-start text-start px-4 hover:text-blue-600"
+                    >
+                      Add
+                    </Link>
+                  </div>
+                  <div className="bg-gray-50 shadow-md p-4  border-1 border-gray-200 px-4">
+                    <Link
+                      to="/users"
+                      className="flex justify-start text-start px-4 hover:text-blue-600"
+                    >
+                      Users
+                    </Link>
+                  </div>
                 </div>
               )}
             </div>
