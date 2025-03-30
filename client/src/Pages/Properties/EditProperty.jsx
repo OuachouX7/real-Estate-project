@@ -55,8 +55,6 @@ const EditProperty = () => {
         )
         .then((e) => {
           getProperty();
-          console.log(e.data);
-          
         });
     } catch (r) {
       console.log(r);
@@ -68,7 +66,7 @@ const EditProperty = () => {
   }, []);
 
   return (
-    <>
+    <div>
       <div className="mt-2">
         <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
           <Link to="/" className="text-gray-600 font-semibold hover:underline">
@@ -80,7 +78,7 @@ const EditProperty = () => {
           <span className="text-blue-900 font-bold">{properties.title}</span>
         </nav>
       </div>
-      <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-6  ">
+      <div className="max-w-4xl m-5 mx-auto p-6 bg-white shadow-md rounded-lg mt-6  ">
         <h1 className="text-2xl font-bold mb-6">Edit Property</h1>
         <form onSubmit={updateProperty} className="space-y-4 py-2">
           <div>
@@ -190,7 +188,7 @@ const EditProperty = () => {
           </button>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 
