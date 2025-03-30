@@ -94,11 +94,12 @@ class PropertiesController extends Controller
     public function updateProperty(Request $request, $id)
     {
         $request->validate([
-            'title' => 'string|min:3|max:55',
-            'description' => 'string|min:3|max:255',
-            'price' => 'min:1',
-            'location' => 'string|min:3|max:205',
+            'title' => 'string',
+            'description' => 'string',
+            'location' => 'string',
             'is_available' => 'boolean',
+            'rentalFrequency' => 'string',
+            'category' => 'string',
         ]);
         $property = Property::findorfail($id);
         $property->update([
@@ -106,7 +107,9 @@ class PropertiesController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'location' => $request->location,
-            'is_available' => $request->is_available
+            'is_available' => $request->is_available,
+            'rentalFrequency' => $request->rentalFrequency,
+            'category' => $request->category,
         ]);
         return response()->json([
             'property' => $property,

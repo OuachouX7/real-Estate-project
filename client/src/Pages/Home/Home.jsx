@@ -7,11 +7,12 @@ import { Helmet } from "react-helmet-async";
 import property2 from "../../assets/property2.webp";
 const Home = () => {
   const [properties, setProperties] = useState([]),
-    images = [property2, homeimg],
     [number, setNumber] = useState(0),
-    [sourceImage, setSourceImage] = useState(property2),
-    navigate = useNavigate(),
-    getProperties = () => {
+    [images, setImages] = useState([]),
+    [sourceImage, setSourceImage] = useState(),
+    navigate = useNavigate();
+  useEffect(() => {
+    const getProperties = () => {
       try {
         axios.get("http://localhost:8000/api/properties").then((e) => {
           setProperties([
@@ -20,14 +21,21 @@ const Home = () => {
             e.data?.data[2],
             e.data?.data[3],
           ]);
+          setImages([
+            `http://localhost:8000/storage/images/${e.data?.data[0].images[0]?.image_url}`,
+            `http://localhost:8000/storage/images/${e.data?.data[1].images[0]?.image_url}`,
+            `http://localhost:8000/storage/images/${e.data?.data[2].images[0]?.image_url}`,
+            e.data?.data[3]?.images[0]?.image_url !== undefined &&
+              `http://localhost:8000/storage/images/${e.data.data[3].images[0].image_url}`,
+          ]);
         });
       } catch (e) {
         console.log(e);
       }
     };
-  useEffect(() => {
     getProperties();
   }, []);
+
   return (
     <div className="bg-[#fff]">
       <Helmet>
@@ -324,8 +332,9 @@ const Home = () => {
         </div>
         <div className="w-[550px] h-[398px] rounded-lg mr-10">
           <img
-            className="w-full h-full rounded-4xl"
-            src={images[number]}
+            loading="lazy"
+            className="w-full object-fill h-full rounded-lg transition duration-500 ease-in-out transform hover:scale-105"
+            src={images.length > 0 && images[number]}
             alt="property"
           />
         </div>

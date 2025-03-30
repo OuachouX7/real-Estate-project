@@ -11,6 +11,8 @@ const EditProperty = () => {
     price: null,
     location: "",
     is_available: true,
+    rentalFrequency : "",
+    category : ""
   });
 
   const token = sessionStorage.getItem("token");
@@ -42,6 +44,8 @@ const EditProperty = () => {
             price: formData.price,
             location: formData.location,
             is_available: select,
+            rentalFrequency : formData.rentalFrequency,
+            category : formData.category
           },
           {
             headers: {
@@ -51,6 +55,8 @@ const EditProperty = () => {
         )
         .then((e) => {
           getProperty();
+          console.log(e.data);
+          
         });
     } catch (r) {
       console.log(r);
@@ -140,8 +146,40 @@ const EditProperty = () => {
               className="w-full p-2 border rounded"
               onChange={handleSelectChange}
             >
+              <option disabled value="true">this is old value: {properties.is_available ? "yes" : "no"}</option>
               <option value="true">yes</option>
               <option value="false">no</option>
+            </select>
+          </div>
+          <div>
+            <label className="block font-semibold">Category</label>
+            <select
+              name="category"
+              className="w-full p-2 border rounded"
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+            >
+              <option disabled value="both">this is old value: {properties.category}</option>
+              <option value="Apartment">Apartment</option>
+              <option value="House">House</option>
+              <option value="Garage">Garage</option>
+              <option value="Bureau">Bureau</option>
+            </select>
+          </div>
+          <div>
+            <label htmlFor="">Rental Frequency</label>
+            <select
+              name="rentalFrequency"
+              className="w-full p-2 border rounded"
+              onChange={(e) =>
+                setFormData({ ...formData, rentalFrequency: e.target.value })
+              }
+            >
+              <option disabled value="both">this is old value: {properties.rentalFrequency}</option>
+              <option value="Monthly">Monthly</option>
+              <option value="Weekly">Weekly</option>
+              <option value="Per Day">Per Day</option>
             </select>
           </div>
           <button
