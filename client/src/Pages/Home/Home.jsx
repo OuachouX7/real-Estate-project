@@ -1,6 +1,6 @@
 import { lazy } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { data, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
