@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axiosInstance from "../../axios/axiosInstance";
 
 const Login = () => {
   const [email, setEmail] = useState(""),
@@ -11,8 +11,8 @@ const Login = () => {
     handleLogin = (e) => {
       e.preventDefault();
       try {
-        axios
-          .post("http://127.0.0.1:8000/api/login", {
+        axiosInstance
+          .post("/login", {
             email: email,
             password: password,
           })

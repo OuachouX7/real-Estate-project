@@ -3,7 +3,7 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../axios/axiosInstance";
 const LocationMap = lazy(() => import("../../Components/Map/LocationMap"));
 
 const PropertyDetails = () => {
@@ -20,13 +20,9 @@ const PropertyDetails = () => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await fetch(
-          `http://localhost:8000/api/properties/${t}`
-        );
-        if (!response.ok) throw new Error("Failed to fetch property details");
-        const data = await response.json();
-        setProperty(data);
-        setDescription(data.description.split(/ {2,}/));
+        const response = await axiosInstance.get(`/properties/${t}`);
+        setProperty(response.data);
+        setDescription(response.data.description.split(/ {2,}/));
       } catch (err) {
         setError(err.message);
       } finally {
@@ -41,9 +37,9 @@ const PropertyDetails = () => {
       navigate("/login");
       return;
     }
-    axios
+    axiosInstance
       .post(
-        "http://localhost:8000/api/addFavorite",
+        "/addFavorite",
         { user_id: userId, property_id: propertyId },
         { headers: { Authorization: `Bearer ${token}` } }
       )

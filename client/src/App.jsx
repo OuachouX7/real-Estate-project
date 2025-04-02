@@ -24,7 +24,7 @@ const AdminNavbar = lazy(() => import("./Components/Navbar/AdminNavbar"));
 const Footer = lazy(() => import("./Components/Footer/Footer"));
 
 function App() {
-  const users = useUsers("http://localhost:8000/api/users")
+  const users = useUsers("/users")
   const token = sessionStorage.getItem("token");
   const userId = localStorage.getItem("userId");
 

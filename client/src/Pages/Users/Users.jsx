@@ -6,7 +6,7 @@ import useUsers from "../../Hooks/useUsers";
 const Users = () => {
   const navigate = useNavigate();
 
-  const users = useUsers('http://localhost:8000/api/users');
+  const users = useUsers('/users');
 
   const filteredUsers = users.filter((user) => user.role === "user");
 

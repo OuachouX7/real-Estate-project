@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "../axios/axiosInstance";
 
 const useProperties = (url) => {
   const [properties, setProperties] = useState([]);
   useEffect(() => {
-    axios.get(url).then((res) => {
+    axiosInstance.get(url).then((res) => {
       setProperties(res.data);
     });
   }, [url]);

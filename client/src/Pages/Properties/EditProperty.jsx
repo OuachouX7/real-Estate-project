@@ -18,7 +18,7 @@ const EditProperty = () => {
   const token = sessionStorage.getItem("token");
   const { id } = useParams();
 
-  const properties = useProperties(`http://localhost:8000/api/properties/${id}`);
+  const properties = useProperties(`/properties/${id}`);
 
   const handleSelectChange = (e) => {
     e.target.value === "true" ? setSelect(true) : setSelect(false);

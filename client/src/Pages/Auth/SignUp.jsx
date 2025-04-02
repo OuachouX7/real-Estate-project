@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
@@ -24,8 +24,8 @@ const SignUp = () => {
     handleSignup = (e) => {
       e.preventDefault();
       try {
-        axios
-          .post("http://127.0.0.1:8000/api/register", {
+        axiosInstance
+          .post("/register", {
             name: signUp.name,
             email: signUp.email,
             phone: signUp.phone,

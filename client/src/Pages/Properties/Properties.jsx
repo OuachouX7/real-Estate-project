@@ -47,7 +47,7 @@ const Properties = () => {
 
   const handleDelete = async (propertyId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/deleteProperty/${propertyId}`, {
+      await axios.delete(`/deleteProperty/${propertyId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       getProperties(currentPage);

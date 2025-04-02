@@ -2,7 +2,7 @@ import React, { use } from "react";
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/Property.webp";
-import axios from "axios";
+import axiosInstance from "../../axios/axiosInstance";
 
 const AdminNavbar = () => {
   const [arrow, SetArrow] = useState(false);
@@ -13,8 +13,8 @@ const AdminNavbar = () => {
 
   const handleLogOut = async () => {
     try {
-      await axios.post(
-        "http://localhost:8000/api/logout",
+      await axiosInstance.post(
+        "/logout",
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

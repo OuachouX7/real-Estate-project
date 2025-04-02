@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "../axios/axiosInstance";
 
 const useUsers = (url) => {
   const [users, setUsers] = useState([]);
-  const token = sessionStorage.getItem("token")
+  const token = sessionStorage.getItem("token");
 
   useEffect(() => {
-    axios.get(url, { headers: { Authorization: `Bearer ${token}` } }).then((res) => {
-      setUsers(res.data.data);
-    });
+    axiosInstance
+      .get(url, { headers: { Authorization: `Bearer ${token}` } })
+      .then((res) => {
+        setUsers(res.data.data);
+      });
   }, [url]);
 
   return users;

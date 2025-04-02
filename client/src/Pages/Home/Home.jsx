@@ -1,4 +1,4 @@
-import axios from "axios";
+import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import homeimg from "../../assets/home-image.webp";
@@ -14,7 +14,7 @@ const Home = () => {
   useEffect(() => {
     const getProperties = () => {
       try {
-        axios.get("http://localhost:8000/api/properties").then((e) => {
+        axiosInstance.get("/properties").then((e) => {
           setProperties([
             e.data?.data[0],
             e.data?.data[1],
