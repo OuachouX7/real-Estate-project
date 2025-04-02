@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { lazy } from "react";
-import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import useUsers from "../../Hooks/useUsers";
+import axiosInstance from "../../axios/axiosInstance";
 
 const Spinner = lazy(() => import("../../Components/Loading/Spinner"));
 
@@ -16,8 +16,8 @@ const Properties = () => {
 
   const getProperties = async (page) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/properties?page=${page}`
+      const response = await axiosInstance.get(
+        `/properties?page=${page}`
       );
       setProperties(response.data.data);
       setCurrentPage(response.data.current_page);
@@ -47,7 +47,7 @@ const Properties = () => {
 
   const handleDelete = async (propertyId) => {
     try {
-      await axios.delete(`/deleteProperty/${propertyId}`, {
+      await axiosInstance.delete(`/deleteProperty/${propertyId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       getProperties(currentPage);

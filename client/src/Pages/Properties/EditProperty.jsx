@@ -1,5 +1,5 @@
-import axios from "axios";
-import React, { lazy, useEffect, useState } from "react";
+import axiosInstance from "../../axios/axiosInstance";
+import React, {  useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import useProperties from "../../Hooks/useProperties";
 
@@ -27,9 +27,9 @@ const EditProperty = () => {
   const updateProperty = async (e) => {
     e.preventDefault();
     try {
-      axios
+      axiosInstance
         .put(
-          `http://localhost:8000/api/properties/${id}`,
+          `/properties/${id}`,
           {
             title: formData.title,
             description: formData.description,
@@ -44,10 +44,10 @@ const EditProperty = () => {
               Authorization: `Bearer ${token}`,
             },
           }
-        )
-        .then((e) => {
-          getProperty();
-        });
+        ).then((res) => {
+          console.log(res);
+          
+        })
     } catch (r) {
       console.log(r);
     }

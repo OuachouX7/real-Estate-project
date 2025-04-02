@@ -4,38 +4,10 @@ import { useState, useEffect } from "react";
 import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
 import property2 from "../../assets/property2.webp";
+import { motion } from "framer-motion";
 
 const Home = () => {
-  const [properties, setProperties] = useState([]),
-    [number, setNumber] = useState(0),
-    [images, setImages] = useState([]),
-    [sourceImage, setSourceImage] = useState(),
-    navigate = useNavigate();
-  useEffect(() => {
-    const getProperties = () => {
-      try {
-        axiosInstance.get("/properties").then((e) => {
-          setProperties([
-            e.data?.data[0],
-            e.data?.data[1],
-            e.data?.data[2],
-            e.data?.data[3],
-          ]);
-          setImages([
-            `http://localhost:8000/storage/images/${e.data?.data[0].images[0]?.image_url}`,
-            `http://localhost:8000/storage/images/${e.data?.data[1].images[0]?.image_url}`,
-            `http://localhost:8000/storage/images/${e.data?.data[2].images[0]?.image_url}`,
-            e.data?.data[3]?.images[0]?.image_url !== undefined &&
-              `http://localhost:8000/storage/images/${e.data.data[3].images[0].image_url}`,
-          ]);
-        });
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    getProperties();
-  }, []);
-
+  const[properties,setProperties]=useState([]),[number,setNumber]=useState(0),[images,setImages]=useState([]),[sourceImage,setSourceImage]=useState(),navigate=useNavigate();useEffect(()=>{let a=()=>{try{axiosInstance.get("/properties").then(a=>{setProperties([a.data?.data[0],a.data?.data[1],a.data?.data[2],a.data?.data[3],]),setImages([`http://localhost:8000/storage/images/${a.data?.data[0].images[0]?.image_url}`,`http://localhost:8000/storage/images/${a.data?.data[1].images[0]?.image_url}`,`http://localhost:8000/storage/images/${a.data?.data[2].images[0]?.image_url}`,a.data?.data[3]?.images[0]?.image_url!==void 0&&`http://localhost:8000/storage/images/${a.data.data[3].images[0].image_url}`,])})}catch(a){console.log(a)}};a()},[]);
   return (
     <div className="bg-[#fff]">
       <Helmet>
@@ -57,7 +29,11 @@ const Home = () => {
         <meta name="og:image" content="/src/assets/home-image.jpg" />
         <title>Home</title>
       </Helmet>
-      <div className="relative w-full h-[600px]">
+      <motion.div 
+      initial={{ opacity: 0 , y: 100 }}
+      animate={{ opacity: 1 , y : 0 }}
+      transition={{ duration: 1 }}
+      className="relative w-full h-[600px]">
         <img
           src={homeimg}
           alt="home_image"
@@ -69,8 +45,19 @@ const Home = () => {
             Discover Your Perfect Home
           </h1>
         </div>
-      </div>
-      <div className="p-10">
+      </motion.div>
+      <motion.div 
+      initial={{
+        opacity : 0,
+        
+      }}
+      animate={{
+        opacity : 1,
+      }}
+      transition = {{
+        duration : 2
+      }}
+      className="p-10">
         <div className="mb-10">
           <div className="flex justify-between items-center">
             <h2 className="text-3xl font-bold">Newest Listings</h2>
@@ -129,7 +116,7 @@ const Home = () => {
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
       <div>
         <div className="flex w-full justify-around items-center">
           <div className="text-[#123763] font-[700] text-[46px] leading-[64px] w-[45%] flex justify-end text-start">
