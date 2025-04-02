@@ -34,7 +34,18 @@ const Home = () => {
       animate={{ opacity: 1 , y : 0 }}
       transition={{ duration: 1 }}
       className="relative w-full h-[600px]">
-        <img
+        <motion.img 
+          initial={{
+            opacity : 0,
+            y : 100
+          }}
+          animate={{
+            opacity : 1,
+            y : 0
+          }}
+          transition = {{
+            duration : 1
+          }}
           src={homeimg}
           alt="home_image"
           loading="lazy"
@@ -49,13 +60,14 @@ const Home = () => {
       <motion.div 
       initial={{
         opacity : 0,
-        
+        y : 100
       }}
       animate={{
         opacity : 1,
+        y : 0
       }}
       transition = {{
-        duration : 2
+        duration : 1
       }}
       className="p-10">
         <div className="mb-10">
