@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { lazy, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import useProperties from "../../Hooks/useProperties";
 
 const EditProperty = () => {
-  const [properties, setProperties] = useState([]);
   const [select, setSelect] = useState(true);
   const [formData, setFormData] = useState({
     title: "",
@@ -18,15 +18,7 @@ const EditProperty = () => {
   const token = sessionStorage.getItem("token");
   const { id } = useParams();
 
-  const getProperty = async () => {
-    try {
-      axios.get(`http://localhost:8000/api/properties/${id}`).then((e) => {
-        setProperties(e.data);
-      });
-    } catch (r) {
-      console.log(r);
-    }
-  };
+  const properties = useProperties(`http://localhost:8000/api/properties/${id}`);
 
   const handleSelectChange = (e) => {
     e.target.value === "true" ? setSelect(true) : setSelect(false);
@@ -60,10 +52,6 @@ const EditProperty = () => {
       console.log(r);
     }
   };
-
-  useEffect(() => {
-    getProperty();
-  }, []);
 
   return (
     <div>

@@ -213,7 +213,7 @@ const PropertyDetails = () => {
                 </p>
               </div>
             </div>
-            <div className="w-[80%]">
+            <div className={selectedImageIndex !== null ? "hidden" : "w-[80%]"}>
               <LocationMap location={property.location} />
             </div>
           </div>

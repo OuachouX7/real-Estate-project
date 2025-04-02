@@ -2,6 +2,7 @@ import { lazy, useEffect, useState } from "react";
 import { Suspense } from "react";
 import axios from "axios";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import useUsers from "./Hooks/useUsers";
 const Home = lazy(() => import("./Pages/Home/Home"));
 const Explore = lazy(() => import("./Pages/Explore/Explore"));
 const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
@@ -23,32 +24,13 @@ const AdminNavbar = lazy(() => import("./Components/Navbar/AdminNavbar"));
 const Footer = lazy(() => import("./Components/Footer/Footer"));
 
 function App() {
-  const [users, setUsers] = useState([]);
+  const users = useUsers("http://localhost:8000/api/users")
   const token = sessionStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-
-  const getUsers = async () => {
-    try {
-      axios
-        .get("http://localhost:8000/api/users", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((e) => {
-          setUsers(e.data.data);
-        })
-        .catch((e) => console.error("Error fetching users:", e));
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const isAdmin = users.find(
     (user) => user.role == "admin" && user.id == userId && token
   );
-
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   return (
     <BrowserRouter>
