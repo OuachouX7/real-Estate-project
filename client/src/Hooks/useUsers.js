@@ -6,13 +6,31 @@ const useUsers = (url) => {
   const token = sessionStorage.getItem("token");
 
   useEffect(() => {
-    axiosInstance
-      .get(url, { headers: { Authorization: `Bearer ${token}` } })
-      .then((res) => {
-        setUsers(res.data.data);
-      });
-  }, [url]);
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchData = async () => {
+      try {
+        const response = await axiosInstance.get(url, {
+          headers: { Authorization: `Bearer ${token}` },
+          signal,
+        });
+        setUsers(response.data.data);
+      } catch (error) {
+        if (error.name !== 'AbortError') {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+
+    fetchData();
+
+    return () => {
+      controller.abort();
+    };
+  }, [url, token]);
 
   return users;
 };
+
 export default useUsers;
