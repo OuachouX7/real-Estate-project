@@ -1,6 +1,6 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy } from "react";
 import { Suspense } from "react";
-import axios from "axios";
+import Spinner from "./Components/Loading/Spinner";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import useUsers from "./Hooks/useUsers";
 const Home = lazy(() => import("./Pages/Home/Home"));
@@ -18,7 +18,6 @@ const Properties = lazy(() => import("./Pages/Properties/Properties"));
 const Chat = lazy(() => import("./Pages/Chat/Chat"));
 const Wishlist = lazy(() => import("./Pages/Wishlist/Wishlist"));
 const Users = lazy(() => import("./Pages/Users/Users"));
-const Spinner = lazy(() => import("./Components/Loading/Spinner"));
 const Navbar = lazy(() => import("./Components/Navbar/Navbar"));
 const AdminNavbar = lazy(() => import("./Components/Navbar/AdminNavbar"));
 const Footer = lazy(() => import("./Components/Footer/Footer"));
