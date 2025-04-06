@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Twilio\Rest\Client;
+use Illuminate\Support\Str;
 
 class UsersController extends Controller
 {
@@ -108,19 +110,61 @@ class UsersController extends Controller
     {
         $request->validate([
             'email' => 'required|email',
-            'phone' => 'required',
-            'name' => 'required',
         ]);
-        $user = User::where('email', $request->email)
-            ->where('phone', $request->phone)
-            ->where('name', $request->name)
-            ->first();
+
+        $user = User::where('email', $request->email)->first();
+
         if (!$user) {
-            return response()->json(['error' => 'User not found'], 404);
+            return response()->json(['message' => 'User not found'], 404);
         }
-        return response()->json([
-            'message' => 'User found',
-            'password' => $user->password,
-        ]);
+
+        $token = Str::random(60);
+
+        $formattedPhoneNumber = 'whatsapp:' . $user->phone;
+
+        $password = $user->password;
+
+        $this->sendWhatsAppMessage($formattedPhoneNumber, $token, $password);
+
+        return response()->json(['message' => 'Password reset link sent via WhatsApp.']);
+    }
+
+    /**
+     * 
+     *
+     * @param string
+     * @param string
+     * @return string 
+     */
+
+
+    /**
+     *
+     *
+     * @param string 
+     * @param string 
+     */
+    protected function sendWhatsAppMessage($phoneNumber, $token, $password)
+    {
+        $sid = env('TWILIO_SID');
+        $authToken = env('TWILIO_AUTH_TOKEN');
+        $twilioNumber = env('TWILIO_WHATSAPP_NUMBER'); 
+
+        $client = new Client($sid, $authToken);
+
+
+        $resetLink = url("/password/reset?token={$token}");
+
+        try {
+            $client->messages->create(
+                $phoneNumber, 
+                [
+                    'from' => 'whatsapp:' . $twilioNumber, 
+                    'body' => "Hello,Your password is: {$password}. Please use it to log in and change your password."
+                ]
+            );
+        } catch (\Twilio\Exceptions\RestException $e) {
+            return response()->json(['error' => 'Failed to send WhatsApp message: ' . $e->getMessage()], 500);
+        }
     }
 }
