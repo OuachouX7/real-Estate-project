@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Spinner from "./Components/Loading/Spinner";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import useUsers from "./Hooks/useUsers";
+const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"))
 const Home = lazy(() => import("./Pages/Home/Home"));
 const Explore = lazy(() => import("./Pages/Explore/Explore"));
 const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
@@ -60,6 +61,7 @@ function AppContent({ isAdmin }) {
           <Route path="/chat/:id" element={<Chat />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </Suspense>
       {!isChatRoute && <Footer />}

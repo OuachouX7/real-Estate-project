@@ -104,4 +104,23 @@ class UsersController extends Controller
             'tokens_deleted' => $res
         ]);
     }
+    public function forgotPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'phone' => 'required',
+            'name' => 'required',
+        ]);
+        $user = User::where('email', $request->email)
+            ->where('phone', $request->phone)
+            ->where('name', $request->name)
+            ->first();
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+        return response()->json([
+            'message' => 'User found',
+            'password' => $user->password,
+        ]);
+    }
 }

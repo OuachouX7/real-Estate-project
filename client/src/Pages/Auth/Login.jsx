@@ -30,7 +30,6 @@ const Login = () => {
           .catch(() => setError(true));
       } catch (e) {
         setError(true);
-        
       }
     };
   return (
@@ -82,17 +81,26 @@ const Login = () => {
 
         {error && (
           <div className="text-red-500 text-center mt-4">
-            {error}
+            Invalid email or password
           </div>
         )}
-
-        <div className="text-center mt-4">
-          <Link
-            to="/sign-up"
-            className="text-indigo-600 hover:text-indigo-800 transition"
-          >
-            Don't have an account? Sign up
-          </Link>
+        <div className="">
+          <div className="text-center mt-4">
+            <Link
+              to="/sign-up"
+              className="text-indigo-600 hover:text-indigo-800 transition"
+            >
+              Don't have an account? Sign up
+            </Link>
+          </div>
+          <div className="text-center mt-4">
+            <Link
+              to="/forgot-password"
+              className="text-indigo-600 hover:text-indigo-800 transition"
+            >
+              Forgot Password?
+            </Link>
+          </div>
         </div>
       </div>
     </div>
