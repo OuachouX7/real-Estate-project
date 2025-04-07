@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-import { lazy } from "react";
-import axios from "axios";
-import { data, useNavigate } from "react-router-dom";
-=======
+import { data } from "react-router-dom";
 import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
->>>>>>> 7677cb7de6cbbf6be89e2b744b6386a10d2e6196
 import { useState, useEffect } from "react";
 import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
