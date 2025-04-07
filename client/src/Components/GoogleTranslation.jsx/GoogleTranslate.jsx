@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import "../../App.css"
 
 const GoogleTranslate = () => {
   // Load the Google Translate script when the component mounts
@@ -8,27 +7,38 @@ const GoogleTranslate = () => {
     script.type = 'text/javascript';
     script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
     script.async = true;
+
+    // Handle script loading and error
     script.onload = () => {
       window.googleTranslateElementInit = () => {
         new window.google.translate.TranslateElement(
           {
-            pageLanguage: 'en', // Default page language
-            includedLanguages: 'en,fr,es,de,it', // List of supported languages
+            pageLanguage: 'en',
+            includedLanguages: 'en,fr,es,de,ar,it', // Add or remove languages as needed
             layout: window.google.translate.TranslateElement.InlineLayout.SIMPLE,
           },
-          'google_translate_element' // The div ID where the widget will be inserted
+          'google_translate_element'
         );
       };
     };
 
-    // Append the script to the document body
+    script.onerror = (error) => {
+      console.error("Google Translate script failed to load", error);
+    };
+
     document.body.appendChild(script);
 
-    // Clean up when the component is unmounted
+    // Cleanup function to remove the script when the component unmounts
     return () => {
       document.body.removeChild(script);
     };
-  }, []); // Empty dependency array to run this effect once
+  }, []);
+
+  return (
+    <div>
+      <div id="google_translate_element" className="translate"></div>
+    </div>
+  );
 };
 
 export default GoogleTranslate;

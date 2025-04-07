@@ -1,5 +1,5 @@
 import React, { lazy, useState } from "react";
-import axiosInstance from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 const SearchBar = lazy(() => import("../../Components/SearchBar/SearchBar"));
 
@@ -16,8 +16,8 @@ const Explore = () => {
       category: filters.category,
     });
     try {
-      const response = await axiosInstance.get(
-        `/propertiesSearch`,
+      const response = await axios.get(
+        `http://localhost:8000/api/propertiesSearch`,
         {
           params: {
             location: filters.location,
