@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import '../../App.css'
 
 const GoogleTranslate = () => {
   // Load the Google Translate script when the component mounts
