@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axiosInstance from "../../axios/axiosInstance";
 import { Link, useNavigate } from "react-router-dom";
 
 const AddProperty = () => {
@@ -27,9 +27,9 @@ const AddProperty = () => {
     handleSubmit = (e) => {
       e.preventDefault();
       try {
-        axios
+        axiosInstance
           .post(
-            "http://localhost:8000/api/addProperty",
+            "/addProperty",
             {
               title: formData.title,
               description: formData.description,

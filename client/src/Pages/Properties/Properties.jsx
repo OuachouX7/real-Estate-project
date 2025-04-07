@@ -1,64 +1,63 @@
 import React, { useState, useEffect } from "react";
 import { lazy } from "react";
-import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
+import useUsers from "../../Hooks/useUsers";
+import axiosInstance from "../../axios/axiosInstance";
+
 const Spinner = lazy(() => import("../../Components/Loading/Spinner"));
 
 const Properties = () => {
-  const [properties, setProperties] = useState([]),
-    [users, setUsers] = useState([]),
-    [currentPage, setCurrentPage] = useState(1),
-    [totalPages, setTotalPages] = useState(1),
-    token = sessionStorage.getItem("token"),
-    userId = localStorage.getItem("userId"),
-    navigate = useNavigate(),
-    getProperties = async (e) => {
-      try {
-        let t = await axios.get(
-          `http://localhost:8000/api/properties?page=${e}`
-        );
-        setProperties(t.data.data),
-          setCurrentPage(t.data.current_page),
-          setTotalPages(t.data.last_page),
-          console.log(t.data);
-      } catch (r) {
-        console.log(r);
-      }
-    };
+  const [properties, setProperties] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const token = sessionStorage.getItem("token");
+  const userId = localStorage.getItem("userId");
+  const navigate = useNavigate();
+
+  const getProperties = async (page) => {
+    try {
+      const response = await axiosInstance.get(
+        `/properties?page=${page}`
+      );
+      setProperties(response.data.data);
+      setCurrentPage(response.data.current_page);
+      setTotalPages(response.data.last_page);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getProperties(currentPage);
-  }, [currentPage]),
-    useEffect(() => {
-      token &&
-        axios
-          .get("http://localhost:8000/api/users", {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((e) => {
-            setUsers(e.data.data);
-          })
-          .catch((e) => console.error("Error fetching users:", e));
-    }, [token]);
+  }, [currentPage]);
+
+  const users = useUsers("http://localhost:8000/api/users");
+
   const handleNextPage = () => {
-      currentPage < totalPages && setCurrentPage(currentPage + 1);
-    },
-    handlePreviousPage = () => {
-      currentPage > 1 && setCurrentPage(currentPage - 1);
-    },
-    handleDelete = (e) => {
-      try {
-        axios
-          .delete(`http://localhost:8000/api/deleteProperty/${e}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then(() => {
-            getProperties(currentPage);
-          });
-      } catch (t) {
-        console.log(t);
-      }
-    },
-    isAdmin = users.find((e) => "admin" == e.role && e.id == userId);
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleDelete = async (propertyId) => {
+    try {
+      await axiosInstance.delete(`/deleteProperty/${propertyId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      getProperties(currentPage);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const isAdmin = users.find((user) => user.role === "admin" && user.id === userId);
+
   return (
     <>
       <nav className="flex items-center space-x-2 p-8 rounded-lg">
@@ -70,12 +69,12 @@ const Properties = () => {
       </nav>
       <div className="max-w-8xl mx-auto p-6 bg-gray-50">
         <h1 className="text-3xl font-bold text-gray-800 mb-6">Properties</h1>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 ">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {properties.length > 0 ? (
             properties.map((listing, index) => (
               <div
                 key={index}
-                className="bg-white border rounded-lg shadow-lg overflow-hidden border-gray-200 "
+                className="bg-white border rounded-lg shadow-lg overflow-hidden border-gray-200"
               >
                 <img
                   src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
@@ -85,7 +84,7 @@ const Properties = () => {
                 />
                 <div className="p-4">
                   <h3
-                    className="text-lg font-semibold mb-2 "
+                    className="text-lg font-semibold mb-2"
                     style={{ color: "#123763" }}
                   >
                     {listing.title}

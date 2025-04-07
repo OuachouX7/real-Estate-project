@@ -1,6 +1,6 @@
 import React, { lazy, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../axios/axiosInstance";
 const Wishlist = () => {
   const [wishList, setWishList] = useState([]),
     [loading, setLoading] = useState(!0),
@@ -9,8 +9,8 @@ const Wishlist = () => {
     token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),
     getFavorite = () => {
-      axios
-        .get("http://localhost:8000/api/favorites", {
+      axiosInstance
+        .get("/favorites", {
           params: { user_id: userId },
           headers: { Authorization: `Bearer ${token}` },
         })
@@ -25,8 +25,8 @@ const Wishlist = () => {
         });
     },
     deleteFavorite = (e) => {
-      axios
-        .delete(`http://localhost:8000/api/deleteFavorite/${e}`, {
+      axiosInstance
+        .delete(`/deleteFavorite/${e}`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then(() => {

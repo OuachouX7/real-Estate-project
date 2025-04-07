@@ -1,26 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import useUsers from "../../Hooks/useUsers";
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const token = sessionStorage.getItem("token");
   const navigate = useNavigate();
 
-  const getUser = async () => {
-    try {
-      const response = await axios.get("http://localhost:8000/api/users", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setUsers(response.data.data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
+  const users = useUsers('/users');
 
   const filteredUsers = users.filter((user) => user.role === "user");
 

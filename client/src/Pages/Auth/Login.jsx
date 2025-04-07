@@ -1,7 +1,7 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axiosInstance from "../../axios/axiosInstance";
 
 const Login = () => {
   const [email, setEmail] = useState(""),
@@ -11,8 +11,8 @@ const Login = () => {
     handleLogin = (e) => {
       e.preventDefault();
       try {
-        axios
-          .post("http://127.0.0.1:8000/api/login", {
+        axiosInstance
+          .post("/login", {
             email: email,
             password: password,
           })
@@ -30,7 +30,6 @@ const Login = () => {
           .catch(() => setError(true));
       } catch (e) {
         setError(true);
-        
       }
     };
   return (
@@ -82,17 +81,26 @@ const Login = () => {
 
         {error && (
           <div className="text-red-500 text-center mt-4">
-            {error}
+            Invalid email or password
           </div>
         )}
-
-        <div className="text-center mt-4">
-          <Link
-            to="/sign-up"
-            className="text-indigo-600 hover:text-indigo-800 transition"
-          >
-            Don't have an account? Sign up
-          </Link>
+        <div className="">
+          <div className="text-center mt-4">
+            <Link
+              to="/sign-up"
+              className="text-indigo-600 hover:text-indigo-800 transition"
+            >
+              Don't have an account? Sign up
+            </Link>
+          </div>
+          <div className="text-center mt-4">
+            <Link
+              to="/forgot-password"
+              className="text-indigo-600 hover:text-indigo-800 transition"
+            >
+              Forgot Password?
+            </Link>
+          </div>
         </div>
       </div>
     </div>

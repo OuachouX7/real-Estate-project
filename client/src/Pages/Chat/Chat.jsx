@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../../axios/axiosInstance";
 function Chat() {
   const [message, setMessage] = useState(""),
     [messages, setmessages] = useState([]),
@@ -10,8 +10,8 @@ function Chat() {
     sender_id = localStorage.getItem("userId"),
     getUserById = () => {
       try {
-        axios
-          .get(`http://localhost:8000/api/user/${e}`, {
+        axiosInstance
+          .get(`/user/${e}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((e) => {
@@ -29,9 +29,9 @@ function Chat() {
       try {
         "Enter" === s.key &&
           (s.preventDefault(),
-          axios
+          axiosInstance
             .post(
-              "http://localhost:8000/api/sendMessage",
+              "/sendMessage",
               { sender_id: sender_id, receiver_id: e, message: message },
               { headers: { Authorization: `Bearer ${token}` } }
             )
@@ -43,8 +43,8 @@ function Chat() {
       }
     },
     getMessages = () => {
-      axios
-        .get("http://localhost:8000/api/getMessages", {
+      axiosInstance
+        .get("/getMessages", {
           params: { user_ids: [sender_id, e] },
           headers: { Authorization: `Bearer ${token}` },
         })

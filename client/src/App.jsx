@@ -1,7 +1,10 @@
-import { lazy, useEffect, useState } from "react";
+import { lazy } from "react";
 import { Suspense } from "react";
-import axios from "axios";
+import Spinner from "./Components/Loading/Spinner";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import useUsers from "./Hooks/useUsers";
+import GoogleTranslate from "./Components/GoogleTranslation.jsx/GoogleTranslate";
+const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"))
 const Home = lazy(() => import("./Pages/Home/Home"));
 const Explore = lazy(() => import("./Pages/Explore/Explore"));
 const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
@@ -17,38 +20,18 @@ const Properties = lazy(() => import("./Pages/Properties/Properties"));
 const Chat = lazy(() => import("./Pages/Chat/Chat"));
 const Wishlist = lazy(() => import("./Pages/Wishlist/Wishlist"));
 const Users = lazy(() => import("./Pages/Users/Users"));
-const Spinner = lazy(() => import("./Components/Loading/Spinner"));
 const Navbar = lazy(() => import("./Components/Navbar/Navbar"));
 const AdminNavbar = lazy(() => import("./Components/Navbar/AdminNavbar"));
 const Footer = lazy(() => import("./Components/Footer/Footer"));
 
 function App() {
-  const [users, setUsers] = useState([]);
+  const users = useUsers("/users")
   const token = sessionStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-
-  const getUsers = async () => {
-    try {
-      axios
-        .get("http://localhost:8000/api/users", {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((e) => {
-          setUsers(e.data.data);
-        })
-        .catch((e) => console.error("Error fetching users:", e));
-    } catch (e) {
-      console.log(e);
-    }
-  };
 
   const isAdmin = users.find(
     (user) => user.role == "admin" && user.id == userId && token
   );
-
-  useEffect(() => {
-    getUsers();
-  }, []);
 
   return (
     <BrowserRouter>
@@ -64,6 +47,7 @@ function AppContent({ isAdmin }) {
   return (
     <>
       {!isChatRoute && (isAdmin ? <AdminNavbar /> : <Navbar />)}
+      {!isChatRoute && <GoogleTranslate />}
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -79,6 +63,7 @@ function AppContent({ isAdmin }) {
           <Route path="/chat/:id" element={<Chat />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </Suspense>
       {!isChatRoute && <Footer />}

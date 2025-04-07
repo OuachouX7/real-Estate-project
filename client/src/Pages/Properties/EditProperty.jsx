@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, { lazy, useEffect, useState } from "react";
+import axiosInstance from "../../axios/axiosInstance";
+import React, {  useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import useProperties from "../../Hooks/useProperties";
 
 const EditProperty = () => {
-  const [properties, setProperties] = useState([]);
   const [select, setSelect] = useState(true);
   const [formData, setFormData] = useState({
     title: "",
@@ -18,15 +18,7 @@ const EditProperty = () => {
   const token = sessionStorage.getItem("token");
   const { id } = useParams();
 
-  const getProperty = async () => {
-    try {
-      axios.get(`http://localhost:8000/api/properties/${id}`).then((e) => {
-        setProperties(e.data);
-      });
-    } catch (r) {
-      console.log(r);
-    }
-  };
+  const properties = useProperties(`/properties/${id}`);
 
   const handleSelectChange = (e) => {
     e.target.value === "true" ? setSelect(true) : setSelect(false);
@@ -35,9 +27,9 @@ const EditProperty = () => {
   const updateProperty = async (e) => {
     e.preventDefault();
     try {
-      axios
+      axiosInstance
         .put(
-          `http://localhost:8000/api/properties/${id}`,
+          `/properties/${id}`,
           {
             title: formData.title,
             description: formData.description,
@@ -52,18 +44,14 @@ const EditProperty = () => {
               Authorization: `Bearer ${token}`,
             },
           }
-        )
-        .then((e) => {
-          getProperty();
-        });
+        ).then((res) => {
+          console.log(res);
+          
+        })
     } catch (r) {
       console.log(r);
     }
   };
-
-  useEffect(() => {
-    getProperty();
-  }, []);
 
   return (
     <div>
