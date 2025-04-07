@@ -1,3 +1,4 @@
+import { data } from "react-router-dom";
 import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";

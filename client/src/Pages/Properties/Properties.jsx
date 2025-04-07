@@ -93,7 +93,7 @@ const Properties = () => {
                     <span className="mr-1">📍</span> {listing.location}
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="text-xl font-bold">{listing.price}</span>
+                    <span className="text-xl font-bold">{listing.price}DH</span>
                     {isAdmin && (
                       <div className="flex justify-end w-[70%]">
                         <button
