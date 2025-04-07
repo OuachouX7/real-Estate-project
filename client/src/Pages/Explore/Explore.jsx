@@ -17,7 +17,7 @@ const Explore = () => {
     });
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/propertiesSearch`,
+        "http://localhost:8000/api/propertiesSearch",
         {
           params: {
             location: filters.location,
