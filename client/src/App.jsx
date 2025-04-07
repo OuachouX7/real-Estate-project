@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Spinner from "./Components/Loading/Spinner";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import useUsers from "./Hooks/useUsers";
+import GoogleTranslate from "./Components/GoogleTranslation.jsx/GoogleTranslate";
 const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"))
 const Home = lazy(() => import("./Pages/Home/Home"));
 const Explore = lazy(() => import("./Pages/Explore/Explore"));
@@ -46,6 +47,7 @@ function AppContent({ isAdmin }) {
   return (
     <>
       {!isChatRoute && (isAdmin ? <AdminNavbar /> : <Navbar />)}
+      {!isChatRoute && <GoogleTranslate />}
       <Suspense fallback={<Spinner />}>
         <Routes>
           <Route path="/" element={<Home />} />

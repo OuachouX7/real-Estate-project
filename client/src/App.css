@@ -2,3 +2,35 @@
 html{
     scroll-behavior: smooth;
 }
+/* Hide the entire Google Translate widget */
+#google_translate_element {
+    display: none !important;
+  }
+  
+  /* Alternatively, you can hide specific parts of the widget by targeting their classes */
+  .VIpgJd-ZVi9od-l4eHX-hSRGPd, /* Hide the Google Translate link */
+  .VIpgJd-ZVi9od-ORHb-KE6vqe { /* Hide other specific parts */
+    display: none !important;
+  }
+  
+  /* If you want to hide the dropdown and its button */
+  button#google_translate_element {
+    display: none !important;
+  }
+
+  /* Hide all Google Translate widget elements */
+#google_translate_element * {
+    display: none !important;
+  }
+  
+  /* Show only the desired span */
+  #google_translate_element #\:2\.finishTargetLang {
+    display: none !important;
+  }
+  
+  /* Optionally, style the span */
+  #google_translate_element #\:2\.finishTargetLang a {
+    display: none !important;
+  }
+  
+  
