@@ -6,9 +6,42 @@ import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
 import property2 from "../../assets/property2.webp";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
-  const[properties,setProperties]=useState([]),[number,setNumber]=useState(0),[images,setImages]=useState([]),[sourceImage,setSourceImage]=useState(),navigate=useNavigate();useEffect(()=>{let a=()=>{try{axiosInstance.get("/properties").then(a=>{setProperties([a.data?.data[0],a.data?.data[1],a.data?.data[2],a.data?.data[3],]),setImages([`http://localhost:8000/storage/images/${a.data?.data[0].images[0]?.image_url}`,`http://localhost:8000/storage/images/${a.data?.data[1].images[0]?.image_url}`,`http://localhost:8000/storage/images/${a.data?.data[2].images[0]?.image_url}`,a.data?.data[3]?.images[0]?.image_url!==void 0&&`http://localhost:8000/storage/images/${a.data.data[3].images[0].image_url}`,])})}catch(a){console.log(a)}};a()},[]);
+  const [properties, setProperties] = useState([]),
+    [number, setNumber] = useState(0),
+    [images, setImages] = useState([]),
+    [sourceImage, setSourceImage] = useState(),
+    { t, i18n } = useTranslation(),
+    navigate = useNavigate();
+  useEffect(() => {
+    let a = () => {
+      try {
+        axiosInstance.get("/properties").then((a) => {
+          setProperties([
+            a.data?.data[0],
+            a.data?.data[1],
+            a.data?.data[2],
+            a.data?.data[3],
+          ]),
+            setImages([
+              `http://localhost:8000/storage/images/${a.data?.data[0].images[0]?.image_url}`,
+              `http://localhost:8000/storage/images/${a.data?.data[1].images[0]?.image_url}`,
+              `http://localhost:8000/storage/images/${a.data?.data[2].images[0]?.image_url}`,
+              a.data?.data[3]?.images[0]?.image_url !== void 0 &&
+                `http://localhost:8000/storage/images/${a.data.data[3].images[0].image_url}`,
+            ]);
+        });
+      } catch (a) {
+        console.log(a);
+      }
+    };
+    a();
+  }, []);
+  useEffect(() => {
+    
+  },[])
   return (
     <div className="bg-[#fff]">
       <Helmet>
@@ -30,22 +63,23 @@ const Home = () => {
         <meta name="og:image" content="/src/assets/home-image.jpg" />
         <title>Home</title>
       </Helmet>
-      <motion.div 
-      initial={{ opacity: 0 , y: 100 }}
-      animate={{ opacity: 1 , y : 0 }}
-      transition={{ duration: 1 }}
-      className="relative w-full h-[600px]">
-        <motion.img 
+      <motion.div
+        initial={{ opacity: 0, y: 100 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="relative w-full h-[600px]"
+      >
+        <motion.img
           initial={{
-            opacity : 0,
-            y : 100
+            opacity: 0,
+            y: 100,
           }}
           animate={{
-            opacity : 1,
-            y : 0
+            opacity: 1,
+            y: 0,
           }}
-          transition = {{
-            duration : 1
+          transition={{
+            duration: 1,
           }}
           src={homeimg}
           alt="home_image"
@@ -58,19 +92,20 @@ const Home = () => {
           </h1>
         </div>
       </motion.div>
-      <motion.div 
-      initial={{
-        opacity : 0,
-        y : 100
-      }}
-      animate={{
-        opacity : 1,
-        y : 0
-      }}
-      transition = {{
-        duration : 1
-      }}
-      className="p-10">
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 100,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 1,
+        }}
+        className="p-10"
+      >
         <div className="mb-10">
           <div className="flex justify-between items-center">
             <h2 className="text-3xl font-bold">Newest Listings</h2>
