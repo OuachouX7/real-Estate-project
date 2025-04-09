@@ -43,7 +43,7 @@ const ResetPassword = () => {
     }
 
     try {
-      axios.post("http://localhost:8000/api/resetPassword", form).then((res) => {
+      axios.post("http://localhost:8000/api/resetPassword", { password, token , email, confirmPassword}).then((res) => {
           console.log(res.data)
       });
     } catch (error) {
