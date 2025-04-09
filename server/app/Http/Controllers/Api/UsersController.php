@@ -148,23 +148,44 @@ class UsersController extends Controller
     {
         $sid = env('TWILIO_SID');
         $authToken = env('TWILIO_AUTH_TOKEN');
-        $twilioNumber = env('TWILIO_WHATSAPP_NUMBER'); 
+        $twilioNumber = env('TWILIO_WHATSAPP_NUMBER');
 
         $client = new Client($sid, $authToken);
 
 
-        $resetLink = url("/password/reset?token={$token}");
+        $resetLink = url("http://localhost:5173/password/reset?token={$token}&&password={$password}");
 
         try {
             $client->messages->create(
-                $phoneNumber, 
+                $phoneNumber,
                 [
-                    'from' => 'whatsapp:' . $twilioNumber, 
-                    'body' => "Hello,Your password is: {$password}. Please use it to log in and change your password."
+                    'from' => 'whatsapp:' . $twilioNumber,
+                    'body' => "Hello,You can reset your password using this link: {$resetLink}"
                 ]
             );
         } catch (\Twilio\Exceptions\RestException $e) {
             return response()->json(['error' => 'Failed to send WhatsApp message: ' . $e->getMessage()], 500);
         }
+    }
+    public function resetPassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'confirmPassword' => 'required',
+            'token' => 'required'
+        ]);
+        $user = User::where('email', $request->email)
+            ->first();
+        if (!$user) {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+        $user->update([
+            'password' => $request->password
+        ]);
+        return response()->json([
+            'message' => 'Password reset successfully.',
+            'user' => $user
+        ]);
     }
 }

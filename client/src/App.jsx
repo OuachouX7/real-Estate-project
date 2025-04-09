@@ -4,6 +4,7 @@ import Spinner from "./Components/Loading/Spinner";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import useUsers from "./Hooks/useUsers";
 import GoogleTranslate from "./Components/GoogleTranslation.jsx/GoogleTranslate";
+import ResetPassword from "./Pages/Auth/ResetPaasword";
 const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"))
 const Home = lazy(() => import("./Pages/Home/Home"));
 const Explore = lazy(() => import("./Pages/Explore/Explore"));
@@ -63,6 +64,7 @@ function AppContent({ isAdmin }) {
           <Route path="/chat/:id" element={<Chat />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/users" element={<Users />} />
+          <Route path="/password/reset" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </Suspense>
