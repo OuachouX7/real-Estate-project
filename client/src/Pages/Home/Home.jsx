@@ -1,4 +1,3 @@
-import { data } from "react-router-dom";
 import axiosInstance from "../../axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
@@ -6,14 +5,12 @@ import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
 import property2 from "../../assets/property2.webp";
 import { motion } from "framer-motion";
-import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const [properties, setProperties] = useState([]),
     [number, setNumber] = useState(0),
     [images, setImages] = useState([]),
     [sourceImage, setSourceImage] = useState(),
-    { t, i18n } = useTranslation(),
     navigate = useNavigate();
   useEffect(() => {
     let a = () => {
@@ -39,9 +36,6 @@ const Home = () => {
     };
     a();
   }, []);
-  useEffect(() => {
-    
-  },[])
   return (
     <div className="bg-[#fff]">
       <Helmet>

@@ -4,8 +4,8 @@ import Spinner from "./Components/Loading/Spinner";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import useUsers from "./Hooks/useUsers";
 import GoogleTranslate from "./Components/GoogleTranslation.jsx/GoogleTranslate";
-import ResetPassword from "./Pages/Auth/ResetPaasword";
-const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"))
+const ResetPassword = lazy(() => import("./Pages/Auth/ResetPaasword"));
+const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"));
 const Home = lazy(() => import("./Pages/Home/Home"));
 const Explore = lazy(() => import("./Pages/Explore/Explore"));
 const SignUp = lazy(() => import("./Pages/Auth/SignUp"));
@@ -26,7 +26,7 @@ const AdminNavbar = lazy(() => import("./Components/Navbar/AdminNavbar"));
 const Footer = lazy(() => import("./Components/Footer/Footer"));
 
 function App() {
-  const users = useUsers("/users")
+  const users = useUsers("/users");
   const token = sessionStorage.getItem("token");
   const userId = localStorage.getItem("userId");
 
