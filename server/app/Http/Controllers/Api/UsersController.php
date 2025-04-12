@@ -120,11 +120,13 @@ class UsersController extends Controller
 
         $token = Str::random(60);
 
+        $user->update([
+            'reset_token' => $token
+        ]);
+
         $formattedPhoneNumber = 'whatsapp:' . $user->phone;
 
-        $password = $user->password;
-
-        $this->sendWhatsAppMessage($formattedPhoneNumber, $token, $password);
+        $this->sendWhatsAppMessage($formattedPhoneNumber, $token);
 
         return response()->json(['message' => 'Password reset link sent via WhatsApp.']);
     }
@@ -144,7 +146,7 @@ class UsersController extends Controller
      * @param string 
      * @param string 
      */
-    protected function sendWhatsAppMessage($phoneNumber, $token, $password)
+    protected function sendWhatsAppMessage($phoneNumber, $token)
     {
         $sid = env('TWILIO_SID');
         $authToken = env('TWILIO_AUTH_TOKEN');
@@ -153,7 +155,7 @@ class UsersController extends Controller
         $client = new Client($sid, $authToken);
 
 
-        $resetLink = url("http://localhost:5173/password/reset?token={$token}&&password={$password}");
+        $resetLink = url("http://localhost:5173/password/reset?token={$token}");
 
         try {
             $client->messages->create(
@@ -170,12 +172,11 @@ class UsersController extends Controller
     public function resetPassword(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
             'password' => 'required',
             'confirmPassword' => 'required',
-            'token' => 'required'
+            'tokenUrl' => 'required'
         ]);
-        $user = User::where('email', $request->email)
+        $user = User::where('reset_token', $request->tokenUrl)
             ->first();
         if (!$user) {
             return response()->json(['message' => 'User not found'], 404);

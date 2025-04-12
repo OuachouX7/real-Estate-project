@@ -25,9 +25,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'reset_token',
         'confirmPassword',
         'phone',
-        'token',
+        'tokenUrl',
         'role',
         'profile_picture',
     ];
