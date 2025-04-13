@@ -93,7 +93,6 @@ const Contact = () => {
             <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition">
               {t("Submit")}
             </button>
-            <a href="mailto:salimimmobilier@gmail.com">sumbit</a>
 
             <p className="text-gray-500 text-sm text-center">
               {t("Contact Disclaimer 1")}{" "}
