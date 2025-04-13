@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
   const [form, setForm] = useState({
@@ -10,12 +11,17 @@ const ResetPassword = () => {
   const [tokenUrl, setTokenUrl] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const location = useLocation();
-  
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const token = queryParams.get("token");
+    if (!token) {
+      navigate("/");
+    }
     setTokenUrl(token);
   }, [location]);
 
@@ -24,8 +30,8 @@ const ResetPassword = () => {
     setLoading(true);
     try {
       await axios.post("http://localhost:8000/api/resetPassword", {
-        password: form.password, 
-        confirmPassword: form.confirmPassword, 
+        password: form.password,
+        confirmPassword: form.confirmPassword,
         tokenUrl: tokenUrl,
       });
       setMessage("Password reset successfully.");
@@ -40,7 +46,7 @@ const ResetPassword = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 bg-white rounded shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
-          Reset Password
+          {t("Reset Password")}
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -48,7 +54,7 @@ const ResetPassword = () => {
               htmlFor="password"
               className="block text-sm font-medium text-gray-700"
             >
-              New Password:
+              {t("New Password:")}
             </label>
             <input
               type="text"
@@ -63,7 +69,7 @@ const ResetPassword = () => {
               htmlFor="confirmPassword"
               className="block text-sm font-medium text-gray-700"
             >
-              Confirm Password:
+              {t("Confirm Password:")}
             </label>
             <input
               type="text"
@@ -84,7 +90,7 @@ const ResetPassword = () => {
                 : "bg-blue-500 hover:bg-blue-600"
             }`}
           >
-            {loading ? "Resetting..." : "Reset Password"}
+            {loading ? t("Resetting...") : t("Reset Password")}
           </button>
         </form>
         {message && (

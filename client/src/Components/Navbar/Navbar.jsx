@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../../assets/Property.webp";
 import axiosInstance from "../../axios/axiosInstance";
+import { useTranslation } from "react-i18next";
 
 const Navbar = () => {
   const [arrow, SetArrow] = useState(false);
   const location = useLocation();
-  const activePath = location.pathname;
+  const { t, i18n } = useTranslation();
   const token = sessionStorage.getItem("token");
   const profilePicture = localStorage.getItem("profilePicture");
 
@@ -28,47 +29,86 @@ const Navbar = () => {
   };
 
   return (
-    <div className="w-full flex justify-between items-center bg-white shadow-md px-10  py-2 ">
+    <div className="w-full flex justify-between items-center bg-white shadow-md px-10 py-4">
       <div className="flex items-center">
-        <img src={logo} alt="Logo" className="w-20 h-20 object-contain" />
+        <img src={logo} alt="Logo" className="w-16 h-16 object-contain" />
       </div>
-
-      <ul className="flex space-x-8 text-lg font-{font-poppins}">
-        {["Home", "Explore", "Properties", "About", "Contact"].map((item) => {
-          const path = item === "Home" ? "/" : `/${item.toLowerCase()}`;
-          const isActive = activePath === path;
-
-          return (
-            <li key={item}>
-              <Link
-                to={path}
-                className={`${
-                  isActive
-                    ? "text-blue-900 font-semibold "
-                    : "text-gray-500  hover:text-blue-700"
-                } transition-all pb-1`}
-              >
-                {item}
-              </Link>
-            </li>
-          );
-        })}
+      <ul className="flex space-x-6 text-lg font-medium">
+        <li>
+          <Link
+            to="/"
+            className={`hover:text-blue-600 transition-colors ${
+              location.pathname === "/"
+                ? "text-blue-600 font-semibold"
+                : "text-gray-700"
+            }`}
+          >
+            {t("Home")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/explore"
+            className={`hover:text-blue-600 transition-colors ${
+              location.pathname === "/explore"
+                ? "text-blue-600 font-semibold"
+                : "text-gray-700"
+            }`}
+          >
+            {t("Explore")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/properties"
+            className={`hover:text-blue-600 transition-colors ${
+              location.pathname === "/properties"
+                ? "text-blue-600 font-semibold"
+                : "text-gray-700"
+            }`}
+          >
+            {t("Properties")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/about"
+            className={`hover:text-blue-600 transition-colors ${
+              location.pathname === "/about"
+                ? "text-blue-600 font-semibold"
+                : "text-gray-700"
+            }`}
+          >
+            {t("About")}
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/contact"
+            className={`hover:text-blue-600 transition-colors ${
+              location.pathname === "/contact"
+                ? "text-blue-600 font-semibold"
+                : "text-gray-700"
+            }`}
+          >
+            {t("Contact")}
+          </Link>
+        </li>
       </ul>
-
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-4">
         {!token ? (
           <>
             <Link
               to="/sign-up"
-              className="bg-blue-600 text-white px-5 py-2 rounded-full shadow-md hover:bg-blue-700 transition-all"
+              className="bg-blue-600 text-white px-4 py-2 rounded-full shadow-md hover:bg-blue-700 transition-all"
             >
-              Sign Up
+              {t("Sign Up")}
             </Link>
             <Link
               to="/login"
-              className="border border-blue-600 text-blue-600 px-5 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-all"
+              className="border border-blue-600 text-blue-600 px-4 py-2 rounded-full hover:bg-blue-600 hover:text-white transition-all"
             >
-              Login
+              {t("Login")}
             </Link>
           </>
         ) : (
@@ -78,48 +118,55 @@ const Navbar = () => {
                 src={`http://localhost:8000/storage/images/${profilePicture}`}
                 alt="Profile"
                 loading="lazy"
-                className="w-12 h-12 rounded-full object-cover shadow-md"
+                className="w-10 h-10 rounded-full object-cover shadow-md"
               />
             )}
-
             <button
               className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
               onClick={handleLogOut}
             >
-              Logout
+              {t("Logout")}
             </button>
-            <button onClick={() => SetArrow(!arrow)}>
+            <button onClick={() => SetArrow(!arrow)} className="relative">
               <svg
-                className="translate-x-4"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 width="24"
                 height="24"
-                color="#000000"
-                fill="none"
+                className="text-gray-700 hover:text-blue-600 transition-colors"
               >
                 <path
                   d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9"
                   stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </button>
-            <div className="z-10 relative">
-              {arrow && (
-                <div
-                  className={"absolute top-5 right-0 bg-white shadow-md p-4"}
+            {arrow && (
+              <div className="absolute top-18 right-40 z-5 bg-white shadow-lg p-4 rounded-lg">
+                <Link
+                  to="/wishlist"
+                  className="block text-gray-700 hover:text-blue-600"
                 >
-                  <Link to="/wishlist" className="block hover:text-blue-600">
-                    Wishlist
-                  </Link>
-                </div>
-              )}
-            </div>
+                  {t("Wishlist")}
+                </Link>
+              </div>
+            )}
           </div>
         )}
+        <div>
+          <select
+            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            value={i18n.language}
+            onChange={(e) => i18n.changeLanguage(e.target.value)}
+          >
+            <option value="en">English</option>
+            <option value="ar">العربية</option>
+            <option value="fr">Français</option>
+          </select>
+        </div>
       </div>
     </div>
   );
