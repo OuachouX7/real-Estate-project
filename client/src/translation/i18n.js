@@ -6,7 +6,7 @@ i18n
   .use(Backend)
   .use(initReactI18next)
   .init({
-    lng: 'ar', 
+    lng: 'fr', 
     fallbackLng: 'en',
     debug: true, 
     backend: {

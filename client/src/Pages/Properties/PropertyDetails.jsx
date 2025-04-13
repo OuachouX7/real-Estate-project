@@ -14,7 +14,7 @@ const PropertyDetails = () => {
     [error, setError] = useState(null),
     [description, setDescription] = useState([]),
     [selectedImageIndex, setSelectedImageIndex] = useState(null),
-    {t,i18n} = useTranslation(),
+    { t, i18n } = useTranslation(),
     token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),
     navigate = useNavigate();
@@ -146,7 +146,7 @@ const PropertyDetails = () => {
             </div>
           </div>
           <div className="flex justify-between w-full items-end mt-8">
-            <div className="w-[20%]">
+            <div className="w-[45%]">
               <h2
                 className="text-3xl font-semibold"
                 style={{ color: "#123763" }}
@@ -187,7 +187,11 @@ const PropertyDetails = () => {
                     />
                   </svg>
                 </button>
-                <a href="https://wa.me/+212677172512" target="_blank" className="bg-green-400 text-white px-4 py-3 rounded-full mt-3">
+                <a
+                  href="https://wa.me/+212677172512"
+                  target="_blank"
+                  className="bg-green-400 text-white px-4 py-3 rounded-full mt-3"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
@@ -237,7 +241,7 @@ const PropertyDetails = () => {
                 </p>
               </div>
             </div>
-            <div className={selectedImageIndex !== null ? "hidden" : "w-[80%]"}>
+            <div className={selectedImageIndex !== null ? "hidden" : "w-[50%]"}>
               <LocationMap location={property.location} />
             </div>
           </div>
