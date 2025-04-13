@@ -11,7 +11,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['auth:sanctum'])->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
     Route::post('/logout', [UsersController::class, 'logout']);
     Route::get('/users', [UsersController::class, 'index']);
     Route::post('/addFavorite', [FavoriteController::class, 'addFavorite']);
@@ -24,10 +24,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::put('/properties/{id}', [PropertiesController::class, 'updateProperty']);
     Route::post('/addProperty', [PropertiesController::class, 'store']);
 });
-Route::post('/resetPassword', [UsersController::class, 'resetPassword']);
-Route::post('/forgotPassword', [UsersController::class, 'forgotPassword']);
-Route::get('/propertiesSearch', [PropertiesController::class, 'search']);
-Route::get('/properties', [PropertiesController::class, 'index']);
-Route::get('/properties/{id}', [PropertiesController::class, 'show']);
-Route::post('/login', [UsersController::class, 'login']);
-Route::post('/register', [UsersController::class, 'register']);
+Route::middleware('throttle:api')->group(function () {
+    Route::get('/properties', [PropertiesController::class, 'index']);
+    Route::get('/properties/{id}', [PropertiesController::class, 'show']);
+    Route::post('/resetPassword', [UsersController::class, 'resetPassword']);
+    Route::post('/forgotPassword', [UsersController::class, 'forgotPassword']);
+    Route::get('/propertiesSearch', [PropertiesController::class, 'search']);
+    Route::post('/login', [UsersController::class, 'login']);
+    Route::post('/register', [UsersController::class, 'register']);
+});

@@ -17,6 +17,11 @@ class UsersController extends Controller
         $users = User::paginate(10);
         return response()->json($users);
     }
+    public function index2()
+    {
+        $users = User::all();
+        return response()->json($users);
+    }
 
     public function getUserById($id)
     {
