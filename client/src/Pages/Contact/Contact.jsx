@@ -30,7 +30,7 @@ const Contact = () => {
             Reach out via email, phone, or the form below to get in touch with
             us.
           </p>
-          <p className="text-gray-800 font-medium">SHestate@gmail.com</p>
+          <p className="text-gray-800 font-medium">salimimmobilier@gmail.com</p>
           <p className="text-gray-800 font-medium">+212 6-77-17-2512</p>
 
           <div className="space-y-4">
