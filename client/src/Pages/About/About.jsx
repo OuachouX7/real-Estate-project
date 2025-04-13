@@ -1,38 +1,37 @@
 import React from "react";
-import { lazy } from "react";
 import aboutPic from "../../assets/aboutPic.webp";
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+
 const About = () => {
+  const { t } = useTranslation();
+
   return (
     <>
-      <nav className="flex  items-center space-x-2 bg-white p-8 rounded-lg">
+      <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
         <Link to="/" className="text-gray-600 font-semibold hover:underline">
-          Home
+          {t("Home")}
         </Link>
         <span className="text-gray-400">&gt;</span>
-        <span className="text-blue-900 font-bold">About</span>
+        <span className="text-blue-900 font-bold">{t("About")}</span>
       </nav>
+
       <div className="bg-gray-50 p-25">
         <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-10">
           <div>
-            <h4 className="text-orange-500 font-semibold">Our Story</h4>
+            <h4 className="text-orange-500 font-semibold">{t("Our Story")}</h4>
             <h1 className="text-5xl font-bold mt-4">
-              Your Dream Home, Our Mission
+              {t("Your Dream Home, Our Mission")}
             </h1>
             <p className="text-gray-600 mt-6">
-              At DreamNest Realty, we believe that finding the perfect home
-              should be an exciting and seamless experience. Founded by Mohammad
-              Salimi, our mission is to connect people with properties that
-              truly feel like home. With years of expertise in the real estate
-              industry, our dedicated team offers personalized guidance to make
-              your dreams a reality.
+              {t("About Description")}
             </p>
           </div>
 
           <div>
             <img
               src={aboutPic}
-              alt="Happy couple in their new home"
+              alt={t("About Image Alt")}
               loading="lazy"
               className="w-full h-full rounded-xl object-cover"
             />
@@ -42,19 +41,19 @@ const About = () => {
         <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 mt-10">
           <div className="p-6 bg-white rounded-xl shadow-md">
             <h2 className="text-3xl font-bold">15+</h2>
-            <p className="text-gray-500">Years Experience</p>
+            <p className="text-gray-500">{t("Years Experience")}</p>
           </div>
           <div className="p-6 bg-white rounded-xl shadow-md">
             <h2 className="text-3xl font-bold">800+</h2>
-            <p className="text-gray-500">Properties Rented</p>
+            <p className="text-gray-500">{t("Properties Rented")}</p>
           </div>
           <div className="p-6 bg-white rounded-xl shadow-md">
             <h2 className="text-3xl font-bold">1.2K+</h2>
-            <p className="text-gray-500">Happy Clients</p>
+            <p className="text-gray-500">{t("Happy Clients")}</p>
           </div>
           <div className="p-6 bg-white rounded-xl shadow-md">
             <h2 className="text-3xl font-bold">98%</h2>
-            <p className="text-gray-500">Customer Satisfaction</p>
+            <p className="text-gray-500">{t("Customer Satisfaction")}</p>
           </div>
         </div>
       </div>

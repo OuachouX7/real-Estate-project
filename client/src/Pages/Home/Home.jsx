@@ -5,12 +5,14 @@ import homeimg from "../../assets/home-image.webp";
 import { Helmet } from "react-helmet-async";
 import property2 from "../../assets/property2.webp";
 import { motion } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const [properties, setProperties] = useState([]),
     [number, setNumber] = useState(0),
     [images, setImages] = useState([]),
     [sourceImage, setSourceImage] = useState(),
+    { t, i18n } = useTranslation(),
     navigate = useNavigate();
   useEffect(() => {
     let a = () => {
@@ -82,7 +84,7 @@ const Home = () => {
         />
         <div className="absolute inset-0 flex items-center justify-center">
           <h1 className="text-white text-6xl font-bold text-center">
-            Discover Your Perfect Home
+            {t("Discover Your Perfect Home")}
           </h1>
         </div>
       </motion.div>
@@ -102,12 +104,12 @@ const Home = () => {
       >
         <div className="mb-10">
           <div className="flex justify-between items-center">
-            <h2 className="text-3xl font-bold">Newest Listings</h2>
+            <h2 className="text-3xl font-bold">{t("Newest Listings")}</h2>
             <button
               className="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100"
               onClick={() => navigate("/properties")}
             >
-              View All
+              {t("View All")}
             </button>
           </div>
 
@@ -153,7 +155,7 @@ const Home = () => {
               ))
             ) : (
               <p className="text-gray-500 col-span-4 text-center">
-                No properties found.
+                {t("No properties found.")}
               </p>
             )}
           </div>
@@ -162,12 +164,10 @@ const Home = () => {
       <div>
         <div className="flex w-full justify-around items-center">
           <div className="text-[#123763] font-[700] text-[46px] leading-[64px] w-[45%] flex justify-end text-start">
-            We help you to find your dream house
+            {t("We help you to find your dream house")}
           </div>
           <div className="w-[45%] text-[#666666] leading-[26px] font-[400] px-5">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-            sint. Velit officia consequat duis enim velit mollit. Exercitation
-            veniam consequat sunt nostrud amet.
+            {t("Feature Text")}
           </div>
         </div>
         <div className="w-full flex justify-around items-center mt-10">
@@ -186,7 +186,31 @@ const Home = () => {
               <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
                 <summary className="bg-white relative flex items-center">
                   <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
-                    Lifetime Warranty
+                    {t("Lifetime Warranty")}
+                  </p>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 w-6 absolute right-0 text-gray-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    stroke-width="2"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M19 9l-7 7-7-7"
+                    ></path>
+                  </svg>
+                </summary>
+                {t("Warranty Description")}
+              </details>
+            </div>
+            <div className="py-2.5 radius-[8px] box-border">
+              <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
+                <summary className="bg-white relative flex items-center">
+                  <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
+                    {t("Cheapest")}
                   </p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +236,7 @@ const Home = () => {
               <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
                 <summary className="bg-white relative flex items-center">
                   <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
-                    cheapest compared to other competitors
+                    {t("Strategic Location")}
                   </p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -238,33 +262,7 @@ const Home = () => {
               <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
                 <summary className="bg-white relative flex items-center">
                   <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
-                    Strategic location
-                  </p>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    class="h-6 w-6 absolute right-0 text-gray-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    stroke-width="2"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M19 9l-7 7-7-7"
-                    ></path>
-                  </svg>
-                </summary>
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do
-                amet sint. Velit officia consequat duis enim velit mollit.
-                Exercitation veniam consequat.
-              </details>
-            </div>
-            <div className="py-2.5 radius-[8px] box-border">
-              <details className="bg-white py-1 px-3 box-border shadow-lg border-1 border-solid border-[#E5E5E5] rounded-[8px] hover:shadow-xl">
-                <summary className="bg-white relative flex items-center">
-                  <p className="text-[#123763] font-[600] text-[20px] leading-[38px]">
-                    Low tax
+                    {t("Low Tax")}
                   </p>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -292,20 +290,16 @@ const Home = () => {
       <div className="mt-10 flex justify-between items-center">
         <div className="flex flex-col w-[35%] h-[400px] justify-around ml-10">
           <h2 className="text-[#123763] font-[700] text-wrap text-[46px] leading-[64px] flex text-start">
-            Need a home loan? Get pre-approved
+            {t("Need Loan")}
           </h2>
           <p className="text-[#666666] leading-[26px] text-wrap font-[400]">
-            Creating a very beautiful website design in accordance with the
-            fundamental user experience which is examined more deeply by the UX
-            Designers that we have.{" "}
+            {t("Loan Description 1")}
           </p>
           <p className="text-[#666666] leading-[26px] font-[400] mt-5">
-            And make good visuals so that clients are satisfied and easy when
-            viewing the website. First impressions are our tricks to attract a
-            customer who has seen the website that we are going to create
+            {t("Loan Description 2")}
           </p>
           <button className="bg-[#FF8A20] text-white rounded-[8px] p-2.5 mt-3 w-fit">
-            Read More
+            {t("Read More")}
           </button>
         </div>
         <div className="w-[55%] h-[500px] flex justify-end">
@@ -323,20 +317,14 @@ const Home = () => {
       </div>
       <div className="bg-[#27AD77] text-white p-10 h-[600px] flex items-center justify-around mt-10 w-full">
         <div className="w-[50%]">
-          <h2 className="text-3xl font-bold">
-            Nice And Comfortable House For Family
-          </h2>
-          <p className="mt-4 text-sm opacity-90">
-            Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet
-            sint. Velit officia consequat duis enim velit mollit. Exercitation
-            veniam consequat sunt nostrud amet.
-          </p>
+          <h2 className="text-3xl font-bold">{t("Nice House")}</h2>
+          <p className="mt-4 text-sm opacity-90">{t("Review Text")}</p>
           <div className="flex items-center mt-4">
             <span className="text-yellow-400 text-lg">⭐ ⭐ ⭐ ⭐ ⭐</span>
           </div>
           <div className="mt-4">
-            <h3 className="font-semibold text-lg">Park Tea Hyung</h3>
-            <p className="text-sm opacity-80">Pedagang Bakso</p>
+            <h3 className="font-semibold text-lg">{t("Reviewer Name")}</h3>
+            <p className="text-sm opacity-80">{t("Reviewer Title")}</p>
           </div>
           <div className="flex gap-4 mt-6">
             <button
@@ -369,11 +357,9 @@ const Home = () => {
         </div>
       </div>
       <div className="bg-gray-400 text-white text-center py-35  w-full ">
-        <h2 className="text-3xl font-bold">
-          Get Luxury And Cheap Housing <br /> And Guaranteed Forever
-        </h2>
+        <h2 className="text-3xl font-bold">{t("Get Luxury")}</h2>
         <button className="mt-6 px-6 py-3 bg-orange-500 text-white font-semibold rounded-lg hover:bg-orange-600">
-          Contact Now
+          {t("Contact Now")}
         </button>
       </div>
     </div>

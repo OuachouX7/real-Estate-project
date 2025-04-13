@@ -4,15 +4,17 @@ import { FaMapMarkerAlt, FaBed, FaBath, FaCar } from "react-icons/fa";
 import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../axios/axiosInstance";
+import { useTranslation } from "react-i18next";
 const LocationMap = lazy(() => import("../../Components/Map/LocationMap"));
 
 const PropertyDetails = () => {
-  const { id: t } = useParams(),
+  const { id } = useParams(),
     [property, setProperty] = useState(null),
     [loading, setLoading] = useState(true),
     [error, setError] = useState(null),
     [description, setDescription] = useState([]),
     [selectedImageIndex, setSelectedImageIndex] = useState(null),
+    {t,i18n} = useTranslation(),
     token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),
     navigate = useNavigate();
@@ -20,7 +22,7 @@ const PropertyDetails = () => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await axiosInstance.get(`/properties/${t}`);
+        const response = await axiosInstance.get(`/properties/${id}`);
         setProperty(response.data);
         setDescription(response.data.description.split(/ {2,}/));
       } catch (err) {
@@ -30,7 +32,7 @@ const PropertyDetails = () => {
       }
     };
     fetchProperty();
-  }, [t]);
+  }, [id]);
 
   const handleFavorite = (propertyId) => {
     if (!token) {
@@ -93,14 +95,14 @@ const PropertyDetails = () => {
     <>
       <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">
         <Link to="/" className="text-gray-600 font-semibold hover:underline">
-          Home
+          {t("Home")}
         </Link>
         <span className="text-gray-400">&gt;</span>
         <Link
           to="/properties"
           className="text-gray-600 font-semibold hover:underline"
         >
-          Properties
+          {t("Properties")}
         </Link>
         <span className="text-gray-400">&gt;</span>
         <span className="text-blue-600 font-semibold hover:underline">
@@ -149,7 +151,7 @@ const PropertyDetails = () => {
                 className="text-3xl font-semibold"
                 style={{ color: "#123763" }}
               >
-                Description
+                {t("Description")}
               </h2>
               <br></br>
               {description?.map((desc, index) => (
@@ -212,26 +214,26 @@ const PropertyDetails = () => {
                 className="text-3xl font-semibold mt-6"
                 style={{ color: "#123763" }}
               >
-                Details
+                {t("Details")}
               </h3>
               <br></br>
               <div className="grid grid-cols-1 gap-4 mt-2">
                 <p className="text-gray-700">
-                  <strong>Price :</strong> {property.price} DH
+                  <strong>{t("Price")} :</strong> {property.price} DH
                 </p>
 
                 <p className="text-gray-700">
-                  <strong>Available :</strong>{" "}
+                  <strong>{t("Available")} :</strong>{" "}
                   {property.available ? "No" : "Yes"}
                 </p>
                 <p className="text-gray-700">
-                  <strong>Category :</strong> {property.category}
+                  <strong>{t("Category")} :</strong> {property.category}
                 </p>
                 <p className="text-gray-700">
-                  <strong>Frequency :</strong> {property.rentalFrequency}
+                  <strong>{t("Frequency")} :</strong> {property.rentalFrequency}
                 </p>
                 <p className="text-gray-700">
-                  <strong>Contact :</strong> {"0677172512"}
+                  <strong>{t("Contact")} :</strong> {"0677172512"}
                 </p>
               </div>
             </div>
