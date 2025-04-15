@@ -6,7 +6,7 @@ const Wishlist = () => {
   const [wishList, setWishList] = useState([]),
     [loading, setLoading] = useState(!0),
     [error, setError] = useState(null),
-    {t,i18n} = useTranslation(),
+    {t} = useTranslation(),
     navigate = useNavigate(),
     token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),

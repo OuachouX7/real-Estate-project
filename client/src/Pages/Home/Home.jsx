@@ -12,7 +12,7 @@ const Home = () => {
     [number, setNumber] = useState(0),
     [images, setImages] = useState([]),
     [sourceImage, setSourceImage] = useState(),
-    { t, i18n } = useTranslation(),
+    { t } = useTranslation(),
     navigate = useNavigate();
   useEffect(() => {
     let a = () => {

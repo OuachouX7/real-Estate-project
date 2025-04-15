@@ -28,6 +28,15 @@ const Navbar = () => {
     }
   };
 
+  const handleLanguage = (e) => {
+    i18n.changeLanguage(e.target.value)
+  }
+
+  useEffect(() => {
+    const lang = i18n.language;
+    lang === 'ar' ? document.body.dir = 'rtl' : 'ltr';
+  }, [i18n.language]);
+
   return (
     <div className="w-full flex justify-between items-center bg-white shadow-md px-10 py-4">
       <div className="flex items-center">
@@ -160,7 +169,7 @@ const Navbar = () => {
           <select
             className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
             value={i18n.language}
-            onChange={(e) => i18n.changeLanguage(e.target.value)}
+            onChange={handleLanguage}
           >
             <option value="en">English</option>
             <option value="ar">العربية</option>

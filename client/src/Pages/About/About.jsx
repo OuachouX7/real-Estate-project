@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 const About = () => {
   const { t } = useTranslation();
-
   return (
     <>
       <nav className="flex items-center space-x-2 bg-white p-8 rounded-lg">

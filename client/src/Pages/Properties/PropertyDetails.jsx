@@ -14,7 +14,7 @@ const PropertyDetails = () => {
     [error, setError] = useState(null),
     [description, setDescription] = useState([]),
     [selectedImageIndex, setSelectedImageIndex] = useState(null),
-    { t, i18n } = useTranslation(),
+    { t } = useTranslation(),
     token = sessionStorage.getItem("token"),
     userId = localStorage.getItem("userId"),
     navigate = useNavigate();

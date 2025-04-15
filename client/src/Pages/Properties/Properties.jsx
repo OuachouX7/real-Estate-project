@@ -13,7 +13,7 @@ const Properties = () => {
   const [totalPages, setTotalPages] = useState(1);
   const token = sessionStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-  const {t,i18n} = useTranslation();
+  const {t} = useTranslation();
   const navigate = useNavigate();
 
   const getProperties = async (page) => {
@@ -81,7 +81,7 @@ const Properties = () => {
             className="bg-white border rounded-lg shadow-lg overflow-hidden border-gray-200"
           >
             <img
-              src={`http://localhost:8000/storage/images/${listing.images[0].image_url}`}
+              src={`http://localhost:8000/storage/images/${listing?.images[0]?.image_url}`}
               alt={listing.title}
               className="w-full h-48 object-cover"
               onClick={() => navigate(`/property/${listing.id}`)}
