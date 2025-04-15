@@ -1,17 +1,19 @@
 const userModel = require("../models/users.js");
 const fs = require("fs");
+require('dotenv').config();
 const path = require("path");
+const jwt = require("jsonwebtoken");
 const multer = require("multer");
+const generateJWT = require("../utils/generateJWT.js");
 
-// Configure multer for file uploads
-const uploadFolderPath = path.join(__dirname, "../uploads"); 
+const uploadFolderPath = path.join(__dirname, "../uploads");
 if (!fs.existsSync(uploadFolderPath)) {
   fs.mkdirSync(uploadFolderPath);
 }
 
 const diskStorage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, uploadFolderPath); 
+    cb(null, uploadFolderPath);
   },
   filename: function (req, file, cb) {
     const ext = file.mimetype.split("/")[1];
@@ -34,18 +36,44 @@ const getUsers = async (req, res) => {
   }
 };
 
+const Login = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    const user = await userModel.findOne({ email, password });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const token = await generateJWT({ id: user._id, email: user.email });
+  
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      data : user,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      message: "error ... " + error.message,
+    });
+  }
+};
+
 const SignUp = async (req, res) => {
   try {
     const { name, email, phone, password } = req.body;
-    const avatar = req.file ? req.file.filename : null; 
+    const avatar = req.file ? path.join("uploads", req.file.filename) : null;
 
     const newUser = new userModel({
       name,
       email,
       phone,
       password,
-      profile_picture: avatar,
+      profile_picture: avatar, 
     });
+
+    const token = await generateJWT({ id: newUser._id , email: newUser.email });
+    newUser.token = token;
 
     await newUser.save();
     res.status(201).json(newUser);
@@ -58,5 +86,6 @@ const SignUp = async (req, res) => {
 module.exports = {
   getUsers,
   SignUp,
+  Login,
   upload,
 };

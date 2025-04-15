@@ -10,6 +10,9 @@ const users = new mongoose.Schema({
     type: String || null,
     default: "user",
   },
+  token : {
+    type: String,
+  }
 });
 
 const User = mongoose.model("User", users);

@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const connectDB = require("./connection/connection.js");
 const UserController = require("./controllers/UserController.js");
 const MessageController = require("./controllers/MessageController.js");
+const verifyToken = require("./middlewares/verifyToken.js");
 
 const app = express();
 
@@ -26,8 +27,9 @@ try {
     UserController.upload.single("avatar"),
     UserController.SignUp
   );
-  app.get("/messages", MessageController.getMessages);
+  app.get("/messages",verifyToken, MessageController.getMessages);
   app.post("/messages", MessageController.sendMessages);
+  app.post("/login", UserController.Login);
 } catch (error) {
   console.error("Error in server setup:", error);
   process.exit(1);
