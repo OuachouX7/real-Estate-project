@@ -21,14 +21,16 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 connectDB();
 
 try {
-  app.get("/", UserController.getUsers);
+  app.get("/users", verifyToken, UserController.getUsers);
+  app.get("/users/:id", verifyToken, UserController.getUserById);
   app.post(
     "/users",
     UserController.upload.single("avatar"),
+    verifyToken,
     UserController.SignUp
   );
-  app.get("/messages",verifyToken, MessageController.getMessages);
-  app.post("/messages", MessageController.sendMessages);
+  app.post("/getMessages", verifyToken, MessageController.getMessages);
+  app.post("/messages", verifyToken, MessageController.sendMessages);
   app.post("/login", UserController.Login);
 } catch (error) {
   console.error("Error in server setup:", error);

@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import axiosInstance from "../../axios/axiosInstance";
+import axios from "axios";
 function Chat() {
   const [message, setMessage] = useState(""),
     [messages, setmessages] = useState([]),
     [user, setUser] = useState({}),
     { id: e } = useParams(),
-    token = sessionStorage.getItem("token"),
-    sender_id = localStorage.getItem("userId"),
+    token = sessionStorage.getItem("jwt_token"),
+    sender_id = localStorage.getItem("user_chat"),
     getUserById = () => {
       try {
-        axiosInstance
-          .get(`/user/${e}`, {
+        axios
+          .get(`http://localhost:5000/users/${e}`, {
             headers: { Authorization: `Bearer ${token}` },
           })
           .then((e) => {
@@ -29,10 +30,10 @@ function Chat() {
       try {
         "Enter" === s.key &&
           (s.preventDefault(),
-          axiosInstance
+          axios
             .post(
-              "/sendMessage",
-              { sender_id: sender_id, receiver_id: e, message: message },
+              "http://localhost:5000/messages",
+              { sender: sender_id, receiver: e, message: message },
               { headers: { Authorization: `Bearer ${token}` } }
             )
             .then(() => {
@@ -43,13 +44,20 @@ function Chat() {
       }
     },
     getMessages = () => {
-      axiosInstance
-        .get("/getMessages", {
-          params: { user_ids: [sender_id, e] },
-          headers: { Authorization: `Bearer ${token}` },
+      axios
+        .post(
+          "http://localhost:5000/getMessages",
+          { userIds: [sender_id, e] },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        )
+        .then((res) => {
+          setmessages(res.data);
+          console.log(res.data);
         })
-        .then((e) => {
-          setmessages(e.data);
+        .catch((err) => {
+          console.error("Error fetching messages:", err);
         });
     };
   useEffect(() => {
@@ -89,7 +97,7 @@ function Chat() {
         {messages.map((message) => (
           <div
             className={
-              sender_id == message.sender_id
+              sender_id == message.sender
                 ? "self-end w-auto bg-blue-500 text-white p-2 rounded-lg my-2"
                 : "self-start w-auto flex items-start p-2 rounded-lg my-2"
             }
@@ -97,11 +105,11 @@ function Chat() {
           >
             <div
               className={
-                message.sender_id != sender_id && "bg-gray-100 p-2 rounded "
+                message.sender != sender_id && "bg-gray-100 p-2 rounded "
               }
             >
               <p className="font-bold">
-                {message.sender_id == sender_id ? "" : user.name}
+                {message.sender == sender_id ? "" : user.name}
               </p>
               <p className="text-sm">{message.message}</p>
             </div>

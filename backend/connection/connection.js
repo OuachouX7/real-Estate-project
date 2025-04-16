@@ -6,7 +6,7 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("✅ Connected to MongoDB (Compass)");
+    console.log("Connected to MongoDB (Compass)");
   } catch (err) {
     console.error("MongoDB connection error:", err.message);
     process.exit(1);

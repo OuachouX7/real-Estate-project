@@ -3,12 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axios/axiosInstance";
 import { useTranslation } from "react-i18next";
+import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState(""),
     [password, setPassword] = useState(""),
     [error, setError] = useState(false),
-    {t} = useTranslation(),
+    { t } = useTranslation(),
     navigate = useNavigate(),
     handleLogin = (e) => {
       e.preventDefault();
@@ -26,10 +27,20 @@ const Login = () => {
               localStorage.setItem(
                 "profilePicture",
                 e.data.user.profile_picture
-              ),
-              navigate("/");
+              );
           })
           .catch(() => setError(true));
+        axios
+          .post("http://localhost:5000/login", {
+            email: email,
+            password: password,
+          })
+          .then((e) => {
+            console.log(e.data),
+              sessionStorage.setItem("jwt_token", e.data.token),
+              localStorage.setItem("user_chat", e.data.data._id),
+              navigate("/");
+          });
       } catch (e) {
         setError(true);
       }

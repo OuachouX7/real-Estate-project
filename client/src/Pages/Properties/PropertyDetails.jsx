@@ -58,7 +58,7 @@ const PropertyDetails = () => {
       navigate("/login");
       return;
     }
-    navigate("/chat/9e36109f-9563-4d05-95e2-c9f1a92e78t9");
+    navigate("/chat/67fe94bc4a1b171b2e850d56");
   };
 
   const openImageModal = (index) => {
