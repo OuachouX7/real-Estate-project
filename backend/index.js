@@ -26,7 +26,6 @@ try {
   app.post(
     "/users",
     UserController.upload.single("avatar"),
-    verifyToken,
     UserController.SignUp
   );
   app.post("/getMessages", verifyToken, MessageController.getMessages);
