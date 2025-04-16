@@ -23,7 +23,6 @@ const getMessages = async (req, res) => {
   }
 };
 
-
 const sendMessages = async (req, res) => {
   try {
     const { sender, receiver, message } = req.body;

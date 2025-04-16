@@ -11,37 +11,32 @@ const Login = () => {
     [error, setError] = useState(false),
     { t } = useTranslation(),
     navigate = useNavigate(),
-    handleLogin = (e) => {
+    handleLogin = async (e) => {
       e.preventDefault();
+      setError(false);
+
       try {
-        axiosInstance
-          .post("/login", {
-            email: email,
-            password: password,
-          })
-          .then((e) => {
-            console.log(e),
-              sessionStorage.setItem("token", e.data.token),
-              localStorage.setItem("user", e.data.user.name),
-              localStorage.setItem("userId", e.data.user.id),
-              localStorage.setItem(
-                "profilePicture",
-                e.data.user.profile_picture
-              );
-          })
-          .catch(() => setError(true));
-        axios
-          .post("http://localhost:5000/login", {
-            email: email,
-            password: password,
-          })
-          .then((e) => {
-            console.log(e.data),
-              sessionStorage.setItem("jwt_token", e.data.token),
-              localStorage.setItem("user_chat", e.data.data._id),
-              navigate("/");
-          });
-      } catch (e) {
+        const res1 = await axiosInstance.post("/login", {
+          email,
+          password,
+        });
+
+        sessionStorage.setItem("token", res1.data.token);
+        localStorage.setItem("user", res1.data.user.name);
+        localStorage.setItem("userId", res1.data.user.id);
+        localStorage.setItem("profilePicture", res1.data.user.profile_picture);
+
+        const res2 = await axios.post("http://localhost:5000/login", {
+          email,
+          password,
+        });
+
+        sessionStorage.setItem("jwt_token", res2.data.token);
+        localStorage.setItem("user_chat", res2.data.data._id);
+
+        navigate("/");
+      } catch (err) {
+        console.error("Login failed:", err);
         setError(true);
       }
     };

@@ -1,6 +1,6 @@
 const userModel = require("../models/users.js");
 const fs = require("fs");
-require('dotenv').config();
+require("dotenv").config();
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
@@ -45,13 +45,12 @@ const Login = async (req, res) => {
     }
 
     const token = await generateJWT({ id: user._id, email: user.email });
-  
+
     res.status(200).json({
       message: "Login successful",
       token,
-      data : user,
+      data: user,
     });
-
   } catch (error) {
     res.status(500).json({
       message: "error ... " + error.message,
@@ -69,10 +68,10 @@ const SignUp = async (req, res) => {
       email,
       phone,
       password,
-      profile_picture: avatar, 
+      profile_picture: avatar,
     });
 
-    const token = await generateJWT({ id: newUser._id , email: newUser.email });
+    const token = await generateJWT({ id: newUser._id, email: newUser.email });
     newUser.token = token;
 
     await newUser.save();
