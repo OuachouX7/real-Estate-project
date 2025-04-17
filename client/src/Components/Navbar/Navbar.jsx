@@ -133,10 +133,11 @@ const Navbar = () => {
             <button
               className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-all"
               onClick={handleLogOut}
+              aria-label="Logout"
             >
               {t("Logout")}
             </button>
-            <button onClick={() => SetArrow(!arrow)} className="relative">
+            <button aria-label="Wishlist" onClick={() => SetArrow(!arrow)} className="relative">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -166,9 +167,11 @@ const Navbar = () => {
           </div>
         )}
         <div>
+          <label for="language"></label>
           <select
             className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
             value={i18n.language}
+            id="language"
             onChange={handleLanguage}
           >
             <option value="en">English</option>
