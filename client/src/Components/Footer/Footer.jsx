@@ -1,7 +1,8 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 const Footer = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   return (
     <footer className="bg-[#1D3557] text-white py-12 px-6">
     <div>
@@ -46,18 +47,18 @@ const Footer = () => {
     </div>
     <div className="border-t border-gray-600 mt-8 pt-4 text-center">
       <nav className="flex justify-center space-x-6">
-        <a href="/" className="hover:underline">
+        <Link to="/" className="hover:underline">
           {t("Home")}
-        </a>
-        <a href="/explore" className="hover:underline">
+        </Link>
+        <Link to="/explore" className="hover:underline">
           {t("Explore")}
-        </a>
-        <a href="/about" className="hover:underline">
+        </Link>
+        <Link to="/about" className="hover:underline">
           {t("About")}
-        </a>
-        <a href="/contact" className="hover:underline">
+        </Link>
+        <Link to="/contact" className="hover:underline">
           {t("Contact")}
-        </a>
+        </Link>
       </nav>
       <p className="mt-4 text-gray-400">{t("Copyright")}</p>
     </div>
