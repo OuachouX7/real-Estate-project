@@ -28,7 +28,7 @@ const SearchBar = React.memo(({ onSearch }) => {
           onChange={(e) => setPriceRange(e.target.value)}
         />
         <div>
-          <label for="category" className="block mb-2 text-sm font-medium text-gray-700">
+          <label for="category">
           </label>
           <select
             name="category"
