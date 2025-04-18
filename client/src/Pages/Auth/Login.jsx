@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import axiosInstance from "../../axios/axiosInstance";
+import axiosInstance, { nodeAxiosInstance } from "../../axios/axiosInstance";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
 
 const Login = () => {
   const [email, setEmail] = useState(""),
@@ -26,7 +25,7 @@ const Login = () => {
         localStorage.setItem("userId", res1.data.user.id);
         localStorage.setItem("profilePicture", res1.data.user.profile_picture);
 
-        const res2 = await axios.post("http://localhost:5000/login", {
+        const res2 = await nodeAxiosInstance.post("/login", {
           email,
           password,
         });

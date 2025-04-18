@@ -13,7 +13,7 @@ function Chat() {
 
   const getUserById = () => {
     nodeAxiosInstance
-      .get(`http://localhost:5000/users/${e}`, {
+      .get(`/users/${e}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -29,7 +29,7 @@ function Chat() {
   const getMessages = () => {
     nodeAxiosInstance
       .post(
-        "http://localhost:5000/getMessages",
+        "/getMessages",
         { userIds: [sender_id, e] },
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -48,7 +48,7 @@ function Chat() {
       s.preventDefault();
       nodeAxiosInstance
         .post(
-          "http://localhost:5000/messages",
+          "/messages",
           { sender: sender_id, receiver: e, message },
           { headers: { Authorization: `Bearer ${token}` } }
         )

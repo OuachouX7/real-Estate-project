@@ -1,8 +1,7 @@
 import { useState } from "react";
-import axiosInstance from "../../axios/axiosInstance";
+import axiosInstance, { nodeAxiosInstance } from "../../axios/axiosInstance";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import axios from "axios";
 
 const SignUp = () => {
   const [signUp, setSignUp] = useState({
@@ -34,8 +33,8 @@ const SignUp = () => {
           password: signUp.password,
           profile_picture: signUp.profile_picture,
         });
-        axios
-          .post("http://localhost:5000/users", {
+        nodeAxiosInstance
+          .post("/users", {
             name: signUp.name,
             email: signUp.email,
             phone: signUp.phone,

@@ -30,6 +30,7 @@ Route::middleware('throttle:api')->group(function () {
     Route::post('/resetPassword', [UsersController::class, 'resetPassword']);
     Route::post('/forgotPassword', [UsersController::class, 'forgotPassword']);
     Route::get('/propertiesSearch', [PropertiesController::class, 'search']);
-    Route::post('/login', [UsersController::class, 'login']);
     Route::post('/register', [UsersController::class, 'register']);
 });
+Route::post('/login', [UsersController::class, 'login'])->middleware('throttle:login');
+
