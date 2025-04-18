@@ -28,7 +28,6 @@ const upload = multer({ storage: diskStorage });
 const getUsers = async (req, res) => {
   try {
     const users = await userModel.find();
-    console.log(users);
     res.json(users);
   } catch (error) {
     console.error(error);

@@ -1,67 +1,81 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import axiosInstance from "../../axios/axiosInstance";
+import io from "socket.io-client"
 import axios from "axios";
+const socket = io("http://localhost:5000");
 function Chat() {
-  const [message, setMessage] = useState(""),
-    [messages, setmessages] = useState([]),
-    [user, setUser] = useState({}),
-    { id: e } = useParams(),
-    token = sessionStorage.getItem("jwt_token"),
-    sender_id = localStorage.getItem("user_chat"),
-    getUserById = () => {
-      try {
-        axios
-          .get(`http://localhost:5000/users/${e}`, {
-            headers: { Authorization: `Bearer ${token}` },
-          })
-          .then((e) => {
-            setUser({
-              name: e.data.name,
-              email: e.data.email,
-              phone: e.data.phone,
-            });
-          });
-      } catch (s) {
-        console.log(s);
-      }
-    },
-    handleMessageSubmit = (s) => {
-      try {
-        "Enter" === s.key &&
-          (s.preventDefault(),
-          axios
-            .post(
-              "http://localhost:5000/messages",
-              { sender: sender_id, receiver: e, message: message },
-              { headers: { Authorization: `Bearer ${token}` } }
-            )
-            .then(() => {
-              getMessages();
-            }));
-      } catch (t) {
-        console.log(t);
-      }
-    },
-    getMessages = () => {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [user, setUser] = useState({});
+  const { id: e } = useParams();
+  const token = sessionStorage.getItem("jwt_token");
+  const sender_id = localStorage.getItem("user_chat");
+
+  const getUserById = () => {
+    axios
+      .get(`http://localhost:5000/users/${e}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setUser({
+          name: res.data.name,
+          email: res.data.email,
+          phone: res.data.phone,
+        });
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const getMessages = () => {
+    axios
+      .post(
+        "http://localhost:5000/getMessages",
+        { userIds: [sender_id, e] },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        setMessages(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching messages:", err);
+      });
+  };
+
+  const handleMessageSubmit = (s) => {
+    if (s.key === "Enter") {
+      s.preventDefault();
       axios
         .post(
-          "http://localhost:5000/getMessages",
-          { userIds: [sender_id, e] },
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          "http://localhost:5000/messages",
+          { sender: sender_id, receiver: e, message },
+          { headers: { Authorization: `Bearer ${token}` } }
         )
-        .then((res) => {
-          setmessages(res.data);
-          console.log(res.data);
-        })
-        .catch((err) => {
-          console.error("Error fetching messages:", err);
+        .then(() => {
+          getMessages();
+          setMessage("");
+          socket.emit("chat message", message); 
         });
-    };
+    }
+  };
+
   useEffect(() => {
-    getMessages(), getUserById();
+    getMessages();
+    getUserById();
+  }, []);
+
+  useEffect(() => {
+    const handleNewMessage = (msg) => {
+      setMessages((prev) => [...prev, msg]);
+      getMessages();
+    };
+
+    socket.on("chat message", handleNewMessage);
+
+    return () => {
+      socket.off("chat message", handleNewMessage);
+    };
   }, []);
   return (
     <div className="flex flex-col justify-between h-screen mx-auto p-4">
