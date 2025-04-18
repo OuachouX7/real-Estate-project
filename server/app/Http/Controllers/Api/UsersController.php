@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 use Twilio\Rest\Client;
 use Illuminate\Support\Str;
 
@@ -15,11 +16,6 @@ class UsersController extends Controller
     public function index()
     {
         $users = User::paginate(10);
-        return response()->json($users);
-    }
-    public function index2()
-    {
-        $users = User::all();
         return response()->json($users);
     }
 
@@ -69,11 +65,13 @@ class UsersController extends Controller
             return response()->json(['error' => 'Image was not saved properly'], 500);
         }
 
+        $password = Hash::make($request->password);
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'password' => $request->password,
+            'password' => $password,
             'profile_picture' => $imageName,
         ]);
 
@@ -93,13 +91,16 @@ class UsersController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user) {
-            $token = $user->createToken('auth_token')->plainTextToken;
-            return response()->json([
-                'user' => $user,
-                'token' => $token
-            ]);
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
+
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return response()->json([
+            'user' => $user,
+            'token' => $token
+        ]);
+
 
         return response()->json(['error' => 'Invalid credentials'], 401);
     }
