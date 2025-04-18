@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import io from "socket.io-client"
-import axios from "axios";
+import io from "socket.io-client";
+import { nodeAxiosInstance } from "../../axios/axiosInstance";
 const socket = io("http://localhost:5000");
 function Chat() {
   const [message, setMessage] = useState("");
@@ -12,7 +12,7 @@ function Chat() {
   const sender_id = localStorage.getItem("user_chat");
 
   const getUserById = () => {
-    axios
+    nodeAxiosInstance
       .get(`http://localhost:5000/users/${e}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -27,7 +27,7 @@ function Chat() {
   };
 
   const getMessages = () => {
-    axios
+    nodeAxiosInstance
       .post(
         "http://localhost:5000/getMessages",
         { userIds: [sender_id, e] },
@@ -46,7 +46,7 @@ function Chat() {
   const handleMessageSubmit = (s) => {
     if (s.key === "Enter") {
       s.preventDefault();
-      axios
+      nodeAxiosInstance
         .post(
           "http://localhost:5000/messages",
           { sender: sender_id, receiver: e, message },
@@ -54,8 +54,7 @@ function Chat() {
         )
         .then(() => {
           getMessages();
-          setMessage("");
-          socket.emit("chat message", message); 
+          socket.emit("chat message", message);
         });
     }
   };

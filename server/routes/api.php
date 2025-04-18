@@ -11,7 +11,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::middleware(['auth:sanctum', 'throttle:api'])->group(function () {
+Route::middleware(['auth:sanctum', 'throttle:auth'])->group(function () {
     Route::post('/logout', [UsersController::class, 'logout']);
     Route::get('/users', [UsersController::class, 'index']);
     Route::post('/addFavorite', [FavoriteController::class, 'addFavorite']);
