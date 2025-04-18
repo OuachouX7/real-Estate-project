@@ -1,4 +1,3 @@
-const { json } = require("body-parser");
 const messageModel = require("../models/messages.js");
 
 const getMessages = async (req, res) => {
