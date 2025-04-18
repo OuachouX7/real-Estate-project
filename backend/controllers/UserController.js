@@ -27,8 +27,11 @@ const upload = multer({ storage: diskStorage });
 
 const getUsers = async (req, res) => {
   try {
-    const users = await userModel.find({'password': false});
-    res.json(users);
+    const users = await userModel.find();
+    res.status(200).json({
+      message : "users fetched successfully",
+      data : users
+    })
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching users" });
@@ -77,7 +80,11 @@ const SignUp = async (req, res) => {
     newUser.token = token;
 
     await newUser.save();
-    res.status(201).json(newUser);
+    res.status(201).json({
+      message: "User created successfully",
+      token,
+      data: newUser,
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating user" });
@@ -91,7 +98,10 @@ const getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.json(user);
+    res.status(200).json({
+      message : "User found successfully",
+      data : user
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error fetching user" });
