@@ -2,7 +2,7 @@ const userModel = require("../models/users.js");
 const fs = require("fs");
 require("dotenv").config();
 const path = require("path");
-const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 const multer = require("multer");
 const generateJWT = require("../utils/generateJWT.js");
 
@@ -27,7 +27,7 @@ const upload = multer({ storage: diskStorage });
 
 const getUsers = async (req, res) => {
   try {
-    const users = await userModel.find();
+    const users = await userModel.find({'password': false});
     res.json(users);
   } catch (error) {
     console.error(error);
@@ -38,8 +38,9 @@ const getUsers = async (req, res) => {
 const Login = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await userModel.findOne({ email, password });
-    if (!user) {
+    const user = await userModel.findOne({ email });
+    const matchedPassword = bcrypt.compare(password, user.password);
+    if (!user || !matchedPassword) {
       return res.status(401).json({ message: "Invalid email or password" });
     }
 
@@ -62,11 +63,13 @@ const SignUp = async (req, res) => {
     const { name, email, phone, password } = req.body;
     const avatar = req.file ? path.join("uploads", req.file.filename) : null;
 
+    const hashedPassword = await bcrypt.hash(password,10);
+
     const newUser = new userModel({
       name,
       email,
       phone,
-      password,
+      password : hashedPassword,
       profile_picture: avatar,
     });
 
