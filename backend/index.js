@@ -5,9 +5,8 @@ const bodyParser = require("body-parser");
 const { Server } = require("socket.io");
 const http = require("http");
 const connectDB = require("./connection/connection.js");
-const UserController = require("./controllers/UserController.js");
-const MessageController = require("./controllers/MessageController.js");
-const verifyToken = require("./middlewares/verifyToken.js");
+const userRoutes = require("./routes/userRoutes.js")
+const messageRoutes = require("./routes/messageRouts.js");
 
 const { EventEmitter } = require("events");
 EventEmitter.defaultMaxListeners = 20;
@@ -49,16 +48,8 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 connectDB();
 
 try {
-  app.get("/users", verifyToken, UserController.getUsers);
-  app.get("/users/:id", verifyToken, UserController.getUserById);
-  app.post(
-    "/users",
-    UserController.upload.single("avatar"),
-    UserController.SignUp
-  );
-  app.post("/getMessages", verifyToken, MessageController.getMessages);
-  app.post("/messages", verifyToken, MessageController.sendMessages);
-  app.post("/login", UserController.Login);
+  app.use("/",userRoutes)
+  app.use("/",messageRoutes);
 } catch (error) {
   console.error("Error in server setup:", error);
   process.exit(1);
