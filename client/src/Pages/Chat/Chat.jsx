@@ -18,9 +18,8 @@ function Chat() {
       })
       .then((res) => {
         setUser({
-          name: res.data.name,
-          email: res.data.email,
-          phone: res.data.phone,
+          name: res.data.data.name,
+          email: res.data.data.email,
         });
       })
       .catch((err) => console.log(err));

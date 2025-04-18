@@ -1,6 +1,6 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 import logo from "../../assets/Property.webp";
 import axiosInstance from "../../axios/axiosInstance";
 import { useTranslation } from "react-i18next";
@@ -8,8 +8,6 @@ import { useTranslation } from "react-i18next";
 const AdminNavbar = () => {
   const [arrow, SetArrow] = useState(false);
   const { t, i18n } = useTranslation();
-  const location = useLocation();
-  const activePath = location.pathname;
   const token = sessionStorage.getItem("token");
   const profilePicture = localStorage.getItem("profilePicture");
 
@@ -28,6 +26,15 @@ const AdminNavbar = () => {
       window.location.reload();
     }
   };
+
+  const handleLanguage = (e) => {
+    i18n.changeLanguage(e.target.value);
+  };
+
+  useEffect(() => {
+    const lang = i18n.language;
+    lang === "ar" ? (document.body.dir = "rtl") : "ltr";
+  }, [i18n.language]);
 
   return (
     <div className="w-full flex justify-between items-center bg-white shadow-md px-10 py-2">
@@ -134,21 +141,20 @@ const AdminNavbar = () => {
                   </div>
                 </div>
               )}
-              
             </div>
             <div>
               <label for="language"></label>
-          <select
-            id="language"
-            className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
-            value={i18n.language}
-            onChange={(e) => i18n.changeLanguage(e.target.value)}
-          >
-            <option value="en">English</option>
-            <option value="ar">العربية</option>
-            <option value="fr">Français</option>
-          </select>
-        </div>
+              <select
+                className="border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-600"
+                value={i18n.language}
+                id="language"
+                onChange={handleLanguage}
+              >
+                <option value="en">English</option>
+                <option value="ar">العربية</option>
+                <option value="fr">Français</option>
+              </select>
+            </div>
           </div>
         )}
       </div>

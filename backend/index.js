@@ -25,11 +25,7 @@ const io = new Server(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("a user connected");
-
   socket.on("chat message", (message) => {
-    console.log("Message received:", message);
-
     io.emit("chat message", message);
   });
 

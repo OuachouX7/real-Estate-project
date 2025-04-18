@@ -29,12 +29,12 @@ const Navbar = () => {
   };
 
   const handleLanguage = (e) => {
-    i18n.changeLanguage(e.target.value)
-  }
+    i18n.changeLanguage(e.target.value);
+  };
 
   useEffect(() => {
     const lang = i18n.language;
-    lang === 'ar' ? document.body.dir = 'rtl' : 'ltr';
+    lang === "ar" ? (document.body.dir = "rtl") : "ltr";
   }, [i18n.language]);
 
   return (
@@ -137,7 +137,11 @@ const Navbar = () => {
             >
               {t("Logout")}
             </button>
-            <button aria-label="Wishlist" onClick={() => SetArrow(!arrow)} className="relative">
+            <button
+              aria-label="Wishlist"
+              onClick={() => SetArrow(!arrow)}
+              className="relative"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
