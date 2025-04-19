@@ -3,7 +3,6 @@
 use App\Http\Controllers\Api\UsersController;
 use App\Http\Controllers\Api\PropertiesController;
 use App\Http\Controllers\Api\FavoriteController;
-use App\Http\Controllers\Api\MessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +15,6 @@ Route::middleware(['auth:sanctum', 'throttle:auth'])->group(function () {
     Route::get('/users', [UsersController::class, 'index']);
     Route::post('/addFavorite', [FavoriteController::class, 'addFavorite']);
     Route::get('/favorites', [FavoriteController::class, 'index']);
-    Route::get('/getMessages', [MessageController::class, 'index']);
-    Route::post('/sendMessage', [MessageController::class, 'sendMessage']);
     Route::get('/user/{id}', [UsersController::class, 'getUserById']);
     Route::delete('/deleteFavorite/{id}', [FavoriteController::class, 'deleteFavorite']);
     Route::delete('/deleteProperty/{id}', [PropertiesController::class, 'deleteProperty']);
