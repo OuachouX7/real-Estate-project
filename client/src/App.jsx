@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Spinner from "./Components/Loading/Spinner";
 import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import useUsers from "./Hooks/useUsers";
+const NotFound = lazy(() => import("./Pages/NotFound/NotFound"));
 const ResetPassword = lazy(() => import("./Pages/Auth/ResetPaasword"));
 const ForgotPassword = lazy(() => import("./Pages/Auth/ForgotPassword"));
 const Home = lazy(() => import("./Pages/Home/Home"));
@@ -64,6 +65,7 @@ function AppContent({ isAdmin }) {
           <Route path="/users" element={<Users />} />
           <Route path="/password/reset" element={<ResetPassword />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
       {!isChatRoute && <Footer />}
