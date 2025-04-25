@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { lazy } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useUsers from "../../Hooks/useUsers";
 import axiosInstance from "../../axios/axiosInstance";
 import { useTranslation } from "react-i18next";
+import { Helmet } from "react-helmet-async";
 
 const Spinner = lazy(() => import("../../Components/Loading/Spinner"));
 
@@ -13,14 +14,12 @@ const Properties = () => {
   const [totalPages, setTotalPages] = useState(1);
   const token = sessionStorage.getItem("token");
   const userId = localStorage.getItem("userId");
-  const {t} = useTranslation();
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   const getProperties = async (page) => {
     try {
-      const response = await axiosInstance.get(
-        `/properties?page=${page}`
-      );
+      const response = await axiosInstance.get(`/properties?page=${page}`);
       setProperties(response.data.data);
       setCurrentPage(response.data.current_page);
       setTotalPages(response.data.last_page);
@@ -58,102 +57,120 @@ const Properties = () => {
     }
   };
 
-  const isAdmin = users.find((user) => user.role === "admin" && user.id === userId);
+  const isAdmin = useMemo(
+    () => users.find((user) => user.role === "admin" && user.id === userId),
+    [users, userId]
+  );
 
   return (
     <>
-  <nav className="flex items-center space-x-2 p-8 rounded-lg">
-    <Link to="/" className="text-gray-600 font-semibold hover:underline">
-      {t('Home')}
-    </Link>
-    <span className="text-gray-400">&gt;</span>
-    <span className="text-blue-900 font-bold">{t('Properties')}</span>
-  </nav>
+      <Helmet>
+        <title>{t("Properties")}</title>
+        <meta name="description" content={t("Properties Description")} />
+        <meta description={t("Properties Description")} />
+        <meta name="keywords" content={t("Properties Keywords")} />
+        <meta name="author" content={t("Properties Author")} />
+      </Helmet>
+      <nav className="flex items-center space-x-2 p-8 rounded-lg">
+        <Link to="/" className="text-gray-600 font-semibold hover:underline">
+          {t("Home")}
+        </Link>
+        <span className="text-gray-400">&gt;</span>
+        <span className="text-blue-900 font-bold">{t("Properties")}</span>
+      </nav>
 
-  <div className="max-w-8xl mx-auto p-6 bg-gray-50">
-    <h1 className="text-3xl font-bold text-gray-800 mb-6">{t('Properties')}</h1>
+      <div className="max-w-8xl mx-auto p-6 bg-gray-50">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">
+          {t("Properties")}
+        </h1>
 
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-      {properties.length > 0 ? (
-        properties.map((listing, index) => (
-          <div
-            key={index}
-            className="bg-white border rounded-lg shadow-lg overflow-hidden border-gray-200"
-          >
-            <img
-              src={`http://localhost:8000/storage/images/${listing?.images[0]?.image_url}`}
-              alt={listing.title}
-              className="w-full h-48 object-cover"
-              onClick={() => navigate(`/property/${listing.id}`)}
-            />
-            <div className="p-4">
-              <h3
-                className="text-lg font-semibold mb-2"
-                style={{ color: "#123763" }}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {properties.length > 0 ? (
+            properties.map((listing, index) => (
+              <div
+                key={index}
+                className="bg-white border rounded-lg shadow-lg overflow-hidden border-gray-200"
               >
-                {listing.title}
-              </h3>
+                <img
+                  src={
+                    listing?.images[0]?.image_url
+                      ? `http://localhost:8000/storage/images/${listing?.images[0]?.image_url}`
+                      : "https://via.placeholder.com/150"
+                  }
+                  alt={listing.title}
+                  loading="lazy"
+                  className="w-full h-48 object-cover"
+                  onClick={() => navigate(`/property/${listing.id}`)}
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold mb-2 text-[#123763]">
+                    {listing.title}
+                  </h3>
 
-              <div className="flex items-center text-gray-600 text-sm mb-2">
-                <span className="mr-1">{t('Location Prefix')}</span> {listing.location}
-              </div>
-
-              <div className="flex justify-between items-center">
-                <span className="text-xl font-bold">
-                  {listing.price} {t('Price Unit')}
-                </span>
-
-                {isAdmin && (
-                  <div className="flex justify-end w-[70%]">
-                    <button
-                      className="px-4 py-2 mr-1 bg-red-500 text-white rounded-lg hover:bg-red-600"
-                      onClick={() => handleDelete(listing.id)}
-                    >
-                      {t('Delete')}
-                    </button>
-                    <button
-                      className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-                      onClick={() => navigate(`/edit/${listing.id}`)}
-                    >
-                      {t('Edit')}
-                    </button>
+                  <div className="flex items-center text-gray-600 text-sm mb-2">
+                    <span className="mr-1">{t("Location Prefix")}</span>{" "}
+                    {listing.location}
                   </div>
-                )}
+
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold">
+                      {listing.price} {t("Price Unit")}
+                    </span>
+
+                    {isAdmin && (
+                      <div className="flex justify-end w-[70%]">
+                        <button
+                          aria-label="button"
+                          className="px-4 py-2 mr-1 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                          onClick={() => handleDelete(listing.id)}
+                        >
+                          {t("Delete")}
+                        </button>
+                        <button
+                          aria-label="button"
+                          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                          onClick={() => navigate(`/edit/${listing.id}`)}
+                        >
+                          {t("Edit")}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </div>
+            ))
+          ) : (
+            <div className="w-[600px] flex">
+              <Spinner />
             </div>
-          </div>
-        ))
-      ) : (
-        <div className="w-[600px] flex">
-          <Spinner />
+          )}
         </div>
-      )}
-    </div>
 
-    <div className="flex justify-between items-center mt-6">
-      <button
-        onClick={handlePreviousPage}
-        disabled={currentPage === 1}
-        className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
-      >
-        {t('Previous')}
-      </button>
+        <div className="flex justify-between items-center mt-6">
+          <button
+            aria-label="button"
+            onClick={handlePreviousPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
+          >
+            {t("Previous")}
+          </button>
 
-      <span className="text-gray-700">
-        {t('Page')} {currentPage} {t('of')} {totalPages}
-      </span>
+          <span className="text-gray-700">
+            {t("Page")} {currentPage} {t("of")} {totalPages}
+          </span>
 
-      <button
-        onClick={handleNextPage}
-        disabled={currentPage === totalPages}
-        className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
-      >
-        {t('Next')}
-      </button>
-    </div>
-  </div>
-</>
-
+          <button
+            aria-label="button"
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400 disabled:opacity-50"
+          >
+            {t("Next")}
+          </button>
+        </div>
+      </div>
+    </>
   );
 };
 

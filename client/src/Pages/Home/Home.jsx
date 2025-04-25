@@ -15,28 +15,23 @@ const Home = () => {
     { t } = useTranslation(),
     navigate = useNavigate();
   useEffect(() => {
-    let a = () => {
+    const fetchProperties = async () => {
       try {
-        axiosInstance.get("/properties").then((a) => {
-          setProperties([
-            a.data?.data[0],
-            a.data?.data[1],
-            a.data?.data[2],
-            a.data?.data[3],
-          ]),
-            setImages([
-              `http://localhost:8000/storage/images/${a.data?.data[0].images[0]?.image_url}`,
-              `http://localhost:8000/storage/images/${a.data?.data[1].images[0]?.image_url}`,
-              `http://localhost:8000/storage/images/${a.data?.data[2].images[0]?.image_url}`,
-              a.data?.data[3]?.images[0]?.image_url !== void 0 &&
-                `http://localhost:8000/storage/images/${a.data.data[3].images[0].image_url}`,
-            ]);
-        });
-      } catch (a) {
-        console.log(a);
+        const response = await axiosInstance.get("/properties");
+        const data = response.data?.data;
+        setProperties(data.slice(0, 4));
+        setImages(
+          data.map((property) =>
+            property.images[0]?.image_url
+              ? `http://localhost:8000/storage/images/${property.images[0].image_url}`
+              : null
+          )
+        );
+      } catch (error) {
+        console.error("Error fetching properties:", error);
       }
     };
-    a();
+    fetchProperties();
   }, []);
   return (
     <div className="bg-[#fff]">
